@@ -1,4 +1,5 @@
 <script>
+	import Footer from '$lib/components/footer.svelte';
 	import '../app.css';
 	import Navbar from '../lib/components/navbar.svelte';
 	import { ModeWatcher } from 'mode-watcher';
@@ -55,3 +56,4 @@
 <Navbar {data}></Navbar>
 <Toaster position="bottom-center" />
 {@render children?.()}
+<Footer />

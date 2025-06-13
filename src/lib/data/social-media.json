@@ -1,0 +1,40 @@
+{
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "href": "https://github.com/mfachryna",
+      "icon": "simple-icons:github",
+      "logo": "github",
+      "color": "hover:text-gray-300",
+      "bgColor": "hover:bg-gray-100",
+      "description": "View my code repositories and open source contributions"
+    },
+    {
+      "name": "LinkedIn",
+      "href": "https://www.linkedin.com/in/mfachryna",
+      "icon": "simple-icons:linkedin",
+      "logo": "linkedin",
+      "color": "hover:text-blue-400",
+      "bgColor": "hover:bg-blue-50",
+      "description": "Connect with me professionally"
+    },
+    {
+      "name": "Instagram",
+      "href": "https://instagram.com/mfachryna",
+      "icon": "simple-icons:instagram",
+      "logo": "instagram",
+      "color": "hover:text-pink-400",
+      "bgColor": "hover:bg-pink-50",
+      "description": "Follow my personal updates and behind-the-scenes"
+    },
+    {
+      "name": "Steam",
+      "href": "https://steamcommunity.com/id/Croazt18/",
+      "icon": "simple-icons:steam",
+      "logo": "steam",
+      "color": "hover:text-blue-600",
+      "bgColor": "hover:bg-blue-50",
+      "description": "Connect with me on Steam for gaming"
+    }
+  ]
+}

@@ -13,7 +13,7 @@
 	const navLinks = [
 		{ name: 'About', href: '#about' },
 		{ name: 'Experiences', href: '#experiences' },
-		{ name: 'Works', href: '#works' },
+		{ name: 'Works', href: '#work' },
 		{ name: 'Blogs', href: '#blogs' },
 		{ name: 'Contacts', href: '#contacts' }
 	];
@@ -66,7 +66,7 @@
 		}
 	};
 
-	let socialMediaWithLogo = [];
+	let socialMediaWithLogo: Array<{ name: string; href: string; logo: string; component: any }> = [];
 
 	async function loadLogos() {
 		socialMediaWithLogo = await Promise.all(
@@ -79,6 +79,47 @@
 
 	onMount(loadLogos);
 	export let data;
+
+	function smoothScrollTo(targetId: string) {
+		if (!browser) return;
+
+		const target = document.querySelector(targetId);
+		if (target) {
+			const navbarHeight = 80;
+			const targetPosition = target.offsetTop - navbarHeight;
+
+			window.scrollTo({
+				top: targetPosition,
+				behavior: 'smooth'
+			});
+		}
+	}
+
+	function handleNavigation(event: Event, href: string) {
+		event.preventDefault();
+
+		if (isSidebarOpen) {
+			handleNavClick();
+		}
+
+		if (href === '/' || href === '#hero') {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+
+			if (browser) {
+				history.pushState(null, '', '/');
+			}
+			return;
+		}
+
+		smoothScrollTo(href);
+
+		if (browser) {
+			history.pushState(null, '', href);
+		}
+	}
 </script>
 
 <header
@@ -95,16 +136,18 @@
 		class:rounded-lg={isScrolled}
 		class:grow-0={isScrolled}
 	>
-		<a href="/" class="my-auto mr-4 font-bold">
+		<a href="/" class="my-auto mr-4 font-bold" on:click={(e) => handleNavigation(e, '/')}>
 			{isScrolled ? 'Home/' : 'FACHRY'}
 		</a>
+
 		<div class="my-auto hidden md:flex" class:justify-center={isScrolled}>
 			{#each navLinks as link}
 				<a
-					href={`${link.href}`}
-					class="mr-4"
+					href={link.href}
+					class="hover:text-primary mr-4 transition-colors duration-200"
 					class:font-bold={pathName.startsWith(link.href)}
 					class:text-destructive={pathName.startsWith(link.href)}
+					on:click={(e) => handleNavigation(e, link.href)}
 				>
 					{link.name}
 				</a>
@@ -142,8 +185,10 @@
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class={`mb-4 text-lg ${pathName.startsWith(link.href) ? 'text-destructive font-bold' : ''}`}
-					on:click={handleNavClick}
+					class={`hover:text-primary mb-4 text-lg transition-colors duration-200 ${
+						pathName.startsWith(link.href) ? 'text-destructive font-bold' : ''
+					}`}
+					on:click={(e) => handleNavigation(e, link.href)}
 				>
 					{link.name}
 				</a>
