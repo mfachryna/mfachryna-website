@@ -11,7 +11,7 @@
 	export let data;
 </script>
 
-<div class="relative z-0">
+<div class="relative z-10">
 	<SocialMedia />
 	<Email />
 	<IntroductionSection />

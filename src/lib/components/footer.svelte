@@ -62,7 +62,7 @@
 	}
 </script>
 
-<footer class="bg-background border-accent/20 relative z-10 h-fit w-full overflow-hidden border-t">
+<footer class="bg-none border-accent/20 z-0 relative h-fit w-full overflow-hidden border-t">
 	{#if showSecretMessage}
 		<div class="absolute top-4 left-1/2 z-20 -translate-x-1/2 transform animate-bounce">
 			<div
@@ -73,7 +73,7 @@
 		</div>
 	{/if}
 
-	<div class="bg-foreground relative -z-10 mx-auto w-full px-6 pt-20 pb-5">
+	<div class="bg-foreground relative z-0 mx-auto w-full px-6 pt-20 pb-5">
 		<div class="space-y-6 text-center">
 			<AnimateOnScroll
 				animation="slide"
@@ -213,7 +213,7 @@
 		</div>
 	</div>
 
-	<Wave position="pointer-events-none absolute top-0 -translate-y-1/5 left-0 w-full">
+	<Wave position="pointer-events-none absolute z-0 top-0 -translate-y-1/5 left-0 w-full">
 		<Layer3 className="fill-background" />
 	</Wave>
 </footer>
