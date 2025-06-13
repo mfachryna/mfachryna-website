@@ -112,3 +112,120 @@
         transform: translateX(0);
     }
 }
+
+.slide-up-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.slide-up-on-scroll.animate-in {
+    animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.slide-down-on-scroll {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+.slide-down-on-scroll.animate-in {
+    animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.rotate-in-on-scroll {
+    opacity: 0;
+    transform: rotate(-15deg) scale(0.95);
+}
+.rotate-in-on-scroll.animate-in {
+    animation: rotateIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes rotateIn {
+    0% {
+        opacity: 0;
+        transform: rotate(-15deg) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+    }
+}
+.zoom-in-on-scroll {
+    opacity: 0;
+    transform: scale(0.95);
+}
+.zoom-in-on-scroll.animate-in {
+    animation: zoomIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes zoomIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.flip-in-on-scroll {
+    opacity: 0;
+    transform: perspective(1000px) rotateY(-90deg);
+}
+.flip-in-on-scroll.animate-in {
+    animation: flipIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes flipIn {
+    0% {
+        opacity: 0;
+        transform: perspective(1000px) rotateY(-90deg);
+    }
+    100% {
+        opacity: 1;
+        transform: perspective(1000px) rotateY(0);
+    }
+}
+.shake-on-scroll {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+.shake-on-scroll.animate-in {
+    animation: shake 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes shake {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    20% {
+        transform: translateX(10px);
+    }
+    40% {
+        transform: translateX(-10px);
+    }
+    60% {
+        transform: translateX(10px);
+    }
+    80% {
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+

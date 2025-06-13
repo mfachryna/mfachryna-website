@@ -176,7 +176,7 @@
 		{:else}
 			{#each experiences.slice(0, visibleExperiences) as item, i (item.id)}
 				<AnimateOnScroll
-					animation="bounce"
+					animation="slide-up"
 					delay={200}
 					threshold={0.1}
 					rootMargin="0px 0px -10% 0px"

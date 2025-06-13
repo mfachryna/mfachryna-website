@@ -84,7 +84,6 @@
         {:else if componentName === 'experiences'}
             <ExperiencesSkeleton {skeletonRows} />
         {:else}
-            <!-- Default skeleton -->
             <section class="bg-background relative w-full py-20" id={sectionId}>
                 <div class="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-28">
                     <div class="mb-8">

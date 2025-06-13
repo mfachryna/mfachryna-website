@@ -29,7 +29,6 @@
 
 	$: isOpen = index === activeIndex;
 
-	// Responsive tag display
 	$: displayTags = item.tags.slice(0, 2);
 	$: hasMoreTags = item.tags.length > 2;
 </script>
@@ -41,13 +40,14 @@
 		on:click={() => onToggle(index)}
 		aria-expanded={isOpen}
 	>
-		<!-- Mobile Layout (< sm) -->
 		<div class="block sm:hidden">
 			<div class="mb-2">
-				<h2 class="text-foreground text-sm font-semibold leading-tight">
+				<h2 class="text-foreground text-sm leading-tight font-semibold">
 					{item.title}
 				</h2>
-				<span class="bg-accent-foreground/10 text-accent-foreground/80 mt-1 inline-block rounded-full px-2 py-0.5 text-xs">
+				<span
+					class="bg-accent-foreground/10 text-accent-foreground/80 mt-1 inline-block rounded-full px-2 py-0.5 text-xs"
+				>
 					{item.role}
 				</span>
 			</div>
@@ -72,15 +72,16 @@
 			{/if}
 		</div>
 
-		<!-- Tablet Layout (sm - md) -->
 		<div class="hidden sm:block md:hidden">
 			<div class="flex items-start justify-between">
 				<div class="flex-grow pr-3">
 					<div class="mb-1">
-						<h2 class="text-foreground text-base font-semibold leading-tight">
+						<h2 class="text-foreground text-base leading-tight font-semibold">
 							{item.title}
 						</h2>
-						<span class="bg-accent-foreground/10 text-accent-foreground/80 mt-1 inline-block rounded-full px-2 py-0.5 text-xs">
+						<span
+							class="bg-accent-foreground/10 text-accent-foreground/80 mt-1 inline-block rounded-full px-2 py-0.5 text-xs"
+						>
 							{item.role}
 						</span>
 					</div>
@@ -92,7 +93,10 @@
 				<div class="flex flex-col items-end">
 					<span class="text-accent-foreground/60 mb-2 text-sm">{item.dateRange}</span>
 					{#if !isOpen && item.tags.length > 0}
-						<div class="flex flex-wrap justify-end gap-1" transition:fly={{ y: -20, duration: 200 }}>
+						<div
+							class="flex flex-wrap justify-end gap-1"
+							transition:fly={{ y: -20, duration: 200 }}
+						>
 							{#each displayTags as tag}
 								<Pil small border="border-foreground/30" text="text-foreground/60">{tag}</Pil>
 							{/each}
@@ -107,7 +111,6 @@
 			</div>
 		</div>
 
-		<!-- Desktop Layout (md+) -->
 		<div class="hidden md:block">
 			<div class="flex items-center justify-between">
 				<div class="flex-grow">
@@ -115,7 +118,9 @@
 						<h2 class="text-foreground text-lg font-semibold lg:text-xl">
 							{item.title}
 						</h2>
-						<span class="bg-accent-foreground/10 text-accent-foreground/80 rounded-full px-2 py-0.5 text-sm">
+						<span
+							class="bg-accent-foreground/10 text-accent-foreground/80 rounded-full px-2 py-0.5 text-sm"
+						>
 							{item.role}
 						</span>
 					</div>
@@ -127,7 +132,10 @@
 				<div class="ml-4 flex flex-col items-end">
 					<span class="text-accent-foreground/60 mb-1 text-sm">{item.dateRange}</span>
 					{#if !isOpen && item.tags.length > 0}
-						<div class="flex flex-wrap justify-end gap-1" transition:fly={{ y: -20, duration: 200 }}>
+						<div
+							class="flex flex-wrap justify-end gap-1"
+							transition:fly={{ y: -20, duration: 200 }}
+						>
 							{#each displayTags as tag}
 								<Pil small border="border-foreground/30" text="text-foreground/60">{tag}</Pil>
 							{/each}
@@ -155,7 +163,10 @@
 				</ul>
 			{/if}
 
-			<div class="mt-3 flex flex-wrap gap-1.5 sm:gap-2" in:fly={{ y: 20, duration: 400, delay: 200 }}>
+			<div
+				class="mt-3 flex flex-wrap gap-1.5 sm:gap-2"
+				in:fly={{ y: 20, duration: 400, delay: 200 }}
+			>
 				{#each item.tags as tag, i (tag)}
 					<div in:fly={{ y: 10, x: 10, duration: 300, delay: 150 + i * 50 }}>
 						<Pil border="border-foreground/50" text="text-foreground/50">{tag}</Pil>

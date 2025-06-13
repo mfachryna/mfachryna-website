@@ -234,8 +234,3 @@
         <Layer1 fill="fill-background" />
     </Wave>
 </section>
-
-<!-- Remove all the old animation styles -->
-<style>
-    /* All animation styles are now handled by the AnimateOnScroll component */
-</style>

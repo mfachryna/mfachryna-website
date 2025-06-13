@@ -19,7 +19,6 @@
                     if (entry.isIntersecting && !component && !loading) {
                         loading = true;
                         try {
-                            // Load component and data in parallel
                             const [comp, response] = await Promise.all([
                                 componentImport(),
                                 fetch(apiEndpoint)

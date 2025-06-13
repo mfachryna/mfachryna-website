@@ -6,7 +6,6 @@
 
 	import type { ToastPosition } from 'svelte-french-toast';
 	import AnimateOnScroll from '../animate-on-scroll.svelte';
-
 	interface ToastOptions {
 		duration?: number;
 		position?: ToastPosition;
@@ -209,8 +208,8 @@
 		id="contacts-title"
 	/>
 
-	<form class="mx-auto max-w-4xl space-y-6" on:submit|preventDefault={handleSubmit} novalidate>
-		<AnimateOnScroll animation="slide" delay={200} threshold={0.1}>
+	<AnimateOnScroll animation="zoom-in" delay={200} threshold={0.1} className="w-full">
+		<form class="mx-auto max-w-4xl space-y-6" on:submit|preventDefault={handleSubmit} novalidate>
 			<div id="needs-combobox" class="relative">
 				<label for="needs" class="mb-1 block text-sm font-medium">
 					<span class="text-red-500">*</span> Needs
@@ -523,8 +522,8 @@
 					{isSubmitting ? 'Submitting...' : 'Submit'}
 				</Button>
 			</div>
-		</AnimateOnScroll>
-	</form>
+		</form>
+	</AnimateOnScroll>
 </section>
 
 <style>

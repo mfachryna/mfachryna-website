@@ -50,11 +50,10 @@
 	<div class="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-28">
 		<PageTitle title="About Me" textColor="text-background" line="bg-background" id="about-title" />
 
-		<!-- Updated grid with equal height cards -->
 		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
 			{#each aboutCards as card, i (card.title)}
 				<AnimateOnScroll
-					animation="slide"
+					animation="slide-right"
 					delay={i * 100}
 					threshold={0.1}
 				>

@@ -11,7 +11,6 @@
 					style="animation-delay: {i * 0.1}s"
 				>
 					<div class="flex h-full w-full items-center justify-center">
-						<!-- Loading spinner icon -->
 						<svg class="text-foreground/20 h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
 							<circle
 								class="opacity-25"
