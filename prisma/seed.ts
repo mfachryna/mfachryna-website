@@ -146,7 +146,7 @@ async function main() {
 							where: { name: 'Vue.js' },
 							create: {
 								name: 'Vue.js',
-								iconUrl: '/images/tags/icon/vuejs.svg',
+								iconUrl: '/images/tags/icon/vue.svg',
 								isTech: true
 							}
 						}
@@ -321,7 +321,7 @@ async function main() {
 							where: { name: 'TailwindCSS' },
 							create: {
 								name: 'TailwindCSS',
-								iconUrl: '/images/tags/icon/tailwindcss.svg',
+								iconUrl: '/images/tags/icon/tailwind.svg',
 								isTech: true
 							}
 						},
@@ -666,7 +666,7 @@ async function main() {
 							where: { name: 'Vue.js' },
 							create: {
 								name: 'Vue.js',
-								iconUrl: '/images/tags/icon/vuejs.svg',
+								iconUrl: '/images/tags/icon/vue.svg',
 								isTech: true
 							}
 						},
@@ -956,7 +956,6 @@ async function main() {
 			// },
 		];
 
-		// Add blog posts
 		for (const blog of blogPosts) {
 			await prisma.blog.create({
 				data: blog

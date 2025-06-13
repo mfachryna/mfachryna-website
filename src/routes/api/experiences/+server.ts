@@ -1,34 +1,40 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
-import type { RequestHandler } from './$types';
 
-export const GET: RequestHandler = async ({ url }) => {
-	const page = Number(url.searchParams.get('page') || '1');
-	const limit = Number(url.searchParams.get('limit') || '10');
-	const skip = (page - 1) * limit;
+export async function GET({ url }) {
+    try {
+        const page = Math.max(1, Number(url.searchParams.get('page') || '1'));
+        const limit = Math.min(50, Math.max(1, Number(url.searchParams.get('limit') || '10')));
+        const skip = (page - 1) * limit;
 
-	try {
-		const [experiences, count] = await Promise.all([
-			prisma.experience.findMany({
-				include: { tags: true },
-				orderBy: { startDate: 'desc' },
-				skip,
-				take: limit
-			}),
-			prisma.experience.count()
-		]);
+        const [experiences, totalExperiences] = await Promise.all([
+            prisma.experience.findMany({
+                skip,
+                take: limit,
+                include: { tags: true },
+                orderBy: { startDate: 'desc' }
+            }),
+            prisma.experience.count()
+        ]);
 
-		return json({
-			data: experiences,
-			pagination: {
-				page,
-				limit,
-				totalItems: count,
-				totalPages: Math.ceil(count / limit)
-			}
-		});
-	} catch (error) {
-		console.error('Error fetching experiences:', error);
-		return json({ error: 'Failed to fetch experiences' }, { status: 500 });
-	}
-};
+        return json({
+            experiences,
+            pagination: {
+                page,
+                limit,
+                totalItems: totalExperiences,
+                totalPages: Math.ceil(totalExperiences / limit)
+            }
+        });
+    } catch (error) {
+        console.error('Error loading experiences:', error);
+        return json(
+            { 
+                experiences: [], 
+                pagination: { page: 1, limit: 10, totalItems: 0, totalPages: 0 },
+                error: 'Failed to load experiences' 
+            },
+            { status: 500 }
+        );
+    }
+}

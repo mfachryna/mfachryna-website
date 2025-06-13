@@ -27,19 +27,7 @@
 	let totalItems = data.pagination?.totalItems || 0;
 	let totalPages = data.pagination?.totalPages || 0;
 
-	console.log('Initial blogs count:', blogs.length);
-	console.log('Initial visibleBlogs:', visibleBlogs);
-
 	$: showLoadMore = visibleBlogs < blogs.length || currentPage < totalPages;
-	$: console.log(
-		'showLoadMore:',
-		showLoadMore,
-		'visibleBlogs:',
-		visibleBlogs,
-		'blogs.length:',
-		blogs.length
-	);
-
 	$: blogSchema = {
 		'@context': 'https://schema.org',
 		'@type': 'Blog',
@@ -58,25 +46,18 @@
 	};
 
 	function loadMoreBlogs() {
-		console.log('loadMoreBlogs called');
-		console.log('Before: visibleBlogs =', visibleBlogs, 'blogs.length =', blogs.length);
-
 		if (visibleBlogs < blogs.length) {
 			visibleBlogs += 3;
-			console.log('Increased visibleBlogs to:', visibleBlogs);
 		} else if (currentPage < totalPages) {
-			console.log('Fetching more blogs from page:', currentPage + 1);
 			fetchMoreBlogs(currentPage + 1);
 		}
 
 		visibleBlogs = visibleBlogs;
-		console.log('After: visibleBlogs =', visibleBlogs);
 	}
 
 	async function fetchMoreBlogs(page: number) {
 		try {
 			isLoading = true;
-			console.log('Fetching more blogs, page:', page);
 
 			const response = await fetch(`/api/blogs?page=${page}&limit=${limit}`);
 
@@ -87,15 +68,12 @@
 			const result = await response.json();
 
 			if (result.success) {
-				console.log('Received new blogs:', result.blogs.length);
-
 				blogs = [...blogs, ...result.blogs];
 				currentPage = result.pagination.page;
 				totalItems = result.pagination.totalItems;
 				totalPages = result.pagination.totalPages;
 
 				visibleBlogs += 3;
-				console.log('Updated visible blogs to:', visibleBlogs);
 			} else {
 				error = result.error || 'Failed to fetch more blogs';
 			}
@@ -114,7 +92,6 @@
 	async function fetchBlogs(page: number = 1) {
 		try {
 			isLoading = true;
-			console.log('Fetching initial blogs');
 
 			const response = await fetch(`/api/blogs?page=${page}&limit=${limit}`);
 
@@ -125,14 +102,12 @@
 			const result = await response.json();
 
 			if (result.success) {
-				console.log('Received initial blogs:', result.blogs.length);
 				blogs = result.blogs;
 				currentPage = result.pagination.page;
 				totalItems = result.pagination.totalItems;
 				totalPages = result.pagination.totalPages;
 
 				visibleBlogs = Math.min(3, blogs.length);
-				console.log('Set initial visible blogs to:', visibleBlogs);
 			} else {
 				error = result.error || 'Failed to fetch blogs';
 			}
@@ -157,8 +132,6 @@
 		if (blogs.length === 0) {
 			fetchBlogs();
 		} else {
-			console.log('Using server-rendered blogs:', blogs.length);
-
 			visibleBlogs = Math.min(3, blogs.length);
 		}
 	});
@@ -208,14 +181,14 @@
 							<img
 								src={blog.imageUrl}
 								alt={blog.title}
-								class="mb-4 h-40 w-full object-cover rounded"
+								class="mb-4 h-40 w-full rounded object-cover"
 								loading="lazy"
 							/>
 						{:else if blog.images && blog.images.length > 0}
 							<img
 								src={blog.images[0]}
 								alt={blog.title}
-								class="mb-4 h-40 w-full object-cover rounded"
+								class="mb-4 h-40 w-full rounded object-cover"
 								loading="lazy"
 							/>
 						{/if}

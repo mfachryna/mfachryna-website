@@ -2,7 +2,7 @@
 	import '../app.css';
 	import Navbar from '../lib/components/navbar.svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	let { children } = $props();
+	let { children, data } = $props();
 	import { Toaster } from 'svelte-french-toast';
 
 	const siteName = 'Muhammad Fachry Noorchoolish Arif - Software Engineer';
@@ -52,6 +52,6 @@
 	</style>
 </svelte:head>
 
-<Navbar></Navbar>
+<Navbar {data}></Navbar>
 <Toaster position="bottom-center" />
 {@render children?.()}

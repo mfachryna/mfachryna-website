@@ -40,6 +40,8 @@
 	onDestroy(() => {
 		if (browser) {
 			window.removeEventListener('scroll', handleScroll);
+			const body = document.body;
+			body.classList.remove('overflow-hidden');
 		}
 	});
 	let isSidebarOpen = false;
@@ -53,6 +55,14 @@
 			} else {
 				body.classList.remove('overflow-hidden');
 			}
+		}
+	};
+
+	const handleNavClick = () => {
+		isSidebarOpen = false;
+		if (browser) {
+			const body = document.body;
+			body.classList.remove('overflow-hidden');
 		}
 	};
 
@@ -133,7 +143,7 @@
 				<a
 					href={link.href}
 					class={`mb-4 text-lg ${pathName.startsWith(link.href) ? 'text-destructive font-bold' : ''}`}
-					on:click={() => (isSidebarOpen = false)}
+					on:click={handleNavClick}
 				>
 					{link.name}
 				</a>
@@ -141,7 +151,14 @@
 
 			{#if data?.resumeUrl}
 				<Button class="mb-4">
-					<a href={data.resumeUrl} target="_blank" rel="noopener noreferrer"> Resume </a>
+					<a
+						href={data.resumeUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						on:click={handleNavClick}
+					>
+						Resume
+					</a>
 				</Button>
 			{:else}
 				<Button class="mb-4" disabled>Resume</Button>

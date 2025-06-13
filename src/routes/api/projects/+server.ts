@@ -3,50 +3,44 @@ import { prisma } from '$lib/server/prisma';
 
 export async function GET({ url }) {
 	try {
-		const featured = url.searchParams.get('featured') === 'true';
-		const page = Number(url.searchParams.get('page') || '1');
-		const limit = Number(url.searchParams.get('limit') || '6');
+		const page = Math.max(1, Number(url.searchParams.get('page') || '1'));
+		const limit = Math.min(50, Math.max(1, Number(url.searchParams.get('limit') || '6')));
 		const skip = (page - 1) * limit;
 
-		const where = featured ? { featured: true } : {};
+		const [projectsRaw, totalProjects] = await Promise.all([
+			prisma.project.findMany({
+				skip,
+				take: limit,
+				include: { tags: true },
+				orderBy: { order: 'asc' }
+			}),
+			prisma.project.count()
+		]);
 
-		const projects = await prisma.project.findMany({
-			where,
-			skip,
-			take: limit,
-			include: {
-				tags: true
-			},
-			orderBy: [{ featured: 'desc' }, { order: 'asc' }]
-		});
-
-		const projectsWithImages = projects.map((project) => ({
+		const projects = projectsRaw.map((project) => ({
 			...project,
 			images: project.images ?? [],
 			thumbnailUrl: project.thumbnailUrl ?? null
 		}));
 
-		const totalItems = await prisma.project.count({
-			where
-		});
-
 		return json({
-			projects: projectsWithImages,
+			success: true,
+			projects,
 			pagination: {
 				page,
 				limit,
-				totalItems,
-				totalPages: Math.ceil(totalItems / limit)
-			},
-			success: true
+				totalItems: totalProjects,
+				totalPages: Math.ceil(totalProjects / limit)
+			}
 		});
 	} catch (error) {
-		console.error('Error fetching projects:', error);
+		console.error('Error loading projects:', error);
 		return json(
 			{
-				error: 'Failed to fetch projects',
 				success: false,
-				projects: []
+				projects: [],
+				pagination: { page: 1, limit: 6, totalItems: 0, totalPages: 0 },
+				error: 'Failed to load projects'
 			},
 			{ status: 500 }
 		);

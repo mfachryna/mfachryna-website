@@ -3,6 +3,7 @@
 	import PageTitle from '../page-title.svelte';
 	import Collapsible from '../collapsible.svelte';
 	import type { ExperienceWithTags } from '$lib/types/experience';
+	import AnimateOnScroll from '../animate-on-scroll.svelte';
 	export let data: {
 		experiences: ExperienceWithTags[];
 		pagination: {
@@ -174,22 +175,29 @@
 			<p class="mt-8 text-center">No experiences found.</p>
 		{:else}
 			{#each experiences.slice(0, visibleExperiences) as item, i (item.id)}
-				<Collapsible
-					item={{
-						id: item.id,
-						title: item.title,
-						role: item.role,
-						company: item.company,
-						location: item.location,
-						dateRange: `${formatDate(item.startDate)} - ${item.endDate ? formatDate(item.endDate) : 'Present'}`,
-						content: item.content,
-						highlights: item.highlights,
-						tags: item.tags.map((tag) => tag.name)
-					}}
-					index={i}
-					{activeIndex}
-					onToggle={toggle}
-				/>
+				<AnimateOnScroll
+					animation="bounce"
+					delay={200}
+					threshold={0.1}
+					rootMargin="0px 0px -10% 0px"
+				>
+					<Collapsible
+						item={{
+							id: item.id,
+							title: item.title,
+							role: item.role,
+							company: item.company,
+							location: item.location,
+							dateRange: `${formatDate(item.startDate)} - ${item.endDate ? formatDate(item.endDate) : 'Present'}`,
+							content: item.content,
+							highlights: item.highlights,
+							tags: item.tags.map((tag) => tag.name)
+						}}
+						index={i}
+						{activeIndex}
+						onToggle={toggle}
+					/>
+				</AnimateOnScroll>
 			{/each}
 		{/if}
 

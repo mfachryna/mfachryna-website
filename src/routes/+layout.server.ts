@@ -1,9 +1,9 @@
-import { RESUME_GOOGLE_DRIVE_ID } from '$env/static/private';
+import { RESUME_URL } from '$env/static/private';
 
 export async function load() {
     return {
-        resumeUrl: RESUME_GOOGLE_DRIVE_ID 
-            ? `https://drive.google.com/file/d/${RESUME_GOOGLE_DRIVE_ID}/view`
+        resumeUrl: RESUME_URL 
+            ? `RESUME_URL`
             : null
     };
 }
