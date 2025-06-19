@@ -215,7 +215,6 @@
 </section>
 
 <style>
-	/* Optimize animation performance with will-change */
 	:global(.collapsible-item) {
 		will-change: height;
 		transition: height 0.3s ease-in-out;
