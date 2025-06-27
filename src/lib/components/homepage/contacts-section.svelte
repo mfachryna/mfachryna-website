@@ -507,11 +507,11 @@
 			</div>
 
 			<div>
-				<label for="additional" class="mb-1 block text-sm font-medium">Additional</label>
+				<label for="additional" class="mb-1 block text-sm font-medium">Description</label>
 				<textarea
 					id="additional"
 					rows="5"
-					placeholder="Additional Info"
+					placeholder="Describe your project or any additional information"
 					bind:value={form.additional}
 					class="border-foreground bg-accent text-foreground placeholder-foreground/50 w-full rounded-md border px-4 py-2"
 				></textarea>
