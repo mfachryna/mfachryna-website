@@ -509,7 +509,7 @@
 			<div>
 				<label for="additional" class="mb-1 block text-sm font-medium">Description</label>
 				<textarea
-					id="additional"
+					id="description"
 					rows="5"
 					placeholder="Describe your project or any additional information"
 					bind:value={form.additional}

@@ -107,7 +107,7 @@
 				'@type': 'Organization',
 				name: exp.company
 			},
-			description: exp.content
+			description: exp.description
 		}));
 	}
 
@@ -189,7 +189,7 @@
 							company: item.company,
 							location: item.location,
 							dateRange: `${formatDate(item.startDate)} - ${item.endDate ? formatDate(item.endDate) : 'Present'}`,
-							content: item.content,
+							description: item.description,
 							highlights: item.highlights,
 							tags: item.tags.map((tag) => tag.name)
 						}}

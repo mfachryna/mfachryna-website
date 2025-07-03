@@ -16,6 +16,7 @@ export interface Experience {
 	startDate: Date | string;
 	endDate?: Date | string | null;
 	content: string;
+	description: string;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 }

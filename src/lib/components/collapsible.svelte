@@ -153,7 +153,7 @@
 
 	{#if isOpen}
 		<div transition:slide={{ duration: 300 }} class="text-foreground px-3 pb-3 sm:px-4 sm:pb-4">
-			<p class="mt-1 text-sm leading-relaxed sm:text-base">{item.content}</p>
+			<p class="mt-1 text-sm leading-relaxed sm:text-base">{item.description}</p>
 
 			{#if item.highlights && item.highlights.length > 0}
 				<ul class="mt-3 ml-4 list-disc space-y-1 text-sm sm:ml-5 sm:text-base">
