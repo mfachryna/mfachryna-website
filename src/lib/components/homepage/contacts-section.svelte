@@ -217,7 +217,7 @@
 				<div class="relative">
 					<button
 						type="button"
-						class="border-foreground bg-accent text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
+						class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
 						class:border-red-500={formErrors.needs}
 						on:click|stopPropagation={() => (isNeedsOpen = !isNeedsOpen)}
 						aria-expanded={isNeedsOpen}
@@ -262,7 +262,7 @@
 					{#if isNeedsOpen}
 						<ul
 							id="needs-listbox"
-							class="bg-accent border-foreground/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
+							class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
 							role="listbox"
 						>
 							{#if filteredNeeds.length === 0}
@@ -304,7 +304,7 @@
 						type="text"
 						placeholder="Input Your name here"
 						bind:value={form.name}
-						class="border-foreground bg-accent text-foreground placeholder-foreground/50 w-full rounded-md border px-4 py-2"
+						class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
 						class:border-red-500={formErrors.name}
 						aria-invalid={!!formErrors.name}
 						aria-describedby={formErrors.name ? 'name-error' : undefined}
@@ -323,7 +323,7 @@
 						type="email"
 						placeholder="Input Your email here"
 						bind:value={form.email}
-						class="border-foreground bg-accent text-foreground placeholder-foreground/50 w-full rounded-md border px-4 py-2"
+						class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
 						class:border-red-500={formErrors.email}
 						aria-invalid={!!formErrors.email}
 						aria-describedby={formErrors.email ? 'email-error' : undefined}
@@ -342,7 +342,7 @@
 					<div class="relative">
 						<button
 							type="button"
-							class="border-foreground bg-accent text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
+							class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
 							class:border-red-500={formErrors.projectType}
 							on:click|stopPropagation={() => (isProjectTypeOpen = !isProjectTypeOpen)}
 							aria-expanded={isProjectTypeOpen}
@@ -389,7 +389,7 @@
 						{#if isProjectTypeOpen}
 							<ul
 								id="projectType-listbox"
-								class="bg-accent border-foreground/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
+								class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
 								role="listbox"
 							>
 								{#if filteredProjectTypes.length === 0}
@@ -428,7 +428,7 @@
 					<div class="relative">
 						<button
 							type="button"
-							class="border-foreground bg-accent text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
+							class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
 							class:border-red-500={formErrors.budget}
 							on:click|stopPropagation={() => (isBudgetOpen = !isBudgetOpen)}
 							aria-expanded={isBudgetOpen}
@@ -473,7 +473,7 @@
 						{#if isBudgetOpen}
 							<ul
 								id="budget-listbox"
-								class="bg-accent border-foreground/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
+								class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
 								role="listbox"
 							>
 								{#if filteredBudgets.length === 0}
@@ -513,7 +513,7 @@
 					rows="5"
 					placeholder="Describe your project or any additional information"
 					bind:value={form.additional}
-					class="border-foreground bg-accent text-foreground placeholder-foreground/50 w-full rounded-md border px-4 py-2"
+					class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
 				></textarea>
 			</div>
 

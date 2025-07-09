@@ -62,7 +62,7 @@
 	}
 </script>
 
-<footer class="bg-none border-accent/20 z-0 relative h-fit w-full overflow-hidden border-t">
+<footer class="bg-none border-none z-0 relative h-fit w-full overflow-hidden border-t">
 	{#if showSecretMessage}
 		<div class="absolute top-4 left-1/2 z-20 -translate-x-1/2 transform animate-bounce">
 			<div

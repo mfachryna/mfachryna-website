@@ -9,6 +9,7 @@
 		company: string;
 		location: string;
 		dateRange: string;
+		description: string;
 		content: string;
 		tags: string[];
 		highlights?: string[];
@@ -19,12 +20,14 @@
 		company: '',
 		location: '',
 		dateRange: '',
+		description: '',
 		content: '',
 		highlights: [],
 		tags: []
 	};
-	export let index: number;
-	export let activeIndex: number;
+
+	export let index: number = 0;
+	export let activeIndex: number = 0;
 	export let onToggle: (index: number) => void;
 
 	$: isOpen = index === activeIndex;
@@ -33,7 +36,7 @@
 	$: hasMoreTags = item.tags.length > 2;
 </script>
 
-<div class="border-accent-foreground mb-3 cursor-pointer overflow-hidden rounded-xl border">
+<div class="border-border mb-3 cursor-pointer overflow-hidden rounded-xl border">
 	<button
 		type="button"
 		class="bg-background w-full cursor-pointer px-3 py-2 text-left focus:outline-none sm:px-4 sm:py-3"
@@ -46,17 +49,17 @@
 					{item.title}
 				</h2>
 				<span
-					class="bg-accent-foreground/10 text-accent-foreground/80 mt-1 inline-block rounded-full px-2 py-0.5 text-xs"
+					class="bg-secondary text-secondary-foreground rounded-full px-2 py-0.5 text-xs font-medium"
 				>
 					{item.role}
 				</span>
 			</div>
 			<div class="mb-2">
-				<p class="text-accent-foreground/70 text-xs leading-tight">
+				<p class="text-muted-foreground text-xs leading-tight">
 					{item.company}
 				</p>
-				<p class="text-accent-foreground/50 text-xs">{item.location}</p>
-				<span class="text-accent-foreground/60 text-xs">{item.dateRange}</span>
+				<p class="text-muted-foreground/90 text-xs">{item.location}</p>
+				<span class="text-muted-foreground/80 text-xs">{item.dateRange}</span>
 			</div>
 			{#if !isOpen && item.tags.length > 0}
 				<div class="flex flex-wrap gap-1" transition:fly={{ y: -10, duration: 200 }}>
@@ -85,13 +88,13 @@
 							{item.role}
 						</span>
 					</div>
-					<p class="text-accent-foreground/70 text-sm leading-tight">
+					<p class="text-muted-foreground text-sm leading-tight">
 						{item.company}
-						<span class="text-accent-foreground/50 block text-xs">{item.location}</span>
+						<span class="text-muted-foreground/90 block text-xs">{item.location}</span>
 					</p>
 				</div>
 				<div class="flex flex-col items-end">
-					<span class="text-accent-foreground/60 mb-2 text-sm">{item.dateRange}</span>
+					<span class="text-muted-foreground/80 mb-2 text-sm">{item.dateRange}</span>
 					{#if !isOpen && item.tags.length > 0}
 						<div
 							class="flex flex-wrap justify-end gap-1"
@@ -124,13 +127,13 @@
 							{item.role}
 						</span>
 					</div>
-					<p class="text-accent-foreground/70 text-sm">
+					<p class="text-muted-foreground text-sm">
 						{item.company}
-						<span class="text-accent-foreground/50 text-sm">| {item.location}</span>
+						<span class="text-muted-foreground/90 text-sm">| {item.location}</span>
 					</p>
 				</div>
 				<div class="ml-4 flex flex-col items-end">
-					<span class="text-accent-foreground/60 mb-1 text-sm">{item.dateRange}</span>
+					<span class="text-muted-foreground/80 mb-1 text-sm">{item.dateRange}</span>
 					{#if !isOpen && item.tags.length > 0}
 						<div
 							class="flex flex-wrap justify-end gap-1"

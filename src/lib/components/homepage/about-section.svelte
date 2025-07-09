@@ -29,7 +29,7 @@
 			title: 'The Pragmatist',
 			icon: 'sliders-h',
 			description:
-				"Technology is a toolbox, and I bring the whole set. I choose the right language, framework, and architecture for your specific challenge, ensuring practical, efficient solutions without being dogmatic about a single technology."
+				'Technology is a toolbox, and I bring the whole set. I choose the right language, framework, and architecture for your specific challenge, ensuring practical, efficient solutions without being dogmatic about a single technology.'
 		},
 		{
 			title: 'The Business Partner',
@@ -50,20 +50,16 @@
 	<div class="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-28">
 		<PageTitle title="About Me" textColor="text-background" line="bg-background" id="about-title" />
 
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+		<div class="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 			{#each aboutCards as card, i (card.title)}
-				<AnimateOnScroll
-					animation="slide-right"
-					delay={i * 100}
-					threshold={0.1}
-				>
+				<AnimateOnScroll animation="slide-right" delay={i * 100} threshold={0.1}>
 					<article
-						class="card bg-accent border-accent text-foreground flex flex-col h-full rounded-xl border-2 shadow-md transition-transform duration-400 ease-in-out hover:-translate-y-2 hover:shadow-2xl"
+						class="card group bg-card border-border text-card-foreground flex h-full flex-col rounded-xl border-2 shadow-md transition-transform duration-400 ease-in-out hover:-translate-y-2 hover:shadow-2xl"
 						aria-labelledby={`card-title-${i}`}
 					>
-						<header class="flex flex-col items-center px-6 pt-8 pb-4 text-center flex-shrink-0">
+						<header class="flex flex-shrink-0 flex-col items-center px-6 pt-8 pb-4 text-center">
 							<div
-								class="card-icon bg-foreground/20 mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-full text-[1.8rem] transition-transform duration-300 ease-in-out"
+								class="card-icon bg-secondary text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-full text-[1.8rem] transition-all duration-300 ease-in-out group-hover:scale-110"
 								aria-hidden="true"
 							>
 								<Icon icon="fa-solid:{card.icon}" />
@@ -75,8 +71,8 @@
 								{card.title}
 							</h3>
 						</header>
-						<div class="flex-grow px-8 pb-8 text-center flex items-center">
-							<p class="text-sm leading-7 sm:text-base md:text-lg lg:text-xl w-full">
+						<div class="flex flex-grow items-center px-8 pb-8 text-center">
+							<p class="w-full text-sm leading-7 sm:text-base md:text-lg lg:text-xl">
 								{card.description}
 							</p>
 						</div>

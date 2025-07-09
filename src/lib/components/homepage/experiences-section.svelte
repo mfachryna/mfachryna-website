@@ -51,7 +51,7 @@
 	let isLoading = false;
 	let error: string | null = data.error || null;
 
-	let activeIndex = -1;
+	let activeIndex = 0;
 	let visibleExperiences = 3;
 	let totalExperiences = data.pagination.totalItems;
 	let currentPage = data.pagination.page;
@@ -190,6 +190,7 @@
 							location: item.location,
 							dateRange: `${formatDate(item.startDate)} - ${item.endDate ? formatDate(item.endDate) : 'Present'}`,
 							description: item.description,
+							content: item.content,
 							highlights: item.highlights,
 							tags: item.tags.map((tag) => tag.name)
 						}}
