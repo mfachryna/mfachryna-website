@@ -20,22 +20,22 @@
 
 	export const aboutCards = [
 		{
-			title: 'Problem Solver',
-			icon: 'puzzle-piece',
+			title: 'The Architect',
+			icon: 'drafting-compass',
 			description:
-				'I thrive on tackling complex challenges, whether in software engineering, system design, or process optimization. My approach is analytical, data-driven, and creative, ensuring robust solutions for every problem.'
+				"I design the blueprint for your software's success. My focus is on creating clean, scalable, and maintainable systems that stand the test of time and traffic. I build the strong foundation you need for future growth."
 		},
 		{
-			title: 'Versatile Technologist',
-			icon: 'laptop-code',
+			title: 'The Pragmatist',
+			icon: 'sliders-h',
 			description:
-				'With experience across web, mobile, and backend development, I adapt quickly to new technologies and frameworks. My portfolio spans fintech, banking, and startup environments, reflecting my ability to deliver in diverse settings.'
+				"Technology is a toolbox, and I bring the whole set. I choose the right language, framework, and architecture for your specific challenge, ensuring practical, efficient solutions without being dogmatic about a single technology."
 		},
 		{
-			title: 'Impact-Driven',
-			icon: 'rocket',
+			title: 'The Business Partner',
+			icon: 'handshake',
 			description:
-				'I aim to create meaningful impact through technology, from improving user experiences to building scalable systems that support business objectives. My work is driven by a passion for innovation and excellence.'
+				'I sit at the intersection of code and commerce. I listen to your business needs and translate them into technical solutions that drive growth, improve efficiency, and deliver a measurable return on investment. Your goals become my technical roadmap.'
 		}
 	];
 </script>
