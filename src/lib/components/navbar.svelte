@@ -128,7 +128,7 @@
 	style="transition: all 0.5s ease-in-out;"
 >
 	<div
-		class="border-primary flex grow justify-between transition-all duration-300 {isScrolled
+		class="border-border flex grow justify-between transition-all duration-300 {isScrolled
 			? 'bg-accent/20 px-3 py-1 md:px-4 md:py-2'
 			: 'px-6 py-4 sm:px-10 md:px-16 lg:px-28'}"
 		class:backdrop-blur-md={isScrolled}

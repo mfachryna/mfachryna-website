@@ -209,7 +209,7 @@
 	/>
 
 	<AnimateOnScroll animation="zoom-in" delay={200} threshold={0.1} className="w-full">
-		<form class="mx-auto max-w-4xl space-y-6" on:submit|preventDefault={handleSubmit} novalidate>
+		<form class="mx-auto max-w-4xl space-y-6 px-2" on:submit|preventDefault={handleSubmit} novalidate>
 			<div id="needs-combobox" class="relative">
 				<label for="needs" class="mb-1 block text-sm font-medium">
 					<span class="text-red-500">*</span> Needs
