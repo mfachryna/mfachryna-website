@@ -83,7 +83,7 @@
 							{item.title}
 						</h2>
 						<span
-							class="bg-accent-foreground/10 text-accent-foreground/80 mt-1 inline-block rounded-full px-2 py-0.5 text-xs"
+							class="bg-foreground/10 text-muted-foreground/90 mt-1 inline-block rounded-full px-2 py-0.5 text-xs"
 						>
 							{item.role}
 						</span>
@@ -122,7 +122,7 @@
 							{item.title}
 						</h2>
 						<span
-							class="bg-accent-foreground/10 text-accent-foreground/80 rounded-full px-2 py-0.5 text-sm"
+							class="bg-foreground/10 text-muted-foreground/90 rounded-full px-2 py-0.5 text-sm"
 						>
 							{item.role}
 						</span>
