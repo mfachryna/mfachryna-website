@@ -164,7 +164,7 @@
 				<div class="my-2" aria-hidden="true"></div>
 
 				<p class="pop-up-text text-base font-medium sm:text-xl md:text-2xl lg:text-3xl">
-					ODP IT Trainee at Bank Syariah Indonesia
+					Software Engineer at Bank Syariah Indonesia
 				</p>
 				<p class="pop-up-text mx-auto w-[90%] text-sm font-thin sm:w-4/5 sm:text-base md:w-3/4">
 					Passionate about crafting elegant solutions and building scalable systems. From backend

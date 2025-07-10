@@ -141,26 +141,26 @@
 
 							<div class="mt-3 flex flex-wrap gap-1.5 sm:gap-2">
 								<div
-									class="bg-foreground/20 border-foreground/50 h-6 w-16 animate-pulse rounded-full border"
+									class="bg-foreground/20 h-6 w-16 animate-pulse rounded-full"
 								></div>
 								<div
-									class="bg-foreground/20 border-foreground/50 h-6 w-20 animate-pulse rounded-full border"
+									class="bg-foreground/20 h-6 w-20 animate-pulse rounded-full"
 									style="animation-delay: 0.1s"
 								></div>
 								<div
-									class="bg-foreground/20 border-foreground/50 h-6 w-14 animate-pulse rounded-full border"
+									class="bg-foreground/20 h-6 w-14 animate-pulse rounded-full"
 									style="animation-delay: 0.2s"
 								></div>
 								<div
-									class="bg-foreground/20 border-foreground/50 h-6 w-18 animate-pulse rounded-full border"
+									class="bg-foreground/20 h-6 w-18 animate-pulse rounded-full"
 									style="animation-delay: 0.3s"
 								></div>
 								<div
-									class="bg-foreground/20 border-foreground/50 h-6 w-12 animate-pulse rounded-full border"
+									class="bg-foreground/20 h-6 w-12 animate-pulse rounded-full"
 									style="animation-delay: 0.4s"
 								></div>
 								<div
-									class="bg-foreground/20 border-foreground/50 h-6 w-22 animate-pulse rounded-full border"
+									class="bg-foreground/20 h-6 w-22 animate-pulse rounded-full"
 									style="animation-delay: 0.5s"
 								></div>
 							</div>
