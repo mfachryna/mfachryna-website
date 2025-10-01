@@ -196,334 +196,352 @@
 	</script>
 </svelte:head>
 
-<section
-	class="bg-background text-foreground px-4 py-10 sm:px-8 md:px-16"
-	id="contacts"
-	aria-labelledby="contacts-title"
->
-	<PageTitle
-		title="contact me"
-		textColor="text-foreground"
-		line="bg-foreground"
-		id="contacts-title"
-	/>
+<section class="section-padding relative" id="contacts" aria-labelledby="contacts-title">
+	<div class="container-modern relative z-10">
+		<div class="mb-16 space-y-4 text-center">
+			<div class="inline-block">
+				<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
+					>Let's Work Together</span
+				>
+				<h2 class="text-responsive-xl gradient-text font-bold">Contact Me</h2>
+			</div>
+			<div
+				class="from-primary via-accent to-primary mx-auto h-1 w-24 rounded-full bg-gradient-to-r"
+			></div>
+			<p class="text-muted-foreground mx-auto max-w-2xl">
+				Ready to bring your ideas to life? Let's discuss your project and create something amazing
+				together.
+			</p>
+		</div>
 
-	<AnimateOnScroll animation="zoom-in" delay={200} threshold={0.1} className="w-full">
-		<form class="mx-auto max-w-4xl space-y-6 px-2" on:submit|preventDefault={handleSubmit} novalidate>
-			<div id="needs-combobox" class="relative">
-				<label for="needs" class="mb-1 block text-sm font-medium">
-					<span class="text-red-500">*</span> Needs
-				</label>
-				<div class="relative">
-					<button
-						type="button"
-						class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
-						class:border-red-500={formErrors.needs}
-						on:click|stopPropagation={() => (isNeedsOpen = !isNeedsOpen)}
-						aria-expanded={isNeedsOpen}
-						aria-haspopup="listbox"
-						aria-label={isNeedsOpen ? 'Close needs options' : 'Open needs options'}
-					>
-						<input
-							id="needs"
-							type="text"
-							placeholder="Input or select your needs"
-							bind:value={form.needs}
-							on:focus={() => (isNeedsOpen = true)}
-							on:input={() => (isNeedsOpen = true)}
-							on:click|stopPropagation
-							on:keydown={(e) => {
-								if (e.key === 'Escape') {
-									isNeedsOpen = false;
-								} else if (e.key === 'ArrowDown' && !isNeedsOpen) {
-									isNeedsOpen = true;
-								}
-							}}
-							class="w-full border-none bg-transparent outline-none focus:ring-0"
-							role="combobox"
-							aria-expanded={isNeedsOpen}
-							aria-autocomplete="list"
-							aria-controls="needs-listbox"
-							aria-invalid={!!formErrors.needs}
-							aria-describedby={formErrors.needs ? 'needs-error' : undefined}
-						/>
-						<span class="ml-2 flex-shrink-0 text-gray-400 focus:outline-none" aria-hidden="true">
-							<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M19 9l-7 7-7-7"
-								></path>
-							</svg>
-						</span>
-					</button>
+		<AnimateOnScroll animation="zoom-in" delay={200} threshold={0.1} className="w-full">
+			<div class="mx-auto max-w-4xl">
+				<form class="card-modern space-y-8" on:submit|preventDefault={handleSubmit} novalidate>
+					<div id="needs-combobox" class="relative">
+						<label for="needs" class="mb-1 block text-sm font-medium">
+							<span class="text-red-500">*</span> Needs
+						</label>
+						<div class="relative">
+							<button
+								type="button"
+								class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
+								class:border-red-500={formErrors.needs}
+								on:click|stopPropagation={() => (isNeedsOpen = !isNeedsOpen)}
+								aria-expanded={isNeedsOpen}
+								aria-haspopup="listbox"
+								aria-label={isNeedsOpen ? 'Close needs options' : 'Open needs options'}
+							>
+								<input
+									id="needs"
+									type="text"
+									placeholder="Input or select your needs"
+									bind:value={form.needs}
+									on:focus={() => (isNeedsOpen = true)}
+									on:input={() => (isNeedsOpen = true)}
+									on:click|stopPropagation
+									on:keydown={(e) => {
+										if (e.key === 'Escape') {
+											isNeedsOpen = false;
+										} else if (e.key === 'ArrowDown' && !isNeedsOpen) {
+											isNeedsOpen = true;
+										}
+									}}
+									class="w-full border-none bg-transparent outline-none focus:ring-0"
+									role="combobox"
+									aria-expanded={isNeedsOpen}
+									aria-autocomplete="list"
+									aria-controls="needs-listbox"
+									aria-invalid={!!formErrors.needs}
+									aria-describedby={formErrors.needs ? 'needs-error' : undefined}
+								/>
+								<span
+									class="ml-2 flex-shrink-0 text-gray-400 focus:outline-none"
+									aria-hidden="true"
+								>
+									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M19 9l-7 7-7-7"
+										></path>
+									</svg>
+								</span>
+							</button>
 
-					{#if isNeedsOpen}
-						<ul
-							id="needs-listbox"
-							class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
-							role="listbox"
-						>
-							{#if filteredNeeds.length === 0}
-								<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
-							{:else}
-								{#each filteredNeeds as option, i}
-									<li
-										class="hover:bg-foreground/10 cursor-pointer px-4 py-2"
-										role="option"
-										tabindex="0"
-										on:click={() => selectOption('needs', option)}
+							{#if isNeedsOpen}
+								<ul
+									id="needs-listbox"
+									class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
+									role="listbox"
+								>
+									{#if filteredNeeds.length === 0}
+										<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
+									{:else}
+										{#each filteredNeeds as option, i}
+											<li
+												class="hover:bg-foreground/10 cursor-pointer px-4 py-2"
+												role="option"
+												tabindex="0"
+												on:click={() => selectOption('needs', option)}
+												on:keydown={(e) => {
+													if (e.key === 'Enter' || e.key === ' ') {
+														e.preventDefault();
+														selectOption('needs', option);
+													}
+												}}
+												aria-selected={form.needs === option}
+											>
+												{option}
+											</li>
+										{/each}
+									{/if}
+								</ul>
+							{/if}
+						</div>
+						{#if formErrors.needs}
+							<p id="needs-error" class="mt-1 text-sm text-red-500">{formErrors.needs}</p>
+						{/if}
+					</div>
+
+					<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+						<div>
+							<label for="name" class="mb-1 block text-sm font-medium">
+								<span class="text-red-500">*</span> Name
+							</label>
+							<input
+								id="name"
+								type="text"
+								placeholder="Input Your name here"
+								bind:value={form.name}
+								class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
+								class:border-red-500={formErrors.name}
+								aria-invalid={!!formErrors.name}
+								aria-describedby={formErrors.name ? 'name-error' : undefined}
+							/>
+							{#if formErrors.name}
+								<p id="name-error" class="mt-1 text-sm text-red-500">{formErrors.name}</p>
+							{/if}
+						</div>
+
+						<div>
+							<label for="email" class="mb-1 block text-sm font-medium">
+								<span class="text-red-500">*</span> Email
+							</label>
+							<input
+								id="email"
+								type="email"
+								placeholder="Input Your email here"
+								bind:value={form.email}
+								class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
+								class:border-red-500={formErrors.email}
+								aria-invalid={!!formErrors.email}
+								aria-describedby={formErrors.email ? 'email-error' : undefined}
+							/>
+							{#if formErrors.email}
+								<p id="email-error" class="mt-1 text-sm text-red-500">{formErrors.email}</p>
+							{/if}
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+						<div id="projectType-combobox" class="relative">
+							<label for="project" class="mb-1 block text-sm font-medium">
+								<span class="text-red-500">*</span> Project Type
+							</label>
+							<div class="relative">
+								<button
+									type="button"
+									class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
+									class:border-red-500={formErrors.projectType}
+									on:click|stopPropagation={() => (isProjectTypeOpen = !isProjectTypeOpen)}
+									aria-expanded={isProjectTypeOpen}
+									aria-haspopup="listbox"
+									aria-label={isProjectTypeOpen
+										? 'Close project type options'
+										: 'Open project type options'}
+								>
+									<input
+										id="project"
+										type="text"
+										placeholder="Input or select project type"
+										bind:value={form.projectType}
+										on:focus={() => (isProjectTypeOpen = true)}
+										on:input={() => (isProjectTypeOpen = true)}
+										on:click|stopPropagation
 										on:keydown={(e) => {
-											if (e.key === 'Enter' || e.key === ' ') {
-												e.preventDefault();
-												selectOption('needs', option);
+											if (e.key === 'Escape') {
+												isProjectTypeOpen = false;
+											} else if (e.key === 'ArrowDown' && !isProjectTypeOpen) {
+												isProjectTypeOpen = true;
 											}
 										}}
-										aria-selected={form.needs === option}
+										class="w-full border-none bg-transparent outline-none focus:ring-0"
+										role="combobox"
+										aria-expanded={isProjectTypeOpen}
+										aria-autocomplete="list"
+										aria-controls="projectType-listbox"
+										aria-invalid={!!formErrors.projectType}
+										aria-describedby={formErrors.projectType ? 'project-error' : undefined}
+									/>
+									<span
+										class="ml-2 flex-shrink-0 text-gray-400 focus:outline-none"
+										aria-hidden="true"
 									>
-										{option}
-									</li>
-								{/each}
+										<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M19 9l-7 7-7-7"
+											></path>
+										</svg>
+									</span>
+								</button>
+
+								{#if isProjectTypeOpen}
+									<ul
+										id="projectType-listbox"
+										class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
+										role="listbox"
+									>
+										{#if filteredProjectTypes.length === 0}
+											<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
+										{:else}
+											{#each filteredProjectTypes as option, i}
+												<li
+													class="hover:bg-foreground/10 cursor-pointer px-4 py-2"
+													role="option"
+													tabindex="0"
+													on:click={() => selectOption('projectType', option)}
+													on:keydown={(e) => {
+														if (e.key === 'Enter' || e.key === ' ') {
+															e.preventDefault();
+															selectOption('projectType', option);
+														}
+													}}
+													aria-selected={form.projectType === option}
+												>
+													{option}
+												</li>
+											{/each}
+										{/if}
+									</ul>
+								{/if}
+							</div>
+							{#if formErrors.projectType}
+								<p id="project-error" class="mt-1 text-sm text-red-500">{formErrors.projectType}</p>
 							{/if}
-						</ul>
-					{/if}
-				</div>
-				{#if formErrors.needs}
-					<p id="needs-error" class="mt-1 text-sm text-red-500">{formErrors.needs}</p>
-				{/if}
-			</div>
+						</div>
 
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-				<div>
-					<label for="name" class="mb-1 block text-sm font-medium">
-						<span class="text-red-500">*</span> Name
-					</label>
-					<input
-						id="name"
-						type="text"
-						placeholder="Input Your name here"
-						bind:value={form.name}
-						class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
-						class:border-red-500={formErrors.name}
-						aria-invalid={!!formErrors.name}
-						aria-describedby={formErrors.name ? 'name-error' : undefined}
-					/>
-					{#if formErrors.name}
-						<p id="name-error" class="mt-1 text-sm text-red-500">{formErrors.name}</p>
-					{/if}
-				</div>
+						<div id="budget-combobox" class="relative">
+							<label for="budget" class="mb-1 block text-sm font-medium">
+								<span class="text-red-500">*</span> Budget
+							</label>
+							<div class="relative">
+								<button
+									type="button"
+									class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
+									class:border-red-500={formErrors.budget}
+									on:click|stopPropagation={() => (isBudgetOpen = !isBudgetOpen)}
+									aria-expanded={isBudgetOpen}
+									aria-haspopup="listbox"
+									aria-label={isBudgetOpen ? 'Close budget options' : 'Open budget options'}
+								>
+									<input
+										id="budget"
+										type="text"
+										placeholder="Input or select budget"
+										bind:value={form.budget}
+										on:focus={() => (isBudgetOpen = true)}
+										on:input={() => (isBudgetOpen = true)}
+										on:click|stopPropagation
+										on:keydown={(e) => {
+											if (e.key === 'Escape') {
+												isBudgetOpen = false;
+											} else if (e.key === 'ArrowDown' && !isBudgetOpen) {
+												isBudgetOpen = true;
+											}
+										}}
+										class="w-full border-none bg-transparent outline-none focus:ring-0"
+										role="combobox"
+										aria-expanded={isBudgetOpen}
+										aria-autocomplete="list"
+										aria-controls="budget-listbox"
+										aria-invalid={!!formErrors.budget}
+										aria-describedby={formErrors.budget ? 'budget-error' : undefined}
+									/>
+									<span
+										class="ml-2 flex-shrink-0 text-gray-400 focus:outline-none"
+										aria-hidden="true"
+									>
+										<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M19 9l-7 7-7-7"
+											></path>
+										</svg>
+									</span>
+								</button>
 
-				<div>
-					<label for="email" class="mb-1 block text-sm font-medium">
-						<span class="text-red-500">*</span> Email
-					</label>
-					<input
-						id="email"
-						type="email"
-						placeholder="Input Your email here"
-						bind:value={form.email}
-						class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
-						class:border-red-500={formErrors.email}
-						aria-invalid={!!formErrors.email}
-						aria-describedby={formErrors.email ? 'email-error' : undefined}
-					/>
-					{#if formErrors.email}
-						<p id="email-error" class="mt-1 text-sm text-red-500">{formErrors.email}</p>
-					{/if}
-				</div>
-			</div>
-
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-				<div id="projectType-combobox" class="relative">
-					<label for="project" class="mb-1 block text-sm font-medium">
-						<span class="text-red-500">*</span> Project Type
-					</label>
-					<div class="relative">
-						<button
-							type="button"
-							class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
-							class:border-red-500={formErrors.projectType}
-							on:click|stopPropagation={() => (isProjectTypeOpen = !isProjectTypeOpen)}
-							aria-expanded={isProjectTypeOpen}
-							aria-haspopup="listbox"
-							aria-label={isProjectTypeOpen
-								? 'Close project type options'
-								: 'Open project type options'}
-						>
-							<input
-								id="project"
-								type="text"
-								placeholder="Input or select project type"
-								bind:value={form.projectType}
-								on:focus={() => (isProjectTypeOpen = true)}
-								on:input={() => (isProjectTypeOpen = true)}
-								on:click|stopPropagation
-								on:keydown={(e) => {
-									if (e.key === 'Escape') {
-										isProjectTypeOpen = false;
-									} else if (e.key === 'ArrowDown' && !isProjectTypeOpen) {
-										isProjectTypeOpen = true;
-									}
-								}}
-								class="w-full border-none bg-transparent outline-none focus:ring-0"
-								role="combobox"
-								aria-expanded={isProjectTypeOpen}
-								aria-autocomplete="list"
-								aria-controls="projectType-listbox"
-								aria-invalid={!!formErrors.projectType}
-								aria-describedby={formErrors.projectType ? 'project-error' : undefined}
-							/>
-							<span class="ml-2 flex-shrink-0 text-gray-400 focus:outline-none" aria-hidden="true">
-								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M19 9l-7 7-7-7"
-									></path>
-								</svg>
-							</span>
-						</button>
-
-						{#if isProjectTypeOpen}
-							<ul
-								id="projectType-listbox"
-								class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
-								role="listbox"
-							>
-								{#if filteredProjectTypes.length === 0}
-									<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
-								{:else}
-									{#each filteredProjectTypes as option, i}
-										<li
-											class="hover:bg-foreground/10 cursor-pointer px-4 py-2"
-											role="option"
-											tabindex="0"
-											on:click={() => selectOption('projectType', option)}
-											on:keydown={(e) => {
-												if (e.key === 'Enter' || e.key === ' ') {
-													e.preventDefault();
-													selectOption('projectType', option);
-												}
-											}}
-											aria-selected={form.projectType === option}
-										>
-											{option}
-										</li>
-									{/each}
+								{#if isBudgetOpen}
+									<ul
+										id="budget-listbox"
+										class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
+										role="listbox"
+									>
+										{#if filteredBudgets.length === 0}
+											<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
+										{:else}
+											{#each filteredBudgets as option, i}
+												<li
+													class="hover:bg-foreground/10 cursor-pointer px-4 py-2"
+													role="option"
+													tabindex="0"
+													on:click={() => selectOption('budget', option)}
+													on:keydown={(e) => {
+														if (e.key === 'Enter' || e.key === ' ') {
+															e.preventDefault();
+															selectOption('budget', option);
+														}
+													}}
+													aria-selected={form.budget === option}
+												>
+													{option}
+												</li>
+											{/each}
+										{/if}
+									</ul>
 								{/if}
-							</ul>
-						{/if}
+							</div>
+							{#if formErrors.budget}
+								<p id="budget-error" class="mt-1 text-sm text-red-500">{formErrors.budget}</p>
+							{/if}
+						</div>
 					</div>
-					{#if formErrors.projectType}
-						<p id="project-error" class="mt-1 text-sm text-red-500">{formErrors.projectType}</p>
-					{/if}
-				</div>
 
-				<div id="budget-combobox" class="relative">
-					<label for="budget" class="mb-1 block text-sm font-medium">
-						<span class="text-red-500">*</span> Budget
-					</label>
-					<div class="relative">
-						<button
-							type="button"
-							class="border-border bg-input text-foreground flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-2 text-left"
-							class:border-red-500={formErrors.budget}
-							on:click|stopPropagation={() => (isBudgetOpen = !isBudgetOpen)}
-							aria-expanded={isBudgetOpen}
-							aria-haspopup="listbox"
-							aria-label={isBudgetOpen ? 'Close budget options' : 'Open budget options'}
-						>
-							<input
-								id="budget"
-								type="text"
-								placeholder="Input or select budget"
-								bind:value={form.budget}
-								on:focus={() => (isBudgetOpen = true)}
-								on:input={() => (isBudgetOpen = true)}
-								on:click|stopPropagation
-								on:keydown={(e) => {
-									if (e.key === 'Escape') {
-										isBudgetOpen = false;
-									} else if (e.key === 'ArrowDown' && !isBudgetOpen) {
-										isBudgetOpen = true;
-									}
-								}}
-								class="w-full border-none bg-transparent outline-none focus:ring-0"
-								role="combobox"
-								aria-expanded={isBudgetOpen}
-								aria-autocomplete="list"
-								aria-controls="budget-listbox"
-								aria-invalid={!!formErrors.budget}
-								aria-describedby={formErrors.budget ? 'budget-error' : undefined}
-							/>
-							<span class="ml-2 flex-shrink-0 text-gray-400 focus:outline-none" aria-hidden="true">
-								<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M19 9l-7 7-7-7"
-									></path>
-								</svg>
-							</span>
-						</button>
-
-						{#if isBudgetOpen}
-							<ul
-								id="budget-listbox"
-								class="bg-input border-border/20 absolute z-10 mt-1 max-h-56 w-full overflow-y-auto rounded-md border shadow-lg"
-								role="listbox"
-							>
-								{#if filteredBudgets.length === 0}
-									<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
-								{:else}
-									{#each filteredBudgets as option, i}
-										<li
-											class="hover:bg-foreground/10 cursor-pointer px-4 py-2"
-											role="option"
-											tabindex="0"
-											on:click={() => selectOption('budget', option)}
-											on:keydown={(e) => {
-												if (e.key === 'Enter' || e.key === ' ') {
-													e.preventDefault();
-													selectOption('budget', option);
-												}
-											}}
-											aria-selected={form.budget === option}
-										>
-											{option}
-										</li>
-									{/each}
-								{/if}
-							</ul>
-						{/if}
+					<div>
+						<label for="additional" class="mb-1 block text-sm font-medium">Description</label>
+						<textarea
+							id="description"
+							rows="5"
+							placeholder="Describe your project or any additional information"
+							bind:value={form.additional}
+							class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
+						></textarea>
 					</div>
-					{#if formErrors.budget}
-						<p id="budget-error" class="mt-1 text-sm text-red-500">{formErrors.budget}</p>
-					{/if}
-				</div>
-			</div>
 
-			<div>
-				<label for="additional" class="mb-1 block text-sm font-medium">Description</label>
-				<textarea
-					id="description"
-					rows="5"
-					placeholder="Describe your project or any additional information"
-					bind:value={form.additional}
-					class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
-				></textarea>
-			</div>
-
-			<div class="pt-4 text-center">
-				<Button variant="default" size="lg" type="submit" disabled={isSubmitting}>
-					{isSubmitting ? 'Submitting...' : 'Submit'}
-				</Button>
-			</div>
-		</form>
-	</AnimateOnScroll>
+					<div class="pt-4 text-center">
+						<Button variant="default" size="lg" type="submit" disabled={isSubmitting}>
+							{isSubmitting ? 'Submitting...' : 'Submit'}
+						</Button>
+					</div>
+				</form>
+			</div></AnimateOnScroll
+		>
+	</div>
 </section>
 
 <style>

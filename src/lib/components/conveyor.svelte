@@ -36,56 +36,135 @@
 {#if loading}
 	<ConveyorSkeleton />
 {:else if error}
-	<section class="bg-background">
-		<div class="relative overflow-hidden px-0 py-4 text-center">
-			<p class="text-foreground/50 text-sm">Failed to load tech logos</p>
+	<section class="relative bg-gradient-to-r">
+		<div class="relative overflow-hidden px-0 py-8 text-center">
+			<div class="card-modern mx-auto max-w-md">
+				<p class="text-muted-foreground text-sm">Failed to load tech logos</p>
+				<div class="bg-destructive/30 mx-auto mt-2 h-1 w-16 rounded-full"></div>
+			</div>
 		</div>
 	</section>
 {:else if logos.length > 0}
-	<section class="bg-background">
-		<div class="relative overflow-hidden px-0 py-4">
-			<div class="animate-scroll flex whitespace-nowrap" bind:this={conveyorElement}>
-				{#each logos as logo, i}
-					{#if logo}
-						<img
-							src={logo}
-							alt="tech logo"
-							class="mx-5 h-10 w-10 cursor-pointer object-contain opacity-50 grayscale filter transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:mx-10"
-							on:error={() => (logos[i] = null)}
-						/>
-					{/if}
-				{/each}
+	<section class="relative bg-gradient-to-r">
+		<div class="relative overflow-hidden px-0 py-12">
+			<div class="relative">
+				<div
+					class="from-background pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-20 bg-gradient-to-r to-transparent"
+				></div>
+				<div
+					class="from-background pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-20 bg-gradient-to-l to-transparent"
+				></div>
 
-				{#each logos as logo, i}
-					{#if logo}
-						<img
-							src={logo}
-							alt="tech logo"
-							class="mx-5 h-10 w-10 cursor-pointer object-contain opacity-50 grayscale filter transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:mx-10"
-							on:error={() => (logos[i] = null)}
-						/>
-					{/if}
-				{/each}
+				<div class="tech-conveyor flex whitespace-nowrap" bind:this={conveyorElement}>
+					{#each logos as logo, i}
+						{#if logo}
+							<div class="tech-logo-container group mx-6 md:mx-8">
+								<div class="relative">
+									<div
+										class="from-primary/20 to-accent/20 absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
+									></div>
+
+									<div
+										class="bg-card/50 border-border/50 group-hover:border-primary/30 group-hover:bg-card/80 relative rounded-lg border p-3 backdrop-blur-sm transition-all duration-500 group-hover:scale-110"
+									>
+										<img
+											src={logo}
+											alt="tech logo"
+											class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
+											on:error={() => (logos[i] = null)}
+										/>
+									</div>
+								</div>
+							</div>
+						{/if}
+					{/each}
+
+					{#each logos as logo, i}
+						{#if logo}
+							<div class="tech-logo-container group mx-6 md:mx-8">
+								<div class="relative">
+									<div
+										class="from-primary/20 to-accent/20 absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
+									></div>
+
+									<div
+										class="bg-card/50 border-border/50 group-hover:border-primary/30 group-hover:bg-card/80 relative rounded-lg border p-3 backdrop-blur-sm transition-all duration-500 group-hover:scale-110"
+									>
+										<img
+											src={logo}
+											alt="tech logo"
+											class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
+											on:error={() => (logos[i] = null)}
+										/>
+									</div>
+								</div>
+							</div>
+						{/if}
+					{/each}
+				</div>
 			</div>
 		</div>
 	</section>
 {/if}
 
 <style>
-	.animate-scroll {
-		animation: scroll 30s linear infinite;
+	.tech-conveyor {
+		animation: smooth-scroll 40s linear infinite;
+		will-change: transform;
 	}
 
-	.animate-scroll:hover {
+	.tech-conveyor:hover {
 		animation-play-state: paused;
 	}
 
-	@keyframes scroll {
+	@keyframes smooth-scroll {
 		0% {
 			transform: translateX(0);
 		}
 		100% {
 			transform: translateX(-50%);
+		}
+	}
+
+	.tech-logo-container {
+		flex-shrink: 0;
+		cursor: pointer;
+	}
+
+	/* Performance optimizations */
+	.tech-logo-container {
+		contain: layout style paint;
+	}
+
+	/* Smooth hover transitions */
+	.tech-logo-container:hover {
+		z-index: 10;
+	}
+
+	/* Enhanced animation for logos entering viewport */
+	@media (prefers-reduced-motion: no-preference) {
+		.tech-logo-container {
+			animation: fadeInScale 0.6s ease-out forwards;
+			opacity: 0;
+		}
+
+		.tech-logo-container:nth-child(odd) {
+			animation-delay: 0.1s;
+		}
+
+		.tech-logo-container:nth-child(even) {
+			animation-delay: 0.2s;
+		}
+	}
+
+	@keyframes fadeInScale {
+		from {
+			opacity: 0;
+			transform: scale(0.8) translateY(10px);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1) translateY(0);
 		}
 	}
 </style>

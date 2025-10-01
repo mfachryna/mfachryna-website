@@ -1,7 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import SocialMedia from '$lib/components/social-media.svelte';
-	import Email from '$lib/components/email.svelte';
 	import IntroductionSection from '$lib/components/homepage/introduction-section.svelte';
 	import AboutSection from '$lib/components/homepage/about-section.svelte';
 	import Conveyor from '$lib/components/conveyor.svelte';
@@ -11,31 +9,39 @@
 	export let data;
 </script>
 
-<div class="relative z-10">
-	<SocialMedia />
-	<Email />
+<div class="relative">
 	<IntroductionSection />
-	<AboutSection />
-	<Conveyor />
 
-	<LazySection
-		apiEndpoint="/api/experiences"
-		componentName="experiences"
-		sectionId="experiences"
-		skeletonRows={3}
-	/>
+	<div class="relative space-y-0">
+		<AboutSection />
 
-	<LazySection apiEndpoint="/api/projects" componentName="work" sectionId="work" skeletonRows={2} />
+		<div class="section-padding">
+			<Conveyor />
+		</div>
 
-	{#if data?.showBlogs}
 		<LazySection
-			apiEndpoint="/api/blogs"
-			componentName="blogs"
-			sectionId="blogs"
+			apiEndpoint="/api/experiences"
+			componentName="experiences"
+			sectionId="experiences"
 			skeletonRows={3}
 		/>
-	{/if}
 
-	<ContactsSection />
-    
+		<LazySection
+			apiEndpoint="/api/projects"
+			componentName="work"
+			sectionId="work"
+			skeletonRows={2}
+		/>
+
+		{#if data?.showBlogs}
+			<LazySection
+				apiEndpoint="/api/blogs"
+				componentName="blogs"
+				sectionId="blogs"
+				skeletonRows={3}
+			/>
+		{/if}
+
+		<ContactsSection />
+	</div>
 </div>

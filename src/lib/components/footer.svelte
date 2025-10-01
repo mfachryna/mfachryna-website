@@ -62,18 +62,16 @@
 	}
 </script>
 
-<footer class="bg-none border-none z-0 relative h-fit w-full overflow-hidden border-t">
+<footer class="relative overflow-hidden border-border bg-transparent">
 	{#if showSecretMessage}
-		<div class="absolute top-4 left-1/2 z-20 -translate-x-1/2 transform animate-bounce">
-			<div
-				class="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-medium text-white shadow-lg"
-			>
+		<div class="absolute top-8 left-1/2 z-20 -translate-x-1/2 transform animate-bounce">
+			<div class="glass-effect px-6 py-3 text-sm font-medium rounded-2xl shadow-glow">
 				{secretMessage}
 			</div>
 		</div>
 	{/if}
 
-	<div class="bg-foreground relative z-0 mx-auto w-full px-6 pt-20 pb-5">
+	<div class="relative z-10 container-modern section-padding">
 		<div class="space-y-6 text-center">
 			<AnimateOnScroll
 				animation="slide"
@@ -166,7 +164,7 @@
 									? 'text-pink-500'
 									: ''}"
 							/><span
-								class="text-muted-foreground group-hover:text-background font-medium transition-colors {getTextSize(
+								class="text-muted-foreground group-hover:text-foreground font-medium transition-colors {getTextSize(
 									clickCount
 								)}"
 								class:text-purple-500={clickCount >= 25}
@@ -182,7 +180,7 @@
 								</div>
 							{/if}</button
 						><span class="text-muted-foreground"
-							>by <span class="text-background">
+							>by <span class="text-foreground">
 								<a href={nameLink}> mfachryna </a> © {currentYear}
 							</span></span
 						>
@@ -212,8 +210,4 @@
 			</AnimateOnScroll>
 		</div>
 	</div>
-
-	<Wave position="pointer-events-none absolute z-0 top-0 -translate-y-1/5 left-0 w-full">
-		<Layer3 className="fill-background" />
-	</Wave>
 </footer>

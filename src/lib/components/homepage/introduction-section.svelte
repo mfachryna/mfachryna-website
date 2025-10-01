@@ -28,8 +28,6 @@
 	let charIndex = 0;
 	let isDeleting = false;
 	let cursorVisible = true;
-	let dimOpacity = 0;
-	let parallaxOffset = 0;
 	let isComponentMounted = false;
 	let animationsStarted = false;
 
@@ -65,12 +63,6 @@
 		setTimeout(blinkCursor, 500);
 	}
 
-	function handleScroll() {
-		if (!isComponentMounted) return;
-		parallaxOffset = window.scrollY * 0.5;
-		dimOpacity = Math.min(window.scrollY / 500, 0.6);
-	}
-
 	function startAnimationsWhenIdle() {
 		if (typeof window.requestIdleCallback === 'function') {
 			window.requestIdleCallback(() => {
@@ -87,19 +79,28 @@
 		}
 	}
 
+	function smoothScrollTo(targetId : any) {
+		const target = document.querySelector(targetId);
+		if (target) {
+			const navbarHeight = 100;
+			const targetPosition = target.offsetTop - navbarHeight;
+			window.scrollTo({
+				top: targetPosition,
+				behavior: 'smooth'
+			});
+		}
+	}
+
 	onMount(() => {
 		isComponentMounted = true;
 
 		tick().then(() => {
-			handleScroll();
-			window.addEventListener('scroll', handleScroll, { passive: true });
-
 			startAnimationsWhenIdle();
 		});
 
 		return () => {
 			isComponentMounted = false;
-			window.removeEventListener('scroll', handleScroll);
+			// window.removeEventListener('scroll', handleScroll);
 		};
 	});
 </script>
@@ -116,66 +117,116 @@
 </svelte:head>
 
 <section
-	class="relative flex h-lvh w-full flex-col overflow-hidden bg-transparent"
+	class="relative flex min-h-screen w-full flex-col overflow-hidden"
 	id="index"
 	aria-label="Introduction"
 >
-	<div
-		class="relative flex h-full w-full flex-col items-center justify-center bg-transparent px-6 sm:px-10 md:px-16 lg:px-28"
-		style="--dim-opacity: {dimOpacity}; transform: translateY({parallaxOffset}px);"
-	>
+	<div class="absolute inset-0 overflow-hidden">
 		<div
-			class="pointer-events-none absolute inset-0 bg-black transition-opacity duration-200"
-			style="opacity: var(--dim-opacity); will-change: opacity;"
-			aria-hidden="true"
+			class="from-primary/20 to-accent/20 floating absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-gradient-to-br blur-3xl"
 		></div>
+		<div
+			class="from-accent/15 to-primary/15 floating absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-gradient-to-br blur-3xl"
+			style="animation-delay: -3s;"
+		></div>
+	</div>
 
-		<AnimatedProfile
-			src="/images/avatar/avatar.webp"
-			alt="Muhammad Fachry Noorchoolish Arif profile picture"
-			size="w-40 h-40 sm:w-44 sm:h-44 md:w-50 md:h-50 mb-5"
-		/>
+	<div
+		class="container-modern section-padding relative z-10 flex flex-1 flex-col items-center justify-center"
+	>
+		<div class="group relative mb-12">
+			<div
+				class="from-primary to-accent absolute inset-0 animate-pulse rounded-full bg-gradient-to-r opacity-75 blur-lg transition-opacity duration-500 group-hover:opacity-100"
+			></div>
+			<div class="relative">
+				<AnimatedProfile
+					src="/images/avatar/avatar.webp"
+					alt="Muhammad Fachry Noorchoolish Arif profile picture"
+					size="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 hover-lift"
+				/>
 
-		<div use:popUpText class="bg-background w-full">
-			<div class="nunito w-full text-center select-none">
-				<h1
-					class="font-foreground pop-up-text mb-1 text-xl font-bold sm:mb-3 sm:text-2xl md:text-3xl lg:text-4xl"
-				>
-					HI, I'M FACHRY!
-				</h1>
 				<div
-					class="text-primary inline-block text-2xl leading-none font-black sm:text-3xl md:text-4xl lg:text-5xl"
+					class="from-accent to-primary floating absolute -top-4 -right-4 h-8 w-8 rounded-full bg-gradient-to-r opacity-80"
+					style="animation-delay: -1s;"
+				></div>
+				<div
+					class="from-primary to-accent floating absolute -bottom-2 -left-2 h-6 w-6 rounded-full bg-gradient-to-r opacity-60"
+					style="animation-delay: -2s;"
+				></div>
+			</div>
+		</div>
+
+		<div class="mx-auto w-full max-w-4xl space-y-8 text-center">
+			<div class="mb-3">
+				<div class="inline-block">
+					<span
+						class="text-muted-foreground text-xs font-medium uppercase sm:text-xs md:text-base lg:text-lg"
+						>Welcome to my world</span
+					>
+				</div>
+				<h1
+					class="text-3xl leading-tight font-bold sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl ,"
 				>
-					<p class="pop-up-text flex items-center justify-center">
-						{currentText}<span
-							class="inline-block font-thin transition-opacity duration-300"
+					<span class="">Hi, I'm Fachry</span>
+				</h1>
+			</div>
+			<div class="flex items-center justify-center">
+				<div class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
+					<span class="gradient-text relative">
+						{currentText}
+						<span
+							class="from-primary to-accent ml-1 inline-block h-5 w-0.5 bg-gradient-to-b transition-opacity duration-300 sm:h-7 md:h-9 lg:h-10"
 							class:opacity-100={cursorVisible}
 							class:opacity-0={!cursorVisible}
-							aria-hidden="true">|</span
-						>
-					</p>
+							aria-hidden="true"
+						></span>
+					</span>
 				</div>
+			</div>
 
-				<div class="my-2" aria-hidden="true"></div>
+			<div class="flex justify-center">
 				<div
-					class="pop-up-text bg-foreground mx-auto h-1 w-1/2 rounded-full sm:w-2/3 md:w-96"
-					aria-hidden="true"
+					class="from-primary via-accent to-primary h-1 w-24 rounded-full bg-gradient-to-r"
 				></div>
-				<div class="my-2" aria-hidden="true"></div>
+			</div>
 
-				<p class="pop-up-text text-base font-medium sm:text-xl md:text-2xl lg:text-3xl">
+			<div class="mx-auto max-w-3xl space-y-6">
+				<p class="text-foreground text-lg font-semibold sm:text-xl md:text-2xl">
 					Software Engineer at Bank Syariah Indonesia
 				</p>
-				<p class="pop-up-text mx-auto w-[90%] text-sm font-thin sm:w-4/5 sm:text-base md:w-3/4">
+				<p class="text-muted-foreground text-sm leading-relaxed sm:text-base md:text-lg">
 					Passionate about crafting elegant solutions and building scalable systems. From backend
 					APIs to system designs, I transform ideas into impactful digital products that make a
 					difference in people's lives.
 				</p>
 			</div>
+
+			<div class="flex flex-col items-center justify-center gap-4 pt-8 sm:flex-row">
+				<button class="btn-modern group" on:click={() => smoothScrollTo('#work')}>
+					<span class="flex items-center space-x-2">
+						<span>View My Work</span>
+						<svg
+							class="h-4 w-4 transition-transform group-hover:translate-x-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 7l5 5m0 0l-5 5m5-5H6"
+							></path>
+						</svg>
+					</span>
+				</button>
+				<button
+					class="border-primary/30 text-foreground hover:bg-primary/5 hover:border-primary/50 rounded-lg border-2 px-8 py-3 font-medium transition-all duration-300 hover:scale-105"
+					on:click={() => smoothScrollTo('#contacts')}
+				>
+					Get In Touch
+				</button>
+			</div>
 		</div>
 	</div>
-
-	<Wave position="absolute bottom-0">
-		<Layer1 fill="fill-foreground" />
-	</Wave>
 </section>

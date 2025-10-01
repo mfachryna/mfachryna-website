@@ -9,6 +9,7 @@
 		delay = 0,
 		animation = 'slide',
 		className = '',
+		style = '',
 		children 
 	}: {
 		threshold?: number;
@@ -16,13 +17,16 @@
 		animationClass?: string;
 		once?: boolean;
 		delay?: number;
-		animation?: 'slide' | 'bounce' | 'fade' | 'slide-left' | 'slide-right'| 'slide-up' | 'slide-down' | 'zoom-in' | 'zoom-out';
+		animation?: 'slide' | 'bounce' | 'fade' | 'slide-left' | 'slide-right'| 'slide-up' | 'slide-down' | 'zoom-in' | 'zoom-out' | 'stagger' | 'morph';
 		className?: string;
+		style?: string,
 		children?: any;
 	} = $props();
 
 	let baseClass = $derived(
 		{
+			stagger: 'stagger-on-scroll',
+			morph: 'morph-on-scroll',
 			slide: 'animate-on-scroll',
 			bounce: 'bounce-on-scroll',
 			fade: 'fade-on-scroll',
@@ -38,6 +42,7 @@
 
 <div
 	class="{baseClass} {className}"
+	style="{style} "
 	use:animateOnScroll={{ threshold, rootMargin, animationClass, once, delay }}
 >
 	{@render children()}

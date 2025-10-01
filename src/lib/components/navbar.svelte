@@ -83,13 +83,28 @@
 	function smoothScrollTo(targetId: string) {
 		if (!browser) return;
 
+		if (targetId.startsWith('#')) {
+			const el = document.getElementById(targetId.slice(1));
+			if (el) {
+				const navbarHeight = 80;
+				const rect = el.getBoundingClientRect();
+				const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+				const targetY = rect.top + scrollTop - navbarHeight;
+				window.scrollTo({
+					top: targetY,
+					behavior: 'smooth'
+				});
+				return;
+			}
+		}
 		const target = document.querySelector(targetId);
 		if (target) {
 			const navbarHeight = 80;
-			const targetPosition = target.offsetTop - navbarHeight;
-
+			const rect = (target as HTMLElement).getBoundingClientRect();
+			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			const targetY = rect.top + scrollTop - navbarHeight;
 			window.scrollTo({
-				top: targetPosition,
+				top: targetY,
 				behavior: 'smooth'
 			});
 		}
@@ -123,103 +138,220 @@
 </script>
 
 <header
-	class="fixed z-30 flex w-full items-center justify-center"
-	class:mt-2={isScrolled}
-	style="transition: all 0.5s ease-in-out;"
+	class="fixed z-100 flex w-full items-center justify-center transition-all duration-500 ease-out"
+	class:mt-4={isScrolled}
 >
-	<div
-		class="border-border flex grow justify-between transition-all duration-300 {isScrolled
-			? 'bg-accent/20 px-3 py-1 md:px-4 md:py-2'
-			: 'px-6 py-4 sm:px-10 md:px-16 lg:px-28'}"
-		class:backdrop-blur-md={isScrolled}
-		class:border={isScrolled}
-		class:rounded-lg={isScrolled}
-		class:grow-0={isScrolled}
+	<nav
+		class="flex w-full items-center justify-between transition-all duration-500 ease-out {isScrolled
+			? 'glass-effect hover-lift shadow-soft mx-4 max-w-4xl rounded-2xl px-6 py-3'
+			: 'container-modern px-6 py-6'}"
+		class:backdrop-blur-xl={isScrolled}
+		style="
+			{isScrolled ? 'background: var(--card-foreground);' : ''}
+			transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+		"
 	>
-		<a href="/" class="my-auto mr-4 font-bold" on:click={(e) => handleNavigation(e, '/')}>
-			{isScrolled ? 'Home/' : 'FACHRY'}
+		<a
+			href="/"
+			class="group flex items-center space-x-2 text-xl font-bold transition-all duration-300 hover:scale-105"
+			on:click={(e) => handleNavigation(e, '/')}
+		>
+			<div class="flex items-center space-x-2">
+				{#if isScrolled}
+					<div
+						class="from-primary to-accent text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold"
+					>
+						F
+					</div>
+				{:else}
+					<span class="gradient-text hidden transition-all duration-300 sm:block"> Fachry </span>
+				{/if}
+			</div>
 		</a>
 
-		<div class="my-auto hidden md:flex" class:justify-center={isScrolled}>
+		<div class="hidden items-center space-x-1 md:flex" class:justify-center={isScrolled}>
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class="hover:text-primary mr-4 transition-colors duration-200"
-					class:font-bold={pathName.startsWith(link.href)}
-					class:text-destructive={pathName.startsWith(link.href)}
+					class="hover:bg-secondary/50 relative rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:scale-105 {pathName.startsWith(
+						link.href
+					)
+						? 'text-primary bg-primary/10'
+						: 'text-muted-foreground hover:text-foreground'}"
 					on:click={(e) => handleNavigation(e, link.href)}
 				>
-					{link.name}
+					<span class="relative">
+						{link.name}
+						{#if pathName.startsWith(link.href)}
+							<div
+								class="from-primary to-accent absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-gradient-to-r"
+							></div>
+						{/if}
+					</span>
 				</a>
 			{/each}
 		</div>
+
 		<div class="md:hidden">
-			<button class="text-2xl" on:click={toggleSidebar}>
-				{#if isSidebarOpen}
-					&times;
-				{:else}
-					&#9776;
-				{/if}
+			<button
+				class="hover:bg-secondary/50 rounded-lg p-2 transition-all duration-300 hover:scale-105"
+				on:click={toggleSidebar}
+				aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}
+			>
+				<div class="flex h-6 w-6 flex-col items-center justify-center">
+					<span
+						class="block h-0.5 w-5 bg-current transition-all duration-300 {isSidebarOpen
+							? 'translate-y-0.5 rotate-45'
+							: ''}"
+					></span>
+					<span
+						class="mt-1 block h-0.5 w-5 bg-current transition-all duration-300 {isSidebarOpen
+							? 'opacity-0'
+							: ''}"
+					></span>
+					<span
+						class="mt-1 block h-0.5 w-5 bg-current transition-all duration-300 {isSidebarOpen
+							? '-translate-y-1.5 -rotate-45'
+							: ''}"
+					></span>
+				</div>
 			</button>
 		</div>
 
-		<div class="hidden align-middle md:flex">
+		<div class="hidden md:flex">
 			{#if data?.resumeUrl}
-				<Button>
-					<a href={data.resumeUrl} target="_blank" rel="noopener noreferrer"> Resume </a>
-				</Button>
+				<a
+					href={data.resumeUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-modern group relative overflow-hidden"
+				>
+					<span class="relative z-10 flex items-center space-x-2">
+						<span>Resume</span>
+						<svg
+							class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+							></path>
+						</svg>
+					</span>
+				</a>
 			{:else}
-				<Button disabled>Resume</Button>
+				<button class="btn-modern cursor-not-allowed opacity-50" disabled> Resume </button>
 			{/if}
 		</div>
-	</div>
+	</nav>
 </header>
 
 <div
-	class={`bg-accent/90 fixed top-0 right-0 z-20 h-full w-full transform pt-10 transition-transform duration-300 ease-in-out md:hidden ${
-		isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-	}`}
+	class="fixed inset-0 z-40 transition-opacity duration-300 md:hidden {isSidebarOpen
+		? 'pointer-events-auto opacity-100'
+		: 'pointer-events-none opacity-0'}"
 >
-	<div class="relative flex h-full flex-col items-center">
-		<div class="flex h-full flex-col items-center justify-center pb-40">
+	<div
+		class="glass-effect absolute top-0 right-0 h-full w-80 max-w-full transform transition-transform duration-500 ease-out {isSidebarOpen
+			? 'translate-x-0'
+			: 'translate-x-full'}"
+		style="background: oklch(from var(--card) l c h / 0.95);"
+	>
+		<div class="flex justify-end p-6">
+			<button
+				class="hover:bg-secondary/50 rounded-full p-2 transition-colors"
+				on:click={handleNavClick}
+				aria-label="Close sidebar"
+			>
+				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M6 18L18 6M6 6l12 12"
+					></path>
+				</svg>
+			</button>
+		</div>
+
+		<div class="mt-8 flex flex-col space-y-3 px-6">
 			{#each navLinks as link}
 				<a
 					href={link.href}
-					class={`hover:text-primary mb-4 text-lg transition-colors duration-200 ${
-						pathName.startsWith(link.href) ? 'text-destructive font-bold' : ''
-					}`}
+					class="group hover:bg-secondary/50 relative flex items-center rounded-xl px-4 py-4 text-lg font-medium transition-all duration-300 hover:scale-105 {pathName.startsWith(
+						link.href
+					)
+						? 'text-primary bg-primary/10'
+						: 'text-muted-foreground hover:text-foreground'}"
 					on:click={(e) => handleNavigation(e, link.href)}
 				>
-					{link.name}
+					<span class="relative">
+						{link.name}
+						{#if pathName.startsWith(link.href)}
+							<div
+								class="from-primary to-accent absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-gradient-to-r"
+							></div>
+						{/if}
+					</span>
+					<svg
+						class="text-muted-foreground group-hover:text-foreground ml-auto h-4 w-4 transition-colors"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+						></path>
+					</svg>
 				</a>
 			{/each}
 
-			{#if data?.resumeUrl}
-				<Button class="mb-4">
+			<div class="border-border/50 mt-6 border-t pt-6">
+				{#if data?.resumeUrl}
 					<a
 						href={data.resumeUrl}
 						target="_blank"
 						rel="noopener noreferrer"
+						class="btn-modern block w-full text-center"
 						on:click={handleNavClick}
 					>
-						Resume
+						<span class="flex items-center justify-center space-x-2">
+							<span>Resume</span>
+							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+								></path>
+							</svg>
+						</span>
 					</a>
-				</Button>
-			{:else}
-				<Button class="mb-4" disabled>Resume</Button>
-			{/if}
+				{:else}
+					<button class="btn-modern w-full cursor-not-allowed opacity-50" disabled> Resume </button>
+				{/if}
+			</div>
 		</div>
-		<div class="absolute bottom-5 mt-auto flex flex-row items-center gap-5">
-			{#each socialMediaWithLogo as link}
-				<a
-					href={link.href}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="text-foreground/40 z-50 h-7 w-7"
-				>
-					<svelte:component this={link.component} class="h-7 w-7" />
-				</a>
-			{/each}
+
+		<div class="absolute right-6 bottom-8 left-6">
+			<div class="border-border/50 flex justify-center space-x-6 border-t pt-6">
+				{#each socialMediaWithLogo as link}
+					<a
+						href={link.href}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="bg-secondary/50 hover:bg-secondary hover-lift rounded-full p-3 transition-all duration-300 hover:scale-110"
+					>
+						<svelte:component
+							this={link.component}
+							class="text-muted-foreground hover:text-foreground h-5 w-5 transition-colors"
+						/>
+					</a>
+				{/each}
+			</div>
 		</div>
 	</div>
 </div>

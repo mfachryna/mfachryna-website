@@ -3,18 +3,24 @@
 </script>
 
 <section
-	class="hidden fixed end-0 md:flex h-full w-fit flex-col items-center justify-between px-6 text-center z-50"
+	class="fixed right-6 top-0 z-[9999] hidden h-screen flex-col items-center justify-center gap-9 py-8 text-center md:flex"
 	style="transition: all 0.5s ease-in-out;"
 >
-	<div class="bg-accent mb-3 h-1/3 w-1 rounded-full"></div>
-	<div class="text-accent w-fit">
+
+	<div class="w-px h-24 bg-gradient-to-b from-transparent via-primary to-accent"></div>
+	<div class="group">
 		<a
 			href="mailto:{email}"
-			class="select-none"
-			style="white-space: nowrap; writing-mode: vertical-rl;"
+			class="block py-2 px-1 text-muted-foreground hover:text-accent transition-all duration-300 hover:scale-105"
+			style="writing-mode: vertical-rl; text-decoration: none;"
+			aria-label="Send email to {email}"
+			title="Send email to {email}"
 		>
-			{email}
+			<span class="text-sm font-normal tracking-wide transition-colors duration-300">
+				{email}
+			</span>
 		</a>
 	</div>
-	<div class="bg-accent mt-3 h-1/3 w-1 rounded-full"></div>
+
+	<div class="w-px h-24 bg-gradient-to-b from-accent via-primary to-transparent"></div>
 </section>

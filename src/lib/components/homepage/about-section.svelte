@@ -1,8 +1,4 @@
 <script>
-	import PageTitle from '../page-title.svelte';
-	import Conveyor from '../conveyor.svelte';
-	import Wave from '../wave.svelte';
-	import Layer2 from '$lib/background/layer2.svelte';
 	import Icon from '@iconify/svelte';
 	import AnimateOnScroll from '$lib/components/animate-on-scroll.svelte';
 
@@ -46,39 +42,96 @@
 	</script>
 </svelte:head>
 
-<section class="bg-foreground relative w-full py-7" id="about" aria-labelledby="about-title">
-	<div class="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-28">
-		<PageTitle title="About Me" textColor="text-background" line="bg-background" id="about-title" />
+<section class="section-padding relative" id="about" aria-labelledby="about-title">
+	<div class="container-modern relative z-10">
+		<div class="mb-16 text-center">
+			<div class="inline-block">
+				<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
+					>Get to know me</span
+				>
+				<h2 class="text-responsive-xl gradient-text font-bold">About Me</h2>
+			</div>
+			<div
+				class="from-primary via-accent to-primary mx-auto h-1 w-24 rounded-full bg-gradient-to-r"
+			></div>
+		</div>
 
-		<div class="grid auto-rows-fr grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 relative">
 			{#each aboutCards as card, i (card.title)}
-				<AnimateOnScroll animation="slide-right" delay={i * 100} threshold={0.1}>
+				<AnimateOnScroll animation="bounce" delay={i * 150} threshold={0.1}>
 					<article
-						class="card group bg-card border-border text-card-foreground flex h-full flex-col rounded-xl border-2 shadow-md transition-transform duration-400 ease-in-out hover:-translate-y-2 hover:shadow-2xl"
+						class="group card-modern hover-lift relative overflow-hidden h-full"
 						aria-labelledby={`card-title-${i}`}
+						style="--stagger-delay: {0.6 + i * 0.1}s"
 					>
-						<header class="flex flex-shrink-0 flex-col items-center px-6 pt-8 pb-4 text-center">
-							<div
-								class="card-icon bg-secondary text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground mb-6 flex h-[70px] w-[70px] items-center justify-center rounded-full text-[1.8rem] transition-all duration-300 ease-in-out group-hover:scale-110"
-								aria-hidden="true"
-							>
-								<Icon icon="fa-solid:{card.icon}" />
+						<div
+							class="from-primary/5 to-accent/5 absolute inset-0 bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+						></div>
+
+						<div class="relative z-10 flex h-full flex-col p-8">
+							<div class="mb-6 flex justify-center">
+								<div class="relative">
+									<div
+										class="from-primary to-accent absolute inset-0 rounded-full bg-gradient-to-br opacity-20 blur-lg transition-opacity duration-500 group-hover:opacity-40"
+									></div>
+
+									<div
+										class="from-primary to-accent text-primary-foreground relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br text-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12"
+									>
+										<Icon icon="fa-solid:{card.icon}" />
+									</div>
+
+									<div
+										class="bg-accent/60 floating absolute -top-2 -right-2 h-4 w-4 rounded-full opacity-60"
+										style="animation-delay: -{i}s;"
+									></div>
+									<div
+										class="bg-primary/60 floating absolute -bottom-1 -left-1 h-3 w-3 rounded-full opacity-80"
+										style="animation-delay: -{i * 0.5}s;"
+									></div>
+								</div>
 							</div>
+
 							<h3
 								id={`card-title-${i}`}
-								class="mb-4 text-[1.5rem] font-semibold transition-colors duration-300"
+								class="group-hover:text-primary mb-4 text-center text-xl font-bold transition-colors duration-300"
 							>
 								{card.title}
 							</h3>
-						</header>
-						<div class="flex flex-grow items-center px-8 pb-8 text-center">
-							<p class="w-full text-sm leading-7 sm:text-base md:text-lg lg:text-xl">
-								{card.description}
-							</p>
+
+							<div class="flex flex-1 items-center">
+								<p
+									class="text-muted-foreground group-hover:text-foreground text-center leading-relaxed transition-colors duration-300"
+								>
+									{card.description}
+								</p>
+							</div>
+
+							<div
+								class="from-primary to-accent absolute bottom-0 left-1/2 h-1 w-12 -translate-x-1/2 translate-y-4 transform rounded-full bg-gradient-to-r opacity-0 transition-all duration-300 group-hover:translate-y-2 group-hover:opacity-100"
+							></div>
 						</div>
 					</article>
 				</AnimateOnScroll>
 			{/each}
+		</div>
+
+		<div class="mt-20 text-center">
+			<AnimateOnScroll animation="fade" delay={600}>
+				<div class="mx-auto max-w-3xl">
+					<p class="text-muted-foreground mb-8 text-lg leading-relaxed">
+						I believe in building software that not only works but makes a difference. Every line of
+						code is written with purpose, every system designed with the future in mind, and every
+						solution crafted to drive real business value.
+					</p>
+					<div class="flex flex-wrap justify-center gap-4">
+						<div class="badge-modern">🎯 Problem Solver</div>
+						<div class="badge-modern">🚀 Growth-Oriented</div>
+						<div class="badge-modern">💡 Strategic Thinker</div>
+						<div class="badge-modern">🔧 Technology Agnostic</div>
+					</div>
+				</div>
+			</AnimateOnScroll>
 		</div>
 	</div>
 </section>
