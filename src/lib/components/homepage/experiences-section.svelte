@@ -203,7 +203,7 @@
 											class="from-primary via-primary/80 to-accent border-background shadow-glow relative h-4 w-4 rounded-full border-3 bg-gradient-to-br transition-transform duration-300 group-hover:scale-125"
 										>
 											<div
-												class="absolute inset-1 rounded-full bg-white/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+												class="absolute inset-1 rounded-full bg-foreground/30 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 											></div>
 
 											<div
@@ -308,10 +308,10 @@
 															class="from-primary to-accent absolute inset-0 rounded-full bg-gradient-to-r opacity-0 blur transition-opacity duration-300 group-hover:opacity-50"
 														></div>
 														<div
-															class="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm transition-all duration-300 group-hover/button:scale-110 group-hover/button:border-white/30 group-hover/button:bg-white/20"
+															class="relative flex h-10 w-10 items-center justify-center rounded-full border border-foreground/20 bg-foreground/10 backdrop-blur-sm transition-all duration-300 group-hover/button:scale-110 group-hover/button:border-foreground/30 group-hover/button:bg-foreground/20"
 														>
 															<svg
-																class="h-4 w-4 text-white transition-all duration-300 {activeIndex ===
+																class="h-4 w-4 text-foreground transition-all duration-300 {activeIndex ===
 																i
 																	? 'rotate-180'
 																	: ''}"
@@ -497,8 +497,8 @@
 		border-radius: 1rem;
 		background: var(--card-foreground);
 		border: 1px solid rgba(255, 255, 255, 0.15);
-		backdrop-filter: blur(20px);
-		-webkit-backdrop-filter: blur(20px);
+		/* backdrop-filter: blur(20px); */
+		/* -webkit-backdrop-filter: blur(20px); */
 		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 		overflow: hidden;
 	}
