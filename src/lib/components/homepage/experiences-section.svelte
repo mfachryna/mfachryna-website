@@ -4,6 +4,7 @@
 	import type { ExperienceWithTags } from '$lib/types/experience';
 	import ExperienceCard from '../experience-card.svelte';
 	import PageTitle from '../page-title.svelte';
+	import AnimateOnScroll from '../animate-on-scroll.svelte';
 	export let data: {
 		experiences: ExperienceWithTags[];
 		pagination: {
@@ -144,7 +145,11 @@
 
 <section class="section-padding relative" id="experiences" aria-labelledby="experiences-title">
 	<div class="container-modern relative z-10">
-		<PageTitle title="Professional Experience" brief={'My Journey'} description="A timeline of my professional growth and the exciting projects I've contributed to" />
+		<PageTitle
+			title="Professional Experience"
+			brief={'My Journey'}
+			description="A timeline of my professional growth and the exciting projects I've contributed to"
+		/>
 
 		{#if isLoading && experiences.length === 0}
 			<div class="flex justify-center py-16">
@@ -168,12 +173,20 @@
 		{:else}
 			<div class="relative">
 				<div
-					class="from-primary via-accent to-primary absolute hidden md:block top-0 bottom-0 left-8 w-px bg-gradient-to-b md:left-1/2 md:-translate-x-1/2 md:transform"
+					class="from-primary via-accent to-primary absolute top-0 bottom-0 left-8 hidden w-px bg-gradient-to-b md:left-1/2 md:block md:-translate-x-1/2 md:transform"
 				></div>
 
 				<div class="space-y-8">
 					{#each experiences.slice(0, visibleExperiences) as item, i (item.id)}
-						<ExperienceCard {item} {i} {activeIndex} {toggle} {formatDate} />
+						<AnimateOnScroll
+							animation="stagger"
+							delay={i * 100}
+							threshold={0.1}
+							rootMargin="0px 0px -10% 0px"
+							style="--stagger-delay: {0.6 + i * 0.1}s"
+						>
+							<ExperienceCard {item} {i} {activeIndex} {toggle} {formatDate} />
+						</AnimateOnScroll>
 					{/each}
 				</div>
 			</div>
