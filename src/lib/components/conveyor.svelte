@@ -48,30 +48,24 @@
 	<section class="relative bg-gradient-to-r">
 		<div class="relative overflow-hidden px-0 py-12">
 			<div class="relative">
-				<div
-					class="from-background pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-20 bg-gradient-to-r to-transparent"
-				></div>
-				<div
-					class="from-background pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-20 bg-gradient-to-l to-transparent"
-				></div>
 
 				<div class="tech-conveyor flex whitespace-nowrap" bind:this={conveyorElement}>
 					{#each logos as logo, i}
 						{#if logo}
-							<div class="tech-logo-container group mx-6 md:mx-8">
+							<div class="tech-logo-container group p-2 mx-3 md:mx-4">
 								<div class="relative">
 									<div
 										class="from-primary/20 to-accent/20 absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
 									></div>
 
 									<div
-										class="bg-card/50 border-border/50 group-hover:border-primary/30 group-hover:bg-card/80 relative rounded-lg border p-3 backdrop-blur-sm transition-all duration-500 group-hover:scale-110"
+										class=" backdrop-blur-md bg-foreground/10 border-border/50 group-hover:border-accent/30 group-hover:bg-primary/10 relative rounded-lg border p-3 transition-all duration-500 group-hover:scale-110"
 									>
 										<img
 											src={logo}
 											alt="tech logo"
 											class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
-											on:error={() => (logos[i] = null)}
+											onerror={() => (logos[i] = null)}
 										/>
 									</div>
 								</div>
@@ -81,20 +75,20 @@
 
 					{#each logos as logo, i}
 						{#if logo}
-							<div class="tech-logo-container group mx-6 md:mx-8">
+							<div class="tech-logo-container group p-2 mx-3 md:mx-4">
 								<div class="relative">
 									<div
-										class="from-primary/20 to-accent/20 absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
+										class="from-primary/20 to-accent/20 inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
 									></div>
 
 									<div
-										class="bg-card/50 border-border/50 group-hover:border-primary/30 group-hover:bg-card/80 relative rounded-lg border p-3 backdrop-blur-sm transition-all duration-500 group-hover:scale-110"
+										class=" backdrop-blur-md bg-foreground/10 border-border/50 group-hover:border-accent/30 group-hover:bg-primary/10 relative rounded-lg border p-3 transition-all duration-500 group-hover:scale-110"
 									>
 										<img
 											src={logo}
 											alt="tech logo"
 											class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
-											on:error={() => (logos[i] = null)}
+											onerror={() => (logos[i] = null)}
 										/>
 									</div>
 								</div>

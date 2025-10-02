@@ -1,9 +1,8 @@
 <script lang="ts">
-	import Layer1 from '$lib/background/layer1.svelte';
+
 	import { onMount } from 'svelte';
-	import { popUpText } from '$lib/actions/pop-up-text';
 	import AnimatedProfile from '$lib/assets/icons/profile.svelte';
-	import Wave from '../wave.svelte';
+	import { browser } from '$app/environment';
 	import { tick } from 'svelte';
 
 	const texts = [
@@ -79,13 +78,33 @@
 		}
 	}
 
-	function smoothScrollTo(targetId : any) {
+
+
+	function smoothScrollTo(targetId: string) {
+		if (!browser) return;
+
+		if (targetId.startsWith('#')) {
+			const el = document.getElementById(targetId.slice(1));
+			if (el) {
+				const navbarHeight = 80;
+				const rect = el.getBoundingClientRect();
+				const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+				const targetY = rect.top + scrollTop - navbarHeight;
+				window.scrollTo({
+					top: targetY,
+					behavior: 'smooth'
+				});
+				return;
+			}
+		}
 		const target = document.querySelector(targetId);
 		if (target) {
-			const navbarHeight = 100;
-			const targetPosition = target.offsetTop - navbarHeight;
+			const navbarHeight = 80;
+			const rect = (target as HTMLElement).getBoundingClientRect();
+			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+			const targetY = rect.top + scrollTop - navbarHeight;
 			window.scrollTo({
-				top: targetPosition,
+				top: targetY,
 				behavior: 'smooth'
 			});
 		}
@@ -123,10 +142,10 @@
 >
 	<div class="absolute inset-0 overflow-hidden">
 		<div
-			class="from-primary/20 to-accent/20 floating absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-gradient-to-br blur-3xl"
+			class="from-primary/20 to-accent/20 floating absolute top-1/4 left-1/4 h-40 w-40 animate-pulse rounded-full bg-gradient-to-br blur-md sm:h-64 sm:w-64 md:h-96 md:w-96 md:blur-3xl"
 		></div>
 		<div
-			class="from-accent/15 to-primary/15 floating absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full bg-gradient-to-br blur-3xl"
+			class="from-accent/15 to-primary/15 floating absolute right-1/4 bottom-1/4 h-32 w-32 rounded-full bg-gradient-to-br blur-md sm:h-56 sm:w-56 md:h-80 md:w-80 md:blur-3xl"
 			style="animation-delay: -3s;"
 		></div>
 	</div>
@@ -160,12 +179,12 @@
 			<div class="mb-3">
 				<div class="inline-block">
 					<span
-						class="text-muted-foreground text-xs font-medium uppercase sm:text-xs md:text-base lg:text-lg"
+						class="text-muted-foreground text-sm font-medium uppercase sm:text-base md:text-base lg:text-lg"
 						>Welcome to my world</span
 					>
 				</div>
 				<h1
-					class="text-3xl leading-tight font-bold sm:text-3xl md:text-5xl lg:text-6xl xl:text-7xl ,"
+					class=", text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl"
 				>
 					<span class="">Hi, I'm Fachry</span>
 				</h1>
@@ -201,9 +220,9 @@
 				</p>
 			</div>
 
-			<div class="flex flex-col items-center justify-center gap-4 pt-8 sm:flex-row">
-				<button class="btn-modern group" on:click={() => smoothScrollTo('#work')}>
-					<span class="flex items-center space-x-2">
+			<div class="flex flex-row items-center justify-center gap-4 pt-8">
+				<button class="btn-modern group" onclick={() => smoothScrollTo('#work')}>
+					<span class="flex items-center text-xs sm:text-sm md:text-base">
 						<span>View My Work</span>
 						<svg
 							class="h-4 w-4 transition-transform group-hover:translate-x-1"
@@ -221,8 +240,8 @@
 					</span>
 				</button>
 				<button
-					class="border-primary/30 text-foreground hover:bg-primary/5 hover:border-primary/50 rounded-lg border-2 px-8 py-3 font-medium transition-all duration-300 hover:scale-105"
-					on:click={() => smoothScrollTo('#contacts')}
+					class="border-primary/30 text-foreground hover:bg-primary/5 hover:border-primary/50 rounded-lg border-2 px-8 py-3 text-xs font-medium transition-all duration-300 hover:scale-105 sm:text-sm md:text-base"
+					onclick={() => smoothScrollTo('#contacts')}
 				>
 					Get In Touch
 				</button>

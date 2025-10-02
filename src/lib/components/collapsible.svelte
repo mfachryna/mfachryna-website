@@ -40,7 +40,7 @@
 	<button
 		type="button"
 		class="bg-background w-full cursor-pointer px-3 py-2 text-left focus:outline-none sm:px-4 sm:py-3"
-		on:click={() => onToggle(index)}
+		onclick={() => onToggle(index)}
 		aria-expanded={isOpen}
 	>
 		<div class="block sm:hidden">

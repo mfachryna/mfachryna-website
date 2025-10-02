@@ -112,7 +112,7 @@
 						{#each socialLinks as social}
 							<button
 								class="group bg-accent/10 hover:bg-accent/20 rounded-full p-2 transition-all duration-300 hover:scale-110 {social.color}"
-								on:click={() => openSocialLink(social.href)}
+								onclick={() => openSocialLink(social.href)}
 								aria-label={social.name}
 								title={social.name}
 							>
@@ -139,7 +139,7 @@
 						<button
 							class="group relative inline-flex items-center gap-1 rounded-md transition-all duration-300"
 							class:scale-105={clickCount >= 20}
-							on:click={handleLoveClick}
+							onclick={handleLoveClick}
 							aria-label="Made with love"
 							title="❤️ Made with love! ({clickCount > 0
 								? clickCount + ' clicks'
@@ -197,7 +197,7 @@
 				<div class="pt-2">
 					<button
 						class="group text-muted-foreground hover:text-background inline-flex items-center gap-1.5 text-xs transition-all duration-300 hover:-translate-y-0.5"
-						on:click={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+						onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 						aria-label="Back to top"
 					>
 						<Icon

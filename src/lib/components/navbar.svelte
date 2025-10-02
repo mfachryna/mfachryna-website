@@ -4,11 +4,10 @@
 	import { browser } from '$app/environment';
 	import { Button } from '$lib/components/ui/button/index.js';
 
-	let isScrolled = false;
-	export let pathName = $page.url.pathname;
-
-	pathName = $page.url.pathname;
-	$: pathName = $page.url.pathname;
+	let { isSidebarOpen, toggleSidebar, data } = $props();
+	
+	let isScrolled = $derived(false);
+	let pathName = $derived($page.url.pathname);
 
 	const navLinks = [
 		{ name: 'About', href: '#about' },
@@ -34,6 +33,7 @@
 	onMount(() => {
 		if (browser) {
 			window.addEventListener('scroll', handleScroll);
+			isScrolled = window.scrollY > 16;
 		}
 	});
 
@@ -44,19 +44,6 @@
 			body.classList.remove('overflow-hidden');
 		}
 	});
-	let isSidebarOpen = false;
-
-	const toggleSidebar = () => {
-		isSidebarOpen = !isSidebarOpen;
-		if (browser) {
-			const body = document.body;
-			if (isSidebarOpen) {
-				body.classList.add('overflow-hidden');
-			} else {
-				body.classList.remove('overflow-hidden');
-			}
-		}
-	};
 
 	const handleNavClick = () => {
 		isSidebarOpen = false;
@@ -66,7 +53,7 @@
 		}
 	};
 
-	let socialMediaWithLogo: Array<{ name: string; href: string; logo: string; component: any }> = [];
+	let socialMediaWithLogo: Array<{ name: string; href: string; logo: string; component: any }> = $state([]);
 
 	async function loadLogos() {
 		socialMediaWithLogo = await Promise.all(
@@ -78,7 +65,6 @@
 	}
 
 	onMount(loadLogos);
-	export let data;
 
 	function smoothScrollTo(targetId: string) {
 		if (!browser) return;
@@ -131,14 +117,14 @@
 
 		smoothScrollTo(href);
 
-		if (browser) {
+		if (browser && href.startsWith('/')) {
 			history.pushState(null, '', href);
 		}
 	}
 </script>
 
 <header
-	class="fixed z-100 flex w-full items-center justify-center transition-all duration-500 ease-out"
+	class="fixed z-100 flex w-full items-center justify-center p-0 transition-all duration-500 ease-out"
 	class:mt-4={isScrolled}
 >
 	<nav
@@ -146,6 +132,7 @@
 			? 'glass-effect hover-lift shadow-soft mx-4 max-w-4xl rounded-2xl px-6 py-3'
 			: 'container-modern px-6 py-6'}"
 		class:backdrop-blur-xl={isScrolled}
+		class:hidden={isSidebarOpen}
 		style="
 			{isScrolled ? 'background: var(--card-foreground);' : ''}
 			transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -154,7 +141,7 @@
 		<a
 			href="/"
 			class="group flex items-center space-x-2 text-xl font-bold transition-all duration-300 hover:scale-105"
-			on:click={(e) => handleNavigation(e, '/')}
+			onclick={(e) => handleNavigation(e, '/')}
 		>
 			<div class="flex items-center space-x-2">
 				{#if isScrolled}
@@ -164,7 +151,7 @@
 						F
 					</div>
 				{:else}
-					<span class="gradient-text hidden transition-all duration-300 sm:block"> Fachry </span>
+					<span class="gradient-text transition-all duration-300"> Fachry </span>
 				{/if}
 			</div>
 		</a>
@@ -178,7 +165,7 @@
 					)
 						? 'text-primary bg-primary/10'
 						: 'text-muted-foreground hover:text-foreground'}"
-					on:click={(e) => handleNavigation(e, link.href)}
+					onclick={(e) => handleNavigation(e, link.href)}
 				>
 					<span class="relative">
 						{link.name}
@@ -195,7 +182,7 @@
 		<div class="md:hidden">
 			<button
 				class="hover:bg-secondary/50 rounded-lg p-2 transition-all duration-300 hover:scale-105"
-				on:click={toggleSidebar}
+				onclick={toggleSidebar}
 				aria-label={isSidebarOpen ? 'Close menu' : 'Open menu'}
 			>
 				<div class="flex h-6 w-6 flex-col items-center justify-center">
@@ -256,7 +243,7 @@
 		: 'pointer-events-none opacity-0'}"
 >
 	<div
-		class="glass-effect absolute top-0 right-0 h-full w-80 max-w-full transform transition-transform duration-500 ease-out {isSidebarOpen
+		class="glass-effect absolute top-0 right-0 h-full w-full max-w-full transform transition-transform duration-500 ease-out {isSidebarOpen
 			? 'translate-x-0'
 			: 'translate-x-full'}"
 		style="background: oklch(from var(--card) l c h / 0.95);"
@@ -264,7 +251,7 @@
 		<div class="flex justify-end p-6">
 			<button
 				class="hover:bg-secondary/50 rounded-full p-2 transition-colors"
-				on:click={handleNavClick}
+				onclick={handleNavClick}
 				aria-label="Close sidebar"
 			>
 				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -287,7 +274,7 @@
 					)
 						? 'text-primary bg-primary/10'
 						: 'text-muted-foreground hover:text-foreground'}"
-					on:click={(e) => handleNavigation(e, link.href)}
+					onclick={(e) => handleNavigation(e, link.href)}
 				>
 					<span class="relative">
 						{link.name}
@@ -309,14 +296,14 @@
 				</a>
 			{/each}
 
-			<div class="border-border/50 mt-6 border-t pt-6">
+			<div class="border-border/50 mt-6 border-t pt-6 text-xs sm:text-sm md:text-base">
 				{#if data?.resumeUrl}
 					<a
 						href={data.resumeUrl}
 						target="_blank"
 						rel="noopener noreferrer"
 						class="btn-modern block w-full text-center"
-						on:click={handleNavClick}
+						onclick={handleNavClick}
 					>
 						<span class="flex items-center justify-center space-x-2">
 							<span>Resume</span>
@@ -339,14 +326,14 @@
 		<div class="absolute right-6 bottom-8 left-6">
 			<div class="border-border/50 flex justify-center space-x-6 border-t pt-6">
 				{#each socialMediaWithLogo as link}
+					{@const Icon = link.component}
 					<a
 						href={link.href}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="bg-secondary/50 hover:bg-secondary hover-lift rounded-full p-3 transition-all duration-300 hover:scale-110"
+						class="bg-secondary/50 hover:bg-secondary hover-lift w-16 rounded-full p-3 transition-all duration-300 hover:scale-110"
 					>
-						<svelte:component
-							this={link.component}
+						<Icon
 							class="text-muted-foreground hover:text-foreground h-5 w-5 transition-colors"
 						/>
 					</a>

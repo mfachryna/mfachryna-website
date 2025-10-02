@@ -3,7 +3,7 @@
 </script>
 
 <section
-	class="from-background via-background-secondary to-background relative bg-gradient-to-r py-12"
+	class="relativepy-12"
 >
 	<div class="relative overflow-hidden">
 		<div class="mb-8 text-center">
@@ -12,13 +12,6 @@
 		</div>
 
 		<div class="relative">
-			<div
-				class="from-background pointer-events-none absolute top-0 bottom-0 left-0 z-10 w-20 bg-gradient-to-r to-transparent"
-			></div>
-			<div
-				class="from-background pointer-events-none absolute top-0 right-0 bottom-0 z-10 w-20 bg-gradient-to-l to-transparent"
-			></div>
-
 			<div class="flex justify-center whitespace-nowrap">
 				{#each skeletonLogos as _, i}
 					<div class="tech-logo-skeleton mx-6 md:mx-8" style="animation-delay: {i * 0.1}s">

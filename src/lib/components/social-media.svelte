@@ -60,7 +60,7 @@
 	{/each}
 
 	<button
-		on:click={toggleMode}
+		onclick={toggleMode}
 		class="bg-accent hover:text-primary transition-opacity duration-300 p-1.5 rounded-full"
 		aria-label="Toggle theme"
 		title="Toggle theme"

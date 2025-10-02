@@ -105,7 +105,7 @@
                 <p class="text-red-500 mb-4">{error}</p>
                 <button
                     class="bg-primary text-primary-foreground rounded px-4 py-2 hover:opacity-80 transition-opacity"
-                    on:click={() => {
+                    onclick={() => {
                         hasLoaded = false;
                         error = null;
                         loading = true;

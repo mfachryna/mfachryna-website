@@ -1,6 +1,7 @@
 <script>
 	import Icon from '@iconify/svelte';
 	import AnimateOnScroll from '$lib/components/animate-on-scroll.svelte';
+	import PageTitle from '../page-title.svelte';
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -44,23 +45,18 @@
 
 <section class="section-padding relative" id="about" aria-labelledby="about-title">
 	<div class="container-modern relative z-10">
-		<div class="mb-16 text-center">
-			<div class="inline-block">
-				<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
-					>Get to know me</span
-				>
-				<h2 class="text-responsive-xl gradient-text font-bold">About Me</h2>
-			</div>
-			<div
-				class="from-primary via-accent to-primary mx-auto h-1 w-24 rounded-full bg-gradient-to-r"
-			></div>
-		</div>
+		<PageTitle title="About Me" brief={'Get to know me'} />
 
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10 relative">
+		<div class="relative grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
 			{#each aboutCards as card, i (card.title)}
-				<AnimateOnScroll animation="bounce" delay={i * 150} threshold={0.1}>
+				<AnimateOnScroll
+					animation="bounce"
+					delay={i * 150}
+					threshold={0.1}
+					className="w-fit radius-xl mx-auto backdrop-blur-sm"
+				>
 					<article
-						class="group card-modern hover-lift relative overflow-hidden h-full"
+						class="group card-modern hover-lift bg-background/60 relative h-full overflow-hidden !p-0 backdrop-blur-md"
 						aria-labelledby={`card-title-${i}`}
 						style="--stagger-delay: {0.6 + i * 0.1}s"
 					>
@@ -94,14 +90,14 @@
 
 							<h3
 								id={`card-title-${i}`}
-								class="group-hover:text-primary mb-4 text-center text-xl font-bold transition-colors duration-300"
+								class="group-hover:text-primary mb-4 text-center text-base font-bold transition-colors duration-300 md:text-lg lg:text-xl"
 							>
 								{card.title}
 							</h3>
 
 							<div class="flex flex-1 items-center">
 								<p
-									class="text-muted-foreground group-hover:text-foreground text-center leading-relaxed transition-colors duration-300"
+									class="text-muted-foreground group-hover:text-foreground text-center text-sm leading-relaxed transition-colors duration-300 md:text-base"
 								>
 									{card.description}
 								</p>
@@ -119,26 +115,19 @@
 		<div class="mt-20 text-center">
 			<AnimateOnScroll animation="fade" delay={600}>
 				<div class="mx-auto max-w-3xl">
-					<p class="text-muted-foreground mb-8 text-lg leading-relaxed">
+					<p class="text-muted-foreground mb-8 text-base leading-relaxed lg:text-lg">
 						I believe in building software that not only works but makes a difference. Every line of
 						code is written with purpose, every system designed with the future in mind, and every
 						solution crafted to drive real business value.
 					</p>
 					<div class="flex flex-wrap justify-center gap-4">
-						<div class="badge-modern">🎯 Problem Solver</div>
-						<div class="badge-modern">🚀 Growth-Oriented</div>
-						<div class="badge-modern">💡 Strategic Thinker</div>
-						<div class="badge-modern">🔧 Technology Agnostic</div>
+						<div class="badge-modern text-sm md:text-base lg:text-lg">🎯 Problem Solver</div>
+						<div class="badge-modern text-sm md:text-base lg:text-lg">🚀 Growth-Oriented</div>
+						<div class="badge-modern text-sm md:text-base lg:text-lg">💡 Strategic Thinker</div>
+						<div class="badge-modern text-sm md:text-base lg:text-lg">🔧 Technology Agnostic</div>
 					</div>
 				</div>
 			</AnimateOnScroll>
 		</div>
 	</div>
 </section>
-
-<style>
-	.card:hover .card-icon {
-		background-color: var(--muted-foreground);
-		transform: scale(1.1);
-	}
-</style>

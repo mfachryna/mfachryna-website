@@ -172,7 +172,7 @@
 			<div class="py-16 text-center">
 				<div class="card-modern mx-auto max-w-md text-center">
 					<p class="text-destructive mb-4">{error}</p>
-					<button class="btn-modern" on:click={retryFetch}> Try Again </button>
+					<button class="btn-modern" onclick={retryFetch}> Try Again </button>
 				</div>
 			</div>
 		{:else if blogs.length === 0}
@@ -275,7 +275,7 @@
 
 			{#if showLoadMore && !isLoading}
 				<div class="mt-12 text-center">
-					<button class="btn-modern group" on:click={loadMoreBlogs}>
+					<button class="btn-modern group" onclick={loadMoreBlogs}>
 						<span class="flex items-center space-x-2">
 							<span>
 								{#if visibleBlogs < blogs.length}
