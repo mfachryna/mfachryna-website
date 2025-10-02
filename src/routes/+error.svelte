@@ -2,8 +2,6 @@
 	import { page } from '$app/stores';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import SEO from '$lib/components/seo.svelte';
-	import Wave from '$lib/components/wave.svelte';
-	import Layer1 from '$lib/background/layer1.svelte';
 	import AnimateOnScroll from '$lib/components/animate-on-scroll.svelte';
 
 	export let data;
@@ -63,7 +61,7 @@
 
 		<AnimateOnScroll animation="zoom-in" delay={400} threshold={0.1}>
 			<p class="text-foreground/50 text-sm">Lost? Here are some helpful links:</p>
-			<div class="flex flex-col mt-4 gap-4 sm:flex-row sm:justify-center">
+			<div class="mt-4 flex flex-col gap-4 sm:flex-row sm:justify-center">
 				<Button variant="default" onclick={goHome}>Go Home</Button>
 				<Button variant="outline" onclick={goBack}>Go Back</Button>
 			</div>

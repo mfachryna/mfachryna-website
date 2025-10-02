@@ -2,7 +2,6 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
-	import { Button } from '$lib/components/ui/button/index.js';
 
 	let { isSidebarOpen, toggleSidebar, data } = $props();
 	
@@ -129,7 +128,7 @@
 >
 	<nav
 		class="flex w-full items-center justify-between transition-all duration-500 ease-out {isScrolled
-			? 'glass-effect hover-lift shadow-soft mx-4 max-w-4xl rounded-2xl px-6 py-3'
+			? 'glass-effect shadow-soft mx-4 max-w-4xl rounded-2xl px-6 py-3'
 			: 'container-modern px-6 py-6'}"
 		class:backdrop-blur-xl={isScrolled}
 		class:hidden={isSidebarOpen}
