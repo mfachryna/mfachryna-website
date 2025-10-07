@@ -128,8 +128,8 @@
 >
 	<nav
 		class="flex w-full items-center justify-between transition-all duration-500 ease-out {isScrolled
-			? 'glass-effect shadow-soft mx-4 max-w-4xl rounded-2xl px-6 py-3'
-			: 'container-modern px-6 py-6'}"
+			? 'glass-effect shadow-soft mx-4 max-w-4xl rounded-2xl px-2 py-2'
+			: 'container-modern px-2 py-2'}"
 		class:backdrop-blur-xl={isScrolled}
 		class:hidden={isSidebarOpen}
 		style="
@@ -210,7 +210,7 @@
 					href={data.resumeUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="btn-modern group relative overflow-hidden"
+					class="btn-modern  !py-3 !px-5 group relative overflow-hidden"
 				>
 					<span class="relative z-10 flex items-center space-x-2">
 						<span>Resume</span>
