@@ -4,7 +4,7 @@
 	import { browser } from '$app/environment';
 
 	let { isSidebarOpen, toggleSidebar, data } = $props();
-	
+
 	let isScrolled = $derived(false);
 	let pathName = $derived($page.url.pathname);
 
@@ -52,7 +52,8 @@
 		}
 	};
 
-	let socialMediaWithLogo: Array<{ name: string; href: string; logo: string; component: any }> = $state([]);
+	let socialMediaWithLogo: Array<{ name: string; href: string; logo: string; component: any }> =
+		$state([]);
 
 	async function loadLogos() {
 		socialMediaWithLogo = await Promise.all(
@@ -128,8 +129,8 @@
 >
 	<nav
 		class="flex w-full items-center justify-between transition-all duration-500 ease-out {isScrolled
-			? 'glass-effect shadow-soft mx-4 max-w-4xl rounded-2xl px-2 py-2'
-			: 'container-modern px-2 py-2'}"
+			? 'glass-effect shadow-soft mx-4 max-w-4xl rounded-2xl px-4 py-2'
+			: 'container-modern !mt-2 px-4 py-2'}"
 		class:backdrop-blur-xl={isScrolled}
 		class:hidden={isSidebarOpen}
 		style="
@@ -210,7 +211,7 @@
 					href={data.resumeUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="btn-modern  !py-3 !px-5 group relative overflow-hidden"
+					class="btn-modern group relative overflow-hidden !px-5 !py-3"
 				>
 					<span class="relative z-10 flex items-center space-x-2">
 						<span>Resume</span>
@@ -332,9 +333,7 @@
 						rel="noopener noreferrer"
 						class="bg-secondary/50 hover:bg-secondary hover-lift w-16 rounded-full p-3 transition-all duration-300 hover:scale-110"
 					>
-						<Icon
-							class="text-muted-foreground hover:text-foreground h-5 w-5 transition-colors"
-						/>
+						<Icon class="text-muted-foreground hover:text-foreground h-5 w-5 transition-colors" />
 					</a>
 				{/each}
 			</div>

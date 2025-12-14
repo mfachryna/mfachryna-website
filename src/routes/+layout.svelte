@@ -84,19 +84,7 @@
 <ModeWatcher></ModeWatcher>
 
 <svelte:head>
-	<title>{siteName}</title>
-	<meta name="description" content={siteDescription} />
 
-	<meta property="og:title" content={siteName} />
-	<meta property="og:description" content={siteDescription} />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content={siteUrl} />
-	<meta property="og:image" content={`${siteUrl}/images/avatar/avatar.webp`} />
-
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content={siteName} />
-	<meta name="twitter:description" content={siteDescription} />
-	<meta name="twitter:image" content={`${siteUrl}/images/avatar/avatar.webp`} />
 
 	<link rel="icon" href="/favicon.ico" />
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

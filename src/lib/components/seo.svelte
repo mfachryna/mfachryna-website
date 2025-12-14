@@ -23,7 +23,7 @@
 	const siteDescription =
 		'Personal portfolio of Muhammad Fachry Noorchoolish Arif, a Software Engineer specializing in web development.';
 	const defaultImage = '/images/avatar/avatar.webp';
-	const siteUrl = 'https://yoursite.com';
+	const siteUrl = 'https://mfachryna.my.id';
 </script>
 
 <svelte:head>
