@@ -9,12 +9,15 @@ export async function GET({ url }) {
 
         const [experiences, totalExperiences] = await Promise.all([
             prisma.experience.findMany({
+                where: { isHidden: false },
                 skip,
                 take: limit,
                 include: { tags: true },
                 orderBy: { startDate: 'desc' }
             }),
-            prisma.experience.count()
+            prisma.experience.count({
+                where: { isHidden: false }
+            })
         ]);
 
         return json({
