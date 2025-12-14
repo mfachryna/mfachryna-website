@@ -24,7 +24,7 @@
 	let projects = data.projects;
 	let isLoading = false;
 	let error: string | null = null;
-	let visibleProjects = 3;
+	let visibleProjects = 4;
 
 	let currentPage = data.pagination?.page || 1;
 	let limit = data.pagination?.limit || 6;
@@ -54,7 +54,7 @@
 
 	function loadMoreProjects() {
 		if (visibleProjects < projects.length) {
-			visibleProjects += 3;
+			visibleProjects += 4;
 		} else if (currentPage < totalPages) {
 			fetchMoreProjects(currentPage + 1);
 		}
@@ -78,7 +78,7 @@
 				totalItems = result.pagination.totalItems;
 				totalPages = result.pagination.totalPages;
 
-				visibleProjects += 3;
+				visibleProjects += 4;
 			} else {
 				error = result.error || 'Failed to fetch more projects';
 			}
@@ -112,7 +112,7 @@
 				totalItems = result.pagination.totalItems;
 				totalPages = result.pagination.totalPages;
 
-				visibleProjects = Math.min(3, projects.length);
+				visibleProjects = Math.min(4, projects.length);
 			} else {
 				error = result.error || 'Failed to fetch projects';
 			}
@@ -137,7 +137,7 @@
 		if (projects.length === 0) {
 			fetchProjects();
 		} else {
-			visibleProjects = Math.min(3, projects.length);
+			visibleProjects = Math.min(4, projects.length);
 		}
 	});
 </script>
