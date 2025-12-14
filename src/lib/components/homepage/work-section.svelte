@@ -199,11 +199,7 @@
 					<button class="btn-modern group" onclick={() => loadMoreProjects()}>
 						<span class="flex items-center space-x-2">
 							<span>
-								{#if visibleProjects < projects.length}
-									Show More Projects ({projects.length - visibleProjects} remaining)
-								{:else}
-									Load More Projects
-								{/if}
+								Show More Projects 
 							</span>
 							<svg
 								class="h-4 w-4 transition-transform group-hover:translate-y-1"
