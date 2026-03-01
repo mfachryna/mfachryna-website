@@ -10,14 +10,8 @@
 
 <section class="bg-background section-padding relative" id="work" aria-labelledby="works-title">
 	<div class="container-modern relative z-10">
-		<div class="mb-16 space-y-4 text-center">
-			<div class="inline-block">
-				<div class="skeleton-shimmer mx-auto mb-2 h-6 w-32 rounded"></div>
-				<div class="skeleton-shimmer mx-auto h-12 w-48 rounded-lg"></div>
-			</div>
-			<div class="skeleton-shimmer mx-auto h-1 w-24 rounded-full"></div>
-			<div class="skeleton-shimmer mx-auto h-4 w-80 rounded"></div>
-		</div>
+		<PageTitle title="Featured Projects" brief={'A Portfolio'} description="A showcase of my latest work, from innovative web applications to scalable system architectures" />
+
 
 		<div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
 			{#each Array(skeletonRows) as _, i}
