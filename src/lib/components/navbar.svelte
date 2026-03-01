@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 
 	let { isSidebarOpen, toggleSidebar, data } = $props();
 
@@ -9,11 +10,11 @@
 	let pathName = $derived($page.url.pathname);
 
 	const navLinks = [
-		{ name: 'About', href: '#about' },
-		{ name: 'Experiences', href: '#experiences' },
-		{ name: 'Works', href: '#work' },
-		{ name: 'Blogs', href: '#blogs' },
-		{ name: 'Contacts', href: '#contacts' }
+		{ name: 'About', href: '/#about' },
+		{ name: 'Experiences', href: '/#experiences' },
+		{ name: 'Works', href: '/#work' },
+		{ name: 'Blogs', href: '/#blogs' },
+		{ name: 'Contacts', href: '/#contacts' }
 	];
 
 	const socialMedia = [
@@ -103,14 +104,29 @@
 			handleNavClick();
 		}
 
-		if (href === '/' || href === '#hero') {
-			window.scrollTo({
-				top: 0,
-				behavior: 'smooth'
-			});
+		if (href === '/' || href === '/#hero') {
+			if ($page.url.pathname === '/') {
+				window.scrollTo({
+					top: 0,
+					behavior: 'smooth'
+				});
+				if (browser) {
+					history.pushState(null, '', '/');
+				}
+			} else {
+				goto('/');
+			}
+			return;
+		}
 
-			if (browser) {
-				history.pushState(null, '', '/');
+		if (href.startsWith('/#')) {
+			if ($page.url.pathname === '/') {
+				smoothScrollTo(href.substring(1));
+				if (browser) {
+					history.pushState(null, '', href);
+				}
+			} else {
+				goto(href);
 			}
 			return;
 		}
