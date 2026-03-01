@@ -3,6 +3,7 @@
 	import '../app.css';
 	import Navbar from '../lib/components/navbar.svelte';
 	import ScrollIndicator from '$lib/components/scroll-indicator.svelte';
+	import LoadingIndicator from '$lib/components/loading-indicator.svelte';
 	import { ModeWatcher, toggleMode } from 'mode-watcher';
 	let { children, data } = $props();
 	import { Toaster } from 'svelte-french-toast';
@@ -123,9 +124,10 @@
 			outline-offset: 2px;
 			border-radius: var(--radius-sm);
 		}
-	</style>
+</style>
 </svelte:head>
 
+<LoadingIndicator />
 <SocialMedia />
 <Email />
 <Navbar {isSidebarOpen} {toggleSidebar} {data} />
