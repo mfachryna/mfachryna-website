@@ -60,7 +60,17 @@
 />
 
 <main class="mx-auto max-w-6xl px-4 py-12">
-	<h1 class="mb-8 text-4xl font-bold">Blog</h1>
+	<div class="mb-12 space-y-4">
+		<div class="inline-block">
+			<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
+				>Latest Insights</span
+			>
+			<h1 class="text-4xl font-bold gradient-text">Blog Posts</h1>
+		</div>
+		<p class="text-muted-foreground max-w-2xl mt-4">
+			Exploring ideas, sharing knowledge, and documenting my journey in software development.
+		</p>
+	</div>
 
 	{#if error}
 		<div class="mb-8 rounded-lg bg-red-100 p-4">
@@ -75,51 +85,86 @@
 	{/if}
 
 	{#if blogs.length === 0 && !error}
-		<p class="py-12 text-center text-lg">No blog posts found.</p>
+		<p class="py-12 text-center text-lg text-muted-foreground">No blog posts found.</p>
 	{:else}
 		<div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-			{#each blogs as blog (blog.id)}
-				<a
-					href={`/blog/${blog.slug}`}
-					class="flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-shadow duration-300 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800"
-				>
-					{#if blog.imageUrl}
-						<div class="relative aspect-video w-full">
-							<img
-								src={blog.imageUrl}
-								alt={blog.title}
-								class="h-full w-full object-cover"
-								width="400"
-								height="225"
-								loading="lazy"
-							/>
+			{#each blogs as blog, i (blog.id)}
+				<article class="blog-card group" style="animation-delay: {i * 100}ms;">
+					<a
+						href={`/blog/${blog.slug}`}
+						class="card-modern hover-lift block h-full overflow-hidden"
+						aria-labelledby={`blog-title-${i}`}
+					>
+						{#if blog.imageUrl || (blog.images && blog.images.length > 0)}
+							<div class="relative aspect-video overflow-hidden">
+								<img
+									src={blog.imageUrl || (blog.images && blog.images[0])}
+									alt={blog.title}
+									class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+									loading="lazy"
+								/>
+								<div
+									class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+								></div>
+							</div>
+						{/if}
+
+						<div class="space-y-4 p-6 flex flex-col h-full">
+							<time class="text-muted-foreground text-xs tracking-wider uppercase">
+								{new Date(blog.publishedAt || '').toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'short',
+									day: 'numeric'
+								})}
+							</time>
+
+							<h3
+								id={`blog-title-${i}`}
+								class="text-foreground group-hover:text-primary line-clamp-2 text-xl font-bold transition-colors duration-300"
+							>
+								{blog.title}
+							</h3>
+
+							<p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed flex-grow">
+								{blog.excerpt || blog.description}
+							</p>
+
+							<div class="flex flex-wrap gap-2 mt-auto">
+								{#if blog.tags && Array.isArray(blog.tags) && blog.tags.length > 0}
+									{#each blog.tags.slice(0, 3) as tag}
+										<span class="badge-modern text-xs">
+											{typeof tag === 'string' ? tag : tag.name}
+										</span>
+									{/each}
+									{#if blog.tags.length > 3}
+										<span class="text-muted-foreground text-xs">+{blog.tags.length - 3}</span>
+									{/if}
+								{:else}
+									<span class="badge-modern text-xs">Uncategorized</span>
+								{/if}
+							</div>
+
+							<div
+								class="text-primary mt-4 flex translate-y-2 transform items-center text-sm opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+							>
+								<span class="mr-2">Read more</span>
+								<svg
+									class="h-4 w-4 transition-transform group-hover:translate-x-1"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M13 7l5 5m0 0l-5 5m5-5H6"
+									></path>
+								</svg>
+							</div>
 						</div>
-					{/if}
-
-					<div class="flex flex-grow flex-col p-6">
-						<h2 class="hover:text-primary mb-2 text-xl font-bold transition-colors">
-							{blog.title}
-						</h2>
-
-						<p class="mb-4 text-sm text-gray-500 dark:text-gray-400">
-							{new Date(blog.publishedAt || '').toLocaleDateString('en-US', {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric'
-							})}
-						</p>
-
-						<p class="mb-6 flex-grow text-gray-600 dark:text-gray-300">
-							{blog.excerpt || blog.description}
-						</p>
-
-						<div class="mt-auto flex flex-wrap gap-2">
-							{#each blog.tags as tag}
-								<Pil>{tag.name}</Pil>
-							{/each}
-						</div>
-					</div>
-				</a>
+					</a>
+				</article>
 			{/each}
 		</div>
 
@@ -155,3 +200,26 @@
 		{/if}
 	{/if}
 </main>
+
+<style>
+	.blog-card {
+		opacity: 0;
+		animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	}
+
+	@keyframes slideInUp {
+		from {
+			opacity: 0;
+			transform: translateY(40px) scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	.blog-card {
+		will-change: transform, opacity;
+		contain: layout style paint;
+	}
+</style>

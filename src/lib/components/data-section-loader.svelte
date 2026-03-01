@@ -27,7 +27,7 @@
                             component = comp;
                             data = await response.json();
                         } catch (err) {
-                            error = err;
+                            error = err instanceof Error ? err : Error(String(err));
                         } finally {
                             loading = false;
                             observer.unobserve(entry.target);

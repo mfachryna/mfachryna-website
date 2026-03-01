@@ -219,6 +219,15 @@
 				</div>
 			{/if}
 
+			<div class="mt-8 text-center">
+				<a href="/projects" class="btn-modern-outline inline-flex items-center space-x-2">
+					<span>View All Projects</span>
+					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+					</svg>
+				</a>
+			</div>
+
 			{#if projects.length > 0}
 				<div class="mt-8 text-center">
 					<p class="text-muted-foreground text-sm">
