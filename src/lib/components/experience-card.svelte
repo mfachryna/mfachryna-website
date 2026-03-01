@@ -246,6 +246,14 @@
 								</div>
 							</div>
 						{/if}
+						<div class="mt-6 flex">
+							<a
+								href={`/experiences/${item.id}`}
+								class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2 text-sm font-medium transition-colors"
+							>
+								Read Full Story
+							</a>
+						</div>
 					</div>
 				</div>
 			{/if}
