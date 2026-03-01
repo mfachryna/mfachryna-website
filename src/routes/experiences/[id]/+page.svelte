@@ -46,7 +46,7 @@
 	type="profile"
 	{structuredData}
 >
-	<article class="mx-auto max-w-4xl px-4 py-12">
+	<article class="mx-auto max-w-4xl px-4 pt-32 pb-12">
 		<div class="mb-4">
 			<a href="/#experiences" class="text-primary flex items-center gap-1 hover:underline">
 				<svg

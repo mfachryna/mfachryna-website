@@ -40,7 +40,7 @@
   description="Explore the web development projects and software engineering work of Muhammad Fachry Noorchoolish Arif."
 />
 
-<main class="mx-auto max-w-6xl px-4 py-12">
+<main class="mx-auto max-w-6xl px-4 pt-32 pb-12">
 	<div class="mb-12 space-y-4">
 		<div class="inline-block">
 			<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
