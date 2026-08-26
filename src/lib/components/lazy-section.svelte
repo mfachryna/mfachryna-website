@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import WorkSkeleton from '$lib/components/skeletons/work-skeleton.svelte';
     import ExperiencesSkeleton from '$lib/components/skeletons/experiences-skeleton.svelte';
+    import BlogSkeleton from '$lib/components/skeletons/blog-skeleton.svelte';
 
     export let apiEndpoint: string;
     export let componentName: string;
@@ -83,6 +84,12 @@
             <WorkSkeleton {skeletonRows} />
         {:else if componentName === 'experiences'}
             <ExperiencesSkeleton {skeletonRows} />
+        {:else if componentName === 'blogs'}
+            <section class="bg-background relative w-full py-20" id={sectionId}>
+                <div class="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-28">
+                    <BlogSkeleton rows={skeletonRows} />
+                </div>
+            </section>
         {:else}
             <section class="bg-background relative w-full py-20" id={sectionId}>
                 <div class="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-28">

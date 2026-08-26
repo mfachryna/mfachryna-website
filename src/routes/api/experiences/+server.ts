@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
+import { CACHE_HEADERS } from '$lib/server/cache';
 
 export async function GET({ url }) {
     try {
@@ -20,15 +21,20 @@ export async function GET({ url }) {
             })
         ]);
 
-        return json({
-            experiences,
-            pagination: {
-                page,
-                limit,
-                totalItems: totalExperiences,
-                totalPages: Math.ceil(totalExperiences / limit)
-            }
-        });
+        // NOTE: `content` is deliberately NOT omitted here — experience-card.svelte
+        // renders it inline in the list view.
+        return json(
+            {
+                experiences,
+                pagination: {
+                    page,
+                    limit,
+                    totalItems: totalExperiences,
+                    totalPages: Math.ceil(totalExperiences / limit)
+                }
+            },
+            { headers: CACHE_HEADERS }
+        );
     } catch (error) {
         console.error('Error loading experiences:', error);
         return json(

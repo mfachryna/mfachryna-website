@@ -4,6 +4,23 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="preload"
+			href="/fonts/inter-latin.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<script>
+			/*
+			  Scroll-intro animations start their elements at opacity:0 and rely on
+			  JavaScript to reveal them. Marking the document here — before first
+			  paint, so there is no flash — lets that hidden initial state be scoped
+			  to `.js`. Without scripting, the content simply renders visible instead
+			  of staying invisible forever.
+			*/
+			document.documentElement.classList.add('js');
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

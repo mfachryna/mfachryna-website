@@ -1,4 +1,6 @@
 <script lang="ts">
+	import BlogCard from '$lib/components/blog-card.svelte';
+	import BlogSkeleton from '$lib/components/skeletons/blog-skeleton.svelte';
 	import PageTitle from '../page-title.svelte';
 	import Pil from '../pil.svelte';
 	import Button from '../ui/button/button.svelte';
@@ -161,13 +163,8 @@
 		</div>
 
 		{#if isLoading && blogs.length === 0}
-			<div class="flex justify-center py-16">
-				<div class="loading-pulse">
-					<div
-						class="border-primary/20 border-t-primary h-12 w-12 animate-spin rounded-full border-4"
-					></div>
-				</div>
-			</div>
+			<!-- Matches the real card grid so nothing shifts when data lands. -->
+			<BlogSkeleton rows={3} />
 		{:else if error}
 			<div class="py-16 text-center">
 				<div class="card-modern mx-auto max-w-md text-center">
@@ -184,82 +181,7 @@
 		{:else}
 			<div class="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
 				{#each blogs.slice(0, visibleBlogs) as blog, i (blog.id)}
-					<article class="blog-card group" style="animation-delay: {i * 100}ms;">
-						<a
-							href={`/blog/${blog.slug}`}
-							class="card-modern hover-lift block h-full overflow-hidden"
-							aria-labelledby={`blog-title-${i}`}
-						>
-							{#if blog.imageUrl || (blog.images && blog.images.length > 0)}
-								<div class="relative aspect-video overflow-hidden">
-									<img
-										src={blog.imageUrl || (blog.images && blog.images[0])}
-										alt={blog.title}
-										class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-										loading="lazy"
-									/>
-									<div
-										class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-									></div>
-								</div>
-							{/if}
-
-							<div class="space-y-4 p-6">
-								<time class="text-muted-foreground text-xs tracking-wider uppercase">
-									{new Date(blog.publishedAt || '').toLocaleDateString('en-US', {
-										year: 'numeric',
-										month: 'short',
-										day: 'numeric'
-									})}
-								</time>
-
-								<h3
-									id={`blog-title-${i}`}
-									class="text-foreground group-hover:text-primary line-clamp-2 text-xl font-bold transition-colors duration-300"
-								>
-									{blog.title}
-								</h3>
-
-								<p class="text-muted-foreground line-clamp-3 text-sm leading-relaxed">
-									{blog.excerpt || blog.description}
-								</p>
-
-								<div class="flex flex-wrap gap-2">
-									{#if blog.tags && Array.isArray(blog.tags) && blog.tags.length > 0}
-										{#each blog.tags.slice(0, 3) as tag}
-											<span class="badge-modern text-xs">
-												{typeof tag === 'string' ? tag : tag.name}
-											</span>
-										{/each}
-										{#if blog.tags.length > 3}
-											<span class="text-muted-foreground text-xs">+{blog.tags.length - 3}</span>
-										{/if}
-									{:else}
-										<span class="badge-modern text-xs">Uncategorized</span>
-									{/if}
-								</div>
-
-								<div
-									class="text-primary flex translate-y-2 transform items-center text-sm opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-								>
-									<span class="mr-2">Read more</span>
-									<svg
-										class="h-4 w-4 transition-transform group-hover:translate-x-1"
-										fill="none"
-										stroke="currentColor"
-										viewBox="0 0 24 24"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											stroke-width="2"
-											d="M13 7l5 5m0 0l-5 5m5-5H6"
-										></path>
-									</svg>
-								</div>
-							</div>
-						</a>
-					</article>
+					<BlogCard {blog} variant="compact" index={i} />
 				{/each}
 			</div>
 
@@ -321,49 +243,3 @@
 		{/if}
 	</div>
 </section>
-
-<style>
-	.blog-card {
-		opacity: 0;
-		animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	}
-
-	@keyframes slideInUp {
-		from {
-			opacity: 0;
-			transform: translateY(40px) scale(0.95);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0) scale(1);
-		}
-	}
-
-	.blog-card {
-		will-change: transform, opacity;
-		contain: layout style paint;
-	}
-
-	.loading-pulse {
-		position: relative;
-	}
-
-	.loading-pulse::after {
-		content: '';
-		position: absolute;
-		inset: -10px;
-		background: conic-gradient(from 0deg, transparent, var(--primary), transparent);
-		border-radius: 50%;
-		opacity: 0.3;
-		animation: rotate 2s linear infinite;
-	}
-
-	@keyframes rotate {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
-	}
-</style>

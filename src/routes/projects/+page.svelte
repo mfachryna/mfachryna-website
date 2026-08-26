@@ -1,16 +1,21 @@
 <script lang="ts">
-  import ProjectCard from '$lib/components/project-card.svelte';
-  import type { ProjectWithTags } from '$lib/types/project';
-  import SEO from '$lib/components/seo.svelte';
+	import ProjectCard from '$lib/components/project-card.svelte';
+	import type { ProjectWithTags } from '$lib/types/project';
+	import SEO from '$lib/components/seo.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 
-  export let data;
-  let projects: ProjectWithTags[] = data.projects;
+	export let data;
+	let projects: ProjectWithTags[] = data.projects;
 	let pagination = data.pagination;
 	let error = data.error;
 
 	let currentPage = pagination.page;
 	let totalPages = pagination.totalPages;
+
+	/** See blog/+page.svelte — hero slot only makes sense on page 1. */
+	$: showHero = currentPage === 1 && projects.length > 0;
+	$: heroProject = showHero ? (projects.find((p) => p.featured) ?? projects[0]) : null;
+	$: gridProjects = showHero ? projects.filter((p) => p.id !== heroProject?.id) : projects;
 
 	async function loadPage(page: number) {
 		const url = new URL(window.location.href);
@@ -35,74 +40,80 @@
 	}
 </script>
 
-<SEO 
-  title="Projects | Muhammad Fachry Noorchoolish Arif"
-  description="Explore the web development projects and software engineering work of Muhammad Fachry Noorchoolish Arif."
+<SEO
+	title="Projects | Muhammad Fachry Noorchoolish Arif"
+	description="Explore the web development projects and software engineering work of Muhammad Fachry Noorchoolish Arif."
 />
 
-<main class="mx-auto max-w-6xl px-4 pt-32 pb-12">
-	<div class="mb-12 space-y-4">
-		<div class="inline-block">
-			<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
-				>Portfolio</span
-			>
-			<h1 class="text-4xl font-bold gradient-text">Projects</h1>
-		</div>
-		<p class="text-muted-foreground max-w-2xl">
+<main class="mx-auto max-w-6xl px-6 pt-32 pb-24 sm:px-8">
+	<header class="border-border/60 mb-12 border-b pb-10">
+		<span class="text-muted-foreground mb-3 block text-xs font-medium tracking-[0.2em] uppercase">
+			Portfolio
+		</span>
+		<h1 class="gradient-text text-4xl font-bold tracking-tight sm:text-5xl">Projects</h1>
+		<p class="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed sm:text-lg">
 			A showcase of my software engineering work and web development projects.
 		</p>
-	</div>
+	</header>
 
 	{#if error}
-		<div class="mb-8 rounded-lg bg-red-100 p-4">
-			<p class="text-red-800">{error}</p>
+		<div class="border-destructive/40 bg-destructive/10 mb-10 rounded-xl border p-5">
+			<p class="text-destructive font-medium">{error}</p>
 			<button
-				class="mt-2 rounded bg-red-800 px-4 py-2 text-white hover:bg-red-700"
-				onclick={() => loadPage(1)}
+				class="border-destructive/40 hover:bg-destructive/20 mt-3 rounded-lg border px-4 py-2 text-sm transition-colors"
+				onclick={() => loadPage(currentPage)}
 			>
-				Try Again
+				Try again
 			</button>
 		</div>
 	{/if}
 
 	{#if projects.length === 0 && !error}
-		<p class="py-12 text-center text-lg text-muted-foreground">No projects found.</p>
-	{:else}
-		<div class="grid gap-8 lg:grid-cols-2 lg:gap-12">
-			{#each projects as project, i (project.id)}
-				<ProjectCard {project} index={i} />
-			{/each}
+		<div class="border-border/60 rounded-2xl border border-dashed py-20 text-center">
+			<p class="text-muted-foreground text-lg">No projects found.</p>
 		</div>
-
-		{#if totalPages > 1}
-			<div class="mt-16 flex justify-center">
-				<div class="flex items-center gap-2">
-					<Button
-						variant="outline"
-						disabled={currentPage === 1}
-						onclick={() => loadPage(currentPage - 1)}
-					>
-						Previous
-					</Button>
-
-					{#each Array(totalPages) as _, i}
-						<Button
-							variant={currentPage === i + 1 ? 'default' : 'outline'}
-							onclick={() => loadPage(i + 1)}
-						>
-							{i + 1}
-						</Button>
-					{/each}
-
-					<Button
-						variant="outline"
-						disabled={currentPage === totalPages}
-						onclick={() => loadPage(currentPage + 1)}
-					>
-						Next
-					</Button>
-				</div>
+	{:else}
+		{#if heroProject}
+			<div class="mb-10">
+				<ProjectCard project={heroProject} variant="hero" index={0} />
 			</div>
 		{/if}
+
+		{#if gridProjects.length}
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{#each gridProjects as project, i (project.id)}
+					<ProjectCard {project} variant="compact" index={i} />
+				{/each}
+			</div>
+		{/if}
+	{/if}
+
+	{#if totalPages > 1}
+		<nav class="mt-16 flex justify-center" aria-label="Pagination">
+			<div class="flex items-center gap-2">
+				<Button
+					variant="outline"
+					disabled={currentPage === 1}
+					onclick={() => loadPage(currentPage - 1)}
+				>
+					Previous
+				</Button>
+				{#each Array(totalPages) as _, i}
+					<Button
+						variant={currentPage === i + 1 ? 'default' : 'outline'}
+						onclick={() => loadPage(i + 1)}
+					>
+						{i + 1}
+					</Button>
+				{/each}
+				<Button
+					variant="outline"
+					disabled={currentPage === totalPages}
+					onclick={() => loadPage(currentPage + 1)}
+				>
+					Next
+				</Button>
+			</div>
+		</nav>
 	{/if}
 </main>

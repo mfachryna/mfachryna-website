@@ -1,0 +1,165 @@
+/* ========================================================
+   Article body styling for CMS (Tiptap) HTML.
+   ========================================================
+   Applied via `.prose-content` alongside Tailwind's
+   `prose` classes. These rules are intentionally UNLAYERED
+   so they win over the typography plugin's `utilities`
+   layer without needing `!important`.
+
+   Everything here reads from the oklch design tokens in
+   app.css, so light/dark mode both work from one source.
+   ======================================================== */
+
+.prose-content {
+	--tw-prose-body: var(--foreground);
+	--tw-prose-headings: var(--foreground);
+	--tw-prose-lead: var(--muted-foreground);
+	--tw-prose-links: var(--primary);
+	--tw-prose-bold: var(--foreground);
+	--tw-prose-counters: var(--muted-foreground);
+	--tw-prose-bullets: var(--border);
+	--tw-prose-hr: var(--border);
+	--tw-prose-quotes: var(--foreground);
+	--tw-prose-quote-borders: var(--primary);
+	--tw-prose-captions: var(--muted-foreground);
+	--tw-prose-code: var(--foreground);
+	--tw-prose-pre-code: var(--foreground);
+	--tw-prose-pre-bg: var(--background-secondary);
+	--tw-prose-th-borders: var(--border);
+	--tw-prose-td-borders: var(--border);
+
+	color: var(--foreground);
+	overflow-wrap: break-word;
+}
+
+/* --- Headings: tighter rhythm than the plugin default,
+       so long CMS articles don't feel airy and unstructured --- */
+.prose-content :where(h2) {
+	margin-top: 2.5em;
+	margin-bottom: 0.75em;
+	padding-bottom: 0.3em;
+	border-bottom: 1px solid var(--border);
+	scroll-margin-top: 6rem;
+}
+
+.prose-content :where(h3) {
+	margin-top: 2em;
+	margin-bottom: 0.6em;
+	scroll-margin-top: 6rem;
+}
+
+.prose-content :where(h2, h3, h4):first-child {
+	margin-top: 0;
+}
+
+/* --- Links --- */
+.prose-content :where(a) {
+	color: var(--primary);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
+	transition: opacity 0.15s ease;
+}
+
+.prose-content :where(a):hover {
+	opacity: 0.75;
+}
+
+/* --- Inline code --- */
+.prose-content :where(code):not(pre code) {
+	background-color: var(--background-secondary);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-sm, 0.25rem);
+	padding: 0.15em 0.4em;
+	font-size: 0.875em;
+	font-weight: 500;
+}
+
+/* the plugin adds literal backticks around inline code — remove them */
+.prose-content :where(code):not(pre code)::before,
+.prose-content :where(code):not(pre code)::after {
+	content: none;
+}
+
+/* --- Code blocks: always dark, in both themes --- */
+.prose-content :where(pre) {
+	background-color: oklch(0.19 0.01 260);
+	color: oklch(0.93 0.01 260);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg, 0.5rem);
+	padding: 1rem 1.25rem;
+	overflow-x: auto;
+	font-size: 0.875rem;
+	line-height: 1.7;
+}
+
+.prose-content :where(pre code) {
+	background: none;
+	border: none;
+	padding: 0;
+	color: inherit;
+	font-size: inherit;
+}
+
+/* --- Blockquote --- */
+.prose-content :where(blockquote) {
+	border-left: 3px solid var(--primary);
+	background-color: var(--background-secondary);
+	border-radius: 0 var(--radius-md, 0.375rem) var(--radius-md, 0.375rem) 0;
+	padding: 0.75rem 1.25rem;
+	font-style: normal;
+}
+
+.prose-content :where(blockquote p:first-of-type)::before,
+.prose-content :where(blockquote p:last-of-type)::after {
+	content: none;
+}
+
+/* --- Images from the editor: never overflow, never cause CLS --- */
+.prose-content :where(img) {
+	border-radius: var(--radius-lg, 0.5rem);
+	max-width: 100%;
+	height: auto;
+	margin-inline: auto;
+}
+
+/* --- Tables: scrollable on narrow screens instead of blowing out the page --- */
+.prose-content :where(table) {
+	display: block;
+	width: 100%;
+	overflow-x: auto;
+	border-collapse: collapse;
+	font-size: 0.9375rem;
+}
+
+.prose-content :where(th) {
+	background-color: var(--background-secondary);
+	font-weight: 600;
+	text-align: left;
+}
+
+.prose-content :where(th, td) {
+	border: 1px solid var(--border);
+	padding: 0.5rem 0.75rem;
+}
+
+/* --- Tiptap emits empty paragraphs for blank lines; keep them from
+       collapsing so spacing matches what the author saw in the CMS --- */
+.prose-content :where(p:empty)::after {
+	content: '\00a0';
+}
+
+/* --- Embeds (Tiptap YouTube extension) --- */
+.prose-content :where(iframe) {
+	width: 100%;
+	aspect-ratio: 16 / 9;
+	height: auto;
+	border-radius: var(--radius-lg, 0.5rem);
+	border: 1px solid var(--border);
+}
+
+/* --- Horizontal rule --- */
+.prose-content :where(hr) {
+	border-color: var(--border);
+	margin-block: 3em;
+}

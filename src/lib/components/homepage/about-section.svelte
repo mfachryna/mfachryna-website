@@ -10,29 +10,40 @@
 			'@type': 'Person',
 			name: 'Muhammad Fachry Noorchoolish Arif',
 			jobTitle: 'Software Engineer',
-			description: 'Problem solver, versatile expert, and growth-oriented software engineer',
-			skills: ['Problem Solving', 'Software Development', 'Web3', 'Strategic Thinking']
+			description:
+				'Backend engineer at Suitmedia in Jakarta, building Laravel and MySQL systems for loyalty, warehouse and admissions platforms.',
+			skills: ['Laravel', 'PHP', 'MySQL', 'Go', 'PostgreSQL', 'API Design', 'Technical Documentation']
 		}
 	};
+
+	// NOTE: `fa-solid` in Iconify is Font Awesome 5. FA6-only names
+	// (arrow-trend-up, screwdriver-wrench) resolve to nothing and render blank.
+	// Verify a name at https://api.iconify.design/fa-solid/<name>.svg before using it.
+	const traits = [
+		{ label: 'Problem Solver', icon: 'bullseye' },
+		{ label: 'Growth-Oriented', icon: 'chart-line' },
+		{ label: 'Strategic Thinker', icon: 'lightbulb' },
+		{ label: 'Technology Agnostic', icon: 'tools' }
+	];
 
 	export const aboutCards = [
 		{
 			title: 'The Architect',
 			icon: 'drafting-compass',
 			description:
-				"I design the blueprint for your software's success. My focus is on creating clean, scalable, and maintainable systems that stand the test of time and traffic. I build the strong foundation you need for future growth."
+				'I design the data models and APIs the rest of the system leans on. On the loyalty platform that meant a schema that stayed correct across point-of-sale and order management — the kind of foundation you only notice when it is missing.'
 		},
 		{
 			title: 'The Pragmatist',
 			icon: 'sliders-h',
 			description:
-				'Technology is a toolbox, and I bring the whole set. I choose the right language, framework, and architecture for your specific challenge, ensuring practical, efficient solutions without being dogmatic about a single technology.'
+				'Technology is a toolbox, not a religion. Laravel and MySQL for most of what I build, Go and PostgreSQL where the problem calls for it. The right choice is the one your team can still maintain a year after I hand it over.'
 		},
 		{
 			title: 'The Business Partner',
 			icon: 'handshake',
 			description:
-				'I sit at the intersection of code and commerce. I listen to your business needs and translate them into technical solutions that drive growth, improve efficiency, and deliver a measurable return on investment. Your goals become my technical roadmap.'
+				'I work to deadlines that belong to somebody else. Five maintenance projects and one build running in parallel, 84% of features delivered on time or early, and a handover at the end that leaves your team able to run it without me.'
 		}
 	];
 </script>
@@ -97,7 +108,7 @@
 
 							<div class="flex flex-1 items-center">
 								<p
-									class="text-muted-foreground group-hover:text-foreground text-center text-sm leading-relaxed transition-colors duration-300 md:text-base"
+									class="text-muted-foreground group-hover:text-foreground text-sm leading-relaxed transition-colors duration-300 md:text-base"
 								>
 									{card.description}
 								</p>
@@ -112,7 +123,7 @@
 			{/each}
 		</div>
 
-		<div class="mt-20 text-center">
+		<div class="mt-20">
 			<AnimateOnScroll animation="fade" delay={600}>
 				<div class="mx-auto max-w-3xl">
 					<p class="text-muted-foreground mb-8 text-base leading-relaxed lg:text-lg">
@@ -121,10 +132,19 @@
 						solution crafted to drive real business value.
 					</p>
 					<div class="flex flex-wrap justify-center gap-4">
-						<div class="badge-modern text-sm md:text-base lg:text-lg">🎯 Problem Solver</div>
-						<div class="badge-modern text-sm md:text-base lg:text-lg">🚀 Growth-Oriented</div>
-						<div class="badge-modern text-sm md:text-base lg:text-lg">💡 Strategic Thinker</div>
-						<div class="badge-modern text-sm md:text-base lg:text-lg">🔧 Technology Agnostic</div>
+						<!--
+							The labels are the original ones. Only the glyphs changed: full-colour
+							emoji (red target, orange rocket, yellow bulb) sat on top of the muted
+							oklch palette and read as pasted on. These are monochrome Iconify icons
+							inheriting currentColor, the same set the cards above already use, so
+							they take the theme instead of fighting it.
+						-->
+						{#each traits as trait (trait.label)}
+							<div class="badge-modern inline-flex items-center gap-2 text-sm md:text-base lg:text-lg">
+								<Icon icon="fa-solid:{trait.icon}" class="text-primary shrink-0 text-[0.85em]" />
+								<span>{trait.label}</span>
+							</div>
+						{/each}
 					</div>
 				</div>
 			</AnimateOnScroll>

@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
+import { CACHE_HEADERS } from '$lib/server/cache';
 
 export async function GET({ url }) {
 	try {
@@ -9,6 +10,8 @@ export async function GET({ url }) {
 
 		const [projectsRaw, totalProjects] = await Promise.all([
 			prisma.project.findMany({
+				// `content` is never rendered by the project cards.
+				omit: { content: true },
 				skip,
 				take: limit,
 				include: { tags: true },
@@ -23,16 +26,19 @@ export async function GET({ url }) {
 			thumbnailUrl: project.thumbnailUrl ?? null
 		}));
 
-		return json({
-			success: true,
-			projects,
-			pagination: {
-				page,
-				limit,
-				totalItems: totalProjects,
-				totalPages: Math.ceil(totalProjects / limit)
-			}
-		});
+		return json(
+			{
+				success: true,
+				projects,
+				pagination: {
+					page,
+					limit,
+					totalItems: totalProjects,
+					totalPages: Math.ceil(totalProjects / limit)
+				}
+			},
+			{ headers: CACHE_HEADERS }
+		);
 	} catch (error) {
 		console.error('Error loading projects:', error);
 		return json(

@@ -1,21 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { marked } from 'marked';
 	import Pil from '$lib/components/pil.svelte';
 	import type { PageData } from './$types';
 	import SEO from '$lib/components/seo.svelte';
 
 	export let data: PageData;
 
-	const experience = data.experience;
-	let content = '';
+	$: experience = data.experience;
 
-	onMount(async () => {
-		if (experience.content) {
-			const parsedContent = marked.parse(experience.content);
-			content = parsedContent instanceof Promise ? await parsedContent : parsedContent;
-		}
-	});
+	/* Tiptap HTML from the CMS, rendered server-side. See the note in
+	   blog/[slug]/+page.svelte — this is not markdown. */
+	$: content = experience.content ?? '';
 
 	const formatDate = (date: string | Date | null) => {
 		if (!date) return 'Present';
@@ -25,7 +19,10 @@
 		});
 	};
 
-	const structuredData = {
+	// Must be reactive: `experience` is declared with `$:` above, so a plain
+	// `const` here would evaluate before that assignment runs and crash on
+	// `experience.title` during SSR.
+	$: structuredData = {
 		'@context': 'https://schema.org',
 		'@type': 'ProfilePage',
 		mainEntity: {
@@ -145,59 +142,12 @@
 		{/if}
 
 		{#if content}
-			<section class="prose prose-lg dark:prose-invert max-w-none pt-8 border-t border-gray-200 dark:border-gray-800">
-				<h3 class="mb-6 text-2xl font-bold">Experience Details</h3>
-				{@html content}
+			<section class="border-border/60 mt-12 border-t pt-12">
+				<h2 class="mb-6 text-2xl font-bold tracking-tight">Experience Details</h2>
+				<div class="prose prose-lg prose-content dark:prose-invert max-w-none">
+					{@html content}
+				</div>
 			</section>
 		{/if}
 	</article>
 </SEO>
-
-<style>
-	/* Markdown styling */
-	:global(.prose h1) {
-		font-size: 2rem;
-		margin-top: 1.5rem;
-		margin-bottom: 1rem;
-	}
-
-	:global(.prose h2) {
-		font-size: 1.5rem;
-		margin-top: 1.3rem;
-		margin-bottom: 0.8rem;
-		border-bottom: 1px solid #e5e7eb;
-		padding-bottom: 0.3rem;
-	}
-
-	:global(.prose h3) {
-		font-size: 1.25rem;
-		margin-top: 1.2rem;
-		margin-bottom: 0.6rem;
-	}
-
-	:global(.prose pre) {
-		background-color: #1e1e1e;
-		color: #f8f8f2;
-		padding: 1rem;
-		border-radius: 0.375rem;
-		overflow-x: auto;
-	}
-
-	:global(.prose code) {
-		color: #e83e8c;
-		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-	}
-
-	:global(.prose pre code) {
-		color: inherit;
-	}
-
-	:global(.prose a) {
-		color: #3b82f6;
-		text-decoration: underline;
-	}
-
-	:global(.dark .prose a) {
-		color: #60a5fa;
-	}
-</style>
