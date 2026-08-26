@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675" role="img" aria-label="typescript">
+  <defs>
+    <linearGradient id="gtypes" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7a5fa8"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <pattern id="ptypes" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#gtypes)"/>
+  <rect width="1200" height="675" fill="url(#ptypes)"/>
+  <circle cx="980" cy="150" r="190" fill="#7a5fa8" fill-opacity="0.18"/>
+  <circle cx="240" cy="560" r="130" fill="#ffffff" fill-opacity="0.04"/>
+  <text x="72" y="600" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="30" fill="#ffffff" fill-opacity="0.5">typescript</text>
+</svg>

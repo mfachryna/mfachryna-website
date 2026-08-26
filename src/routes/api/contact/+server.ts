@@ -1,7 +1,35 @@
 import { json } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
+import { env } from '$env/dynamic/private';
 import nodemailer from 'nodemailer';
 import type { RequestHandler } from './$types';
+
+/** Max accepted length per field. Previously unbounded. */
+const FIELD_LIMITS: Record<string, number> = {
+	needs: 100,
+	name: 100,
+	email: 254,
+	projectType: 100,
+	budget: 100,
+	additional: 5000
+};
+
+/** Escape untrusted text before it goes into the notification email body. */
+function escapeHtml(value: unknown): string {
+	return String(value ?? '')
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;');
+}
+
+/** Strip CR/LF so a value can never inject an extra mail header. */
+function headerSafe(value: unknown): string {
+	return String(value ?? '')
+		.replace(/[\r\n]+/g, ' ')
+		.trim();
+}
 
 const rateLimits = new Map<string, number[]>();
 
@@ -55,26 +83,23 @@ function cleanupRateLimits() {
 }
 
 const transporter = nodemailer.createTransport({
-	host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-	port: Number(process.env.EMAIL_PORT) || 465,
-	secure: process.env.EMAIL_SECURE === 'true' || true,
+	host: env.EMAIL_HOST || 'smtp.gmail.com',
+	port: Number(env.EMAIL_PORT) || 465,
+	secure: env.EMAIL_SECURE !== 'false',
 	auth: {
-		user: process.env.EMAIL_USER,
-		pass: process.env.EMAIL_PASS
-	},
-	debug: true
+		user: env.EMAIL_USER,
+		pass: env.EMAIL_PASS
+	}
 });
 
-const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || process.env.EMAIL_USER;
+const NOTIFICATION_EMAIL = env.NOTIFICATION_EMAIL || env.EMAIL_USER;
 
-console.log('Email configuration:', {
-	host: process.env.EMAIL_HOST,
-	port: process.env.EMAIL_PORT,
-	secure: process.env.EMAIL_SECURE,
-	user: process.env.EMAIL_USER ? '***exists***' : 'undefined',
-	pass: process.env.EMAIL_PASS ? '***exists***' : 'undefined',
-	notification: NOTIFICATION_EMAIL
-});
+/**
+ * The envelope sender must be an address we are authorised to send as,
+ * otherwise SPF/DKIM fails and the notification lands in spam. The
+ * submitter's address goes in Reply-To instead.
+ */
+const MAIL_FROM = env.EMAIL_FROM || env.EMAIL_USER;
 
 export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	const clientIp = getClientAddress();
@@ -115,7 +140,28 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 			}
 		}
 
-		if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
+		// Every field must be a string within its limit. Without this, a client
+		// could post an object, or megabytes of text, straight into the database.
+		for (const [field, max] of Object.entries(FIELD_LIMITS)) {
+			const value = formData[field];
+			if (value === undefined || value === null) continue;
+			if (typeof value !== 'string') {
+				return json(
+					{ success: false, message: `${field} must be text` },
+					{ status: 400 }
+				);
+			}
+			if (value.length > max) {
+				return json(
+					{ success: false, message: `${field} must be ${max} characters or fewer` },
+					{ status: 400 }
+				);
+			}
+		}
+
+		const email = String(formData.email).trim().toLowerCase();
+
+		if (!/^\S+@\S+\.\S+$/.test(email)) {
 			return json(
 				{
 					success: false,
@@ -123,6 +169,30 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 				},
 				{ status: 400 }
 			);
+		}
+
+		// Second limiter, backed by the database. The in-memory map above is
+		// per-instance and resets on every cold start, so on serverless it does
+		// not actually bound anything. This one survives across instances.
+		try {
+			const recentFromEmail = await prisma.contact.count({
+				where: {
+					email,
+					createdAt: { gte: new Date(Date.now() - RATE_LIMIT.windowMs) }
+				}
+			});
+
+			if (recentFromEmail >= RATE_LIMIT.max) {
+				return json(
+					{
+						success: false,
+						message: 'Too many contact requests. Please try again later.'
+					},
+					{ status: 429 }
+				);
+			}
+		} catch (err) {
+			console.error('Rate-limit lookup failed:', err);
 		}
 
 		if (!prisma || !prisma.contact) {
@@ -142,7 +212,7 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 				data: {
 					needs: formData.needs,
 					name: formData.name,
-					email: formData.email,
+					email,
 					projectType: formData.projectType,
 					budget: formData.budget,
 					additional: formData.additional || ''
@@ -161,14 +231,16 @@ export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 
 		try {
 			await transporter.sendMail({
-				from: `"${formData.name}" <${formData.email}>`,
-				replyTo: formData.email,
+				from: MAIL_FROM,
+				replyTo: `"${headerSafe(formData.name).replace(/"/g, '')}" <${email}>`,
 				to: NOTIFICATION_EMAIL,
-				subject: `${formData.needs} Project Inquiry: ${formData.projectType} (Budget: ${formData.budget})`,
+				subject: headerSafe(
+					`${formData.needs} Project Inquiry: ${formData.projectType} (Budget: ${formData.budget})`
+				),
 				text: `
 New contact form submission:
 
-FROM: ${formData.name} <${formData.email}>
+FROM: ${formData.name} <${email}>
 PROJECT NEEDS: ${formData.needs}
 PROJECT TYPE: ${formData.projectType}
 BUDGET: ${formData.budget}
@@ -272,28 +344,28 @@ This submission was saved in the database with ID: ${contact.id}
     
     <div class="email-body">
       <div class="sender-info">
-        <div class="sender-name">${formData.name}</div>
-        <div class="sender-email">${formData.email}</div>
+        <div class="sender-name">${escapeHtml(formData.name)}</div>
+        <div class="sender-email">${escapeHtml(email)}</div>
       </div>
       
       <div class="contact-detail">
         <span class="label">Project Needs:</span>
-        <span class="value highlight">${formData.needs}</span>
+        <span class="value highlight">${escapeHtml(formData.needs)}</span>
       </div>
       
       <div class="contact-detail">
         <span class="label">Project Type:</span>
-        <span class="value highlight">${formData.projectType}</span>
+        <span class="value highlight">${escapeHtml(formData.projectType)}</span>
       </div>
       
       <div class="contact-detail">
         <span class="label">Budget:</span>
-        <span class="value highlight">${formData.budget}</span>
+        <span class="value highlight">${escapeHtml(formData.budget)}</span>
       </div>
       
       <div class="contact-detail">
         <span class="label">Additional Info:</span>
-        <div class="additional-info">${formData.additional ? formData.additional.replace(/\n/g, '<br>') : 'None provided'}</div>
+        <div class="additional-info">${formData.additional ? escapeHtml(formData.additional).replace(/\n/g, '<br>') : 'None provided'}</div>
       </div>
     </div>
     

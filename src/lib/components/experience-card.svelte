@@ -34,10 +34,26 @@
 			? 'md:mr-auto md:pr-4 lg:pr-6 xl:pr-8'
 			: 'md:ml-auto md:pl-4 lg:pl-6 xl:pl-8'}"
 	>
+		<!--
+			The card is clickable to expand/collapse, but it also contains a
+			"Read Full Story" link that only exists while expanded. Toggling on a
+			link click removed that anchor from the DOM mid-click and cancelled
+			the navigation, so the link appeared to do nothing.
+
+			Ignoring link-originated events here (rather than stopPropagation on
+			the anchor) keeps the event reaching SvelteKit's router, so the link
+			still does a client-side navigation instead of a full page reload.
+		-->
 		<div
 			class="group experience-card cursor-pointer"
-			onclick={() => toggle(i)}
-			onkeydown={(e) => e.key === 'Enter' && toggle(i)}
+			onclick={(e) => {
+				if ((e.target as HTMLElement)?.closest('a')) return;
+				toggle(i);
+			}}
+			onkeydown={(e) => {
+				if ((e.target as HTMLElement)?.closest('a')) return;
+				if (e.key === 'Enter') toggle(i);
+			}}
 			role="button"
 			tabindex="0"
 		>
@@ -287,6 +303,15 @@
 		border-radius: inherit;
 		opacity: 0;
 		transition: opacity 0.3s ease;
+		/*
+		  Purely decorative. Without pointer-events:none this absolutely
+		  positioned overlay paints above the card's non-positioned in-flow
+		  content and swallows every click on it — which is what stopped the
+		  "Read Full Story" link from navigating. Pseudo-elements cannot be
+		  event targets, so those clicks were attributed to .experience-card
+		  and collapsed the card instead.
+		*/
+		pointer-events: none;
 	}
 
 	.experience-card:hover {
@@ -316,105 +341,18 @@
 		overflow: hidden;
 	}
 
-	@keyframes floating {
-		0%,
-		100% {
-			transform: translateY(0) rotate(0deg) scale(1);
-		}
-		33% {
-			transform: translateY(-20px) rotate(1deg) scale(1.02);
-		}
-		66% {
-			transform: translateY(10px) rotate(-0.5deg) scale(0.98);
-		}
-	}
 
-	@keyframes floating-delayed {
-		0%,
-		100% {
-			transform: translateY(0) rotate(0deg) scale(1);
-		}
-		25% {
-			transform: translateY(15px) rotate(-1deg) scale(1.01);
-		}
-		75% {
-			transform: translateY(-10px) rotate(0.5deg) scale(0.99);
-		}
-	}
 
-	@keyframes floating-slow {
-		0%,
-		100% {
-			transform: translateY(0) rotate(0deg);
-		}
-		50% {
-			transform: translateY(-15px) rotate(2deg);
-		}
-	}
 
-	@keyframes floating-reverse {
-		0%,
-		100% {
-			transform: translateY(0) rotate(0deg);
-		}
-		50% {
-			transform: translateY(25px) rotate(-1deg);
-		}
-	}
 
-	@keyframes floating-gentle {
-		0%,
-		100% {
-			transform: translateX(0) scale(1);
-		}
-		50% {
-			transform: translateX(10px) scale(1.05);
-		}
-	}
 
-	@keyframes floating-gentle-delayed {
-		0%,
-		100% {
-			transform: translateX(0) scale(1);
-		}
-		50% {
-			transform: translateX(-15px) scale(0.95);
-		}
-	}
 
-	:global(.floating) {
-		animation: floating 8s ease-in-out infinite;
-	}
 
-	:global(.floating-delayed) {
-		animation: floating-delayed 10s ease-in-out infinite;
-	}
 
-	:global(.floating-slow) {
-		animation: floating-slow 12s ease-in-out infinite;
-	}
 
-	:global(.floating-reverse) {
-		animation: floating-reverse 9s ease-in-out infinite;
-	}
 
-	:global(.floating-gentle) {
-		animation: floating-gentle 6s ease-in-out infinite;
-	}
 
-	:global(.floating-gentle-delayed) {
-		animation: floating-gentle-delayed 7s ease-in-out infinite;
-	}
 
-	:global(.animate-pulse-slow) {
-		animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-	}
 
-	:global(.animate-pulse-slower) {
-		animation: pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-	}
 
-	:global(.animate-pulse-slowest) {
-		animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-	}
 </style>
