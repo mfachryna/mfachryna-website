@@ -5,6 +5,7 @@
 	import Layer3 from '$lib/background/layer3.svelte';
 	import Wave from './wave.svelte';
 	import AnimateOnScroll from './animate-on-scroll.svelte';
+	import { t } from '$lib/i18n/store';
 
 	const currentYear = new Date().getFullYear();
 	const nameLink = env.PUBLIC_NAME_LINK || '';
@@ -204,7 +205,7 @@
 							icon="ph:arrow-up"
 							class="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5"
 						/>
-						<span>Back to top</span>
+						<span>{$t('footer.backToTop')}</span>
 					</button>
 				</div>
 			</AnimateOnScroll>

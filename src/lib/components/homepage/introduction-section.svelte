@@ -4,18 +4,10 @@
 	import AnimatedProfile from '$lib/assets/icons/profile.svelte';
 	import { browser } from '$app/environment';
 	import { tick } from 'svelte';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { translations } from '$lib/i18n/translations';
 
-	const texts = [
-		'A SOFTWARE ENGINEER',
-		'A BACKEND ARCHITECT',
-		'A GO & LARAVEL SPECIALIST',
-		'A DISTRIBUTED SYSTEMS ENTHUSIAST',
-		'A PROBLEM SOLVER',
-		'A DARK MODE EVANGELIST',
-		'A TRAIL-SEEKING ADVENTURER',
-		'A MASTER OF CTRL+Z',
-		'A NOOB GAMER'
-	];
+	$: texts = translations[$currentLocale]?.hero?.typewriter ?? translations.en.hero.typewriter;
 	const title = 'Muhammad Fachry Noorchoolish Arif - Software Engineer';
 	const description = 'Experienced Software Engineer and ODP IT Trainee at Bank Syariah Indonesia';
 
@@ -177,13 +169,13 @@
 				<div class="inline-block">
 					<span
 						class="text-muted-foreground text-sm font-medium uppercase sm:text-base md:text-base lg:text-lg"
-						>Welcome to my world</span
+						>{$t('hero.welcome')}</span
 					>
 				</div>
 				<h1
 					class="text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl"
 				>
-					<span class="">Hi, I'm Fachry</span>
+					<span class="">{$t('hero.greeting')} {$t('hero.name')}</span>
 				</h1>
 			</div>
 			<div class="flex items-center justify-center">
@@ -211,16 +203,14 @@
 					Software Engineer at Bank Syariah Indonesia
 				</p>
 				<p class="text-muted-foreground text-sm leading-relaxed sm:text-base md:text-lg">
-					Passionate about crafting elegant solutions and building scalable systems. From backend
-					APIs to system designs, I transform ideas into impactful digital products that make a
-					difference in people's lives.
+					{$t('hero.tagline')}
 				</p>
 			</div>
 
 			<div class="flex flex-row items-center justify-center gap-4 pt-8">
 				<button class="btn-modern group" onclick={() => smoothScrollTo('#work')}>
 					<span class="flex items-center text-xs sm:text-sm md:text-base">
-						<span>View My Work</span>
+						<span>{$t('hero.exploreWorks')}</span>
 						<svg
 							class="h-4 w-4 transition-transform group-hover:translate-x-1"
 							fill="none"
@@ -240,7 +230,7 @@
 					class="border-primary/30 text-foreground hover:bg-primary/5 hover:border-primary/50 rounded-lg border-2 px-8 py-3 text-xs font-medium transition-all duration-300 hover:scale-105 sm:text-sm md:text-base"
 					onclick={() => smoothScrollTo('#contacts')}
 				>
-					Get In Touch
+					{$t('hero.letsConnect')}
 				</button>
 			</div>
 		</div>

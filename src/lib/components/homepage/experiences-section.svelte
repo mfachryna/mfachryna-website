@@ -5,6 +5,7 @@
 	import ExperienceCard from '../experience-card.svelte';
 	import PageTitle from '../page-title.svelte';
 	import AnimateOnScroll from '../animate-on-scroll.svelte';
+	import { t } from '$lib/i18n/store';
 	export let data: {
 		experiences: ExperienceWithTags[];
 		pagination: {
@@ -146,9 +147,9 @@
 <section class="section-padding relative" id="experiences" aria-labelledby="experiences-title">
 	<div class="container-modern relative z-10">
 		<PageTitle
-			title="Professional Experience"
-			brief={'My Journey'}
-			description="A timeline of my professional growth and the exciting projects I've contributed to"
+			title={$t('experience.title')}
+			brief={$t('experience.badge')}
+			description={$t('experience.subtitle')}
 		/>
 
 		{#if isLoading && experiences.length === 0}
@@ -168,7 +169,7 @@
 			</div>
 		{:else if experiences.length === 0}
 			<div class="py-16 text-center">
-				<p class="text-muted-foreground">No experiences found.</p>
+				<p class="text-muted-foreground">{$t('experience.noExperiences')}</p>
 			</div>
 		{:else}
 			<div class="relative">
@@ -198,7 +199,7 @@
 			<div class="mt-16 text-center">
 				<button class="btn-modern" onclick={loadMoreExperiences}>
 					<span class="flex items-center space-x-2">
-						<span>Load More Experiences</span>
+						<span>{$t('experience.loadMore')}</span>
 						<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
 								stroke-linecap="round"
@@ -218,7 +219,7 @@
 					<div
 						class="border-primary/20 border-t-primary h-4 w-4 animate-spin rounded-full border-2"
 					></div>
-					<span>Loading more experiences...</span>
+					<span>{$t('experience.loading')}</span>
 				</div>
 			</div>
 		{/if}

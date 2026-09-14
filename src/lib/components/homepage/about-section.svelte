@@ -2,6 +2,10 @@
 	import Icon from '@iconify/svelte';
 	import AnimateOnScroll from '$lib/components/animate-on-scroll.svelte';
 	import PageTitle from '../page-title.svelte';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { translations } from '$lib/i18n/translations';
+
+	$: aboutCards = translations[$currentLocale]?.about?.cards ?? translations.en.about.cards;
 
 	const structuredData = {
 		'@context': 'https://schema.org',
@@ -26,26 +30,6 @@
 		{ label: 'Technology Agnostic', icon: 'tools' }
 	];
 
-	export const aboutCards = [
-		{
-			title: 'The Architect',
-			icon: 'drafting-compass',
-			description:
-				'I design the data models and APIs the rest of the system leans on. On the loyalty platform that meant a schema that stayed correct across point-of-sale and order management — the kind of foundation you only notice when it is missing.'
-		},
-		{
-			title: 'The Pragmatist',
-			icon: 'sliders-h',
-			description:
-				'Technology is a toolbox, not a religion. Laravel and MySQL for most of what I build, Go and PostgreSQL where the problem calls for it. The right choice is the one your team can still maintain a year after I hand it over.'
-		},
-		{
-			title: 'The Business Partner',
-			icon: 'handshake',
-			description:
-				'I work to deadlines that belong to somebody else. Five maintenance projects and one build running in parallel, 84% of features delivered on time or early, and a handover at the end that leaves your team able to run it without me.'
-		}
-	];
 </script>
 
 <svelte:head>
@@ -56,7 +40,7 @@
 
 <section class="section-padding relative" id="about" aria-labelledby="about-title">
 	<div class="container-modern relative z-10">
-		<PageTitle title="About Me" brief={'Get to know me'} />
+		<PageTitle title={$t('about.title')} brief={$t('about.badge')} />
 
 		<div class="relative grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
 			{#each aboutCards as card, i (card.title)}

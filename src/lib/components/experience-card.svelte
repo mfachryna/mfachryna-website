@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade, slide } from 'svelte/transition';
 	import Pil from './pil.svelte';
+	import { t } from '$lib/i18n/store';
 
 	export let item;
 	export let i;
@@ -80,7 +81,7 @@
 								<span class="text-primary text-xs font-medium">
 									{formatDate(item.startDate)} - {item.endDate
 										? formatDate(item.endDate)
-										: 'Present'}
+										: $t('experience.present')}
 								</span>
 							</div>
 							{#if item.location}
@@ -208,7 +209,7 @@
 								>
 									<span class="from-primary to-accent mr-2 h-2 w-2 rounded-full bg-gradient-to-r"
 									></span>
-									Key Achievements
+									{$t('experience.achievements')}
 									{#if item.highlights.length > 5}
 										<span class="bg-primary/10 text-primary ml-2 rounded-full px-2 py-0.5 text-xs">
 											{item.highlights.length} items
@@ -267,7 +268,7 @@
 								href={`/experiences/${item.id}`}
 								class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg px-4 py-2 text-sm font-medium transition-colors"
 							>
-								Read Full Story
+								{$t('experience.readFull')}
 							</a>
 						</div>
 					</div>

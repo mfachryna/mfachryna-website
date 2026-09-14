@@ -3,6 +3,7 @@
 	import PageTitle from '../page-title.svelte';
 	import Button from '../ui/button/button.svelte';
 	import { onMount } from 'svelte';
+	import { t } from '$lib/i18n/store';
 
 	import type { ToastPosition } from 'svelte-french-toast';
 	import AnimateOnScroll from '../animate-on-scroll.svelte';
@@ -199,10 +200,9 @@
 <section class="section-padding relative" id="contacts" aria-labelledby="contacts-title">
 	<div class="container-modern relative z-10">
 		<PageTitle
-			brief="Let's Work Together"
-			title="Contact Me"
-			description="Ready to bring your ideas to life? Let's discuss your project and create something amazing
-				together."
+			brief={$t('contact.badge')}
+			title={$t('contact.title')}
+			description={$t('contact.subtitle')}
 		/>
 		<AnimateOnScroll
 			animation="zoom-in"
@@ -552,7 +552,7 @@
 
 					<div class="pt-4 text-center">
 						<Button variant="default" size="lg" type="submit" disabled={isSubmitting}>
-							{isSubmitting ? 'Submitting...' : 'Submit'}
+							{isSubmitting ? $t('contact.sending') : $t('contact.sendButton')}
 						</Button>
 					</div>
 				</form>

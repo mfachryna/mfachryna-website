@@ -3,19 +3,21 @@
 	import { page } from '$app/stores';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
+	import { t } from '$lib/i18n/store';
+	import LanguageSwitcher from '$lib/components/language-switcher.svelte';
 
 	let { isSidebarOpen, toggleSidebar, data } = $props();
 
 	let isScrolled = $state(false);
 	let pathName = $derived($page.url.pathname);
 
-	const navLinks = [
-		{ name: 'About', href: '/#about' },
-		{ name: 'Experiences', href: '/#experiences' },
-		{ name: 'Works', href: '/#work' },
-		{ name: 'Blogs', href: '/#blogs' },
-		{ name: 'Contacts', href: '/#contacts' }
-	];
+	let navLinks = $derived([
+		{ name: $t('nav.about'), href: '/#about' },
+		{ name: $t('nav.experiences'), href: '/#experiences' },
+		{ name: $t('nav.works'), href: '/#work' },
+		{ name: $t('nav.blogs'), href: '/#blogs' },
+		{ name: $t('nav.contacts'), href: '/#contacts' }
+	]);
 
 	const socialMedia = [
 		{ name: 'Github', href: 'https://github.com/mfachryna', logo: 'github' },
@@ -221,7 +223,8 @@
 			</button>
 		</div>
 
-		<div class="hidden md:flex">
+		<div class="hidden items-center space-x-3 md:flex">
+			<LanguageSwitcher />
 			{#if data?.resumeUrl}
 				<a
 					href={data.resumeUrl}
@@ -230,7 +233,7 @@
 					class="btn-modern group relative overflow-hidden !px-5 !py-3"
 				>
 					<span class="relative z-10 flex items-center space-x-2">
-						<span>Resume</span>
+						<span>{$t('hero.resume')}</span>
 						<svg
 							class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
 							fill="none"
@@ -313,6 +316,9 @@
 			{/each}
 
 			<div class="border-border/50 mt-6 border-t pt-6 text-xs sm:text-sm md:text-base">
+				<div class="mb-4">
+					<LanguageSwitcher variant="mobile" />
+				</div>
 				{#if data?.resumeUrl}
 					<a
 						href={data.resumeUrl}
@@ -322,7 +328,7 @@
 						onclick={handleNavClick}
 					>
 						<span class="flex items-center justify-center space-x-2">
-							<span>Resume</span>
+							<span>{$t('hero.resume')}</span>
 							<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
 									stroke-linecap="round"

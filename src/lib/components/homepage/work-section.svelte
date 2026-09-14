@@ -8,6 +8,7 @@
 	import Layer1 from '$lib/background/layer1.svelte';
 	import Button from '../ui/button/button.svelte';
 	import AnimateOnScroll from '$lib/components/animate-on-scroll.svelte';
+	import { t } from '$lib/i18n/store';
 
 	export let data: {
 		projects: ProjectWithTags[];
@@ -155,7 +156,7 @@
 	bind:this={sectionRef}
 >
 	<div class="container-modern relative z-10">
-		<PageTitle title="Featured Projects" brief={'A Portfolio'} description="A showcase of my latest work, from innovative web applications to scalable system architectures" />
+		<PageTitle title={$t('work.title')} brief={$t('work.badge')} description={$t('work.subtitle')} />
 
 		{#if isLoading && projects.length === 0}
 			<div class="flex justify-center py-16">
@@ -174,7 +175,7 @@
 			</div>
 		{:else if projects.length === 0}
 			<div class="py-16 text-center">
-				<p class="text-muted-foreground">No projects found.</p>
+				<p class="text-muted-foreground">{$t('work.noProjects')}</p>
 			</div>
 		{:else}
 			<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
@@ -183,23 +184,12 @@
 				{/each}
 			</div>
 
-			{#if isLoading && projects.length > 0}
+			{#if showLoadMore}
 				<div class="mt-12 text-center">
-					<div class="loading-pulse text-muted-foreground inline-flex items-center space-x-2">
-						<div
-							class="border-primary/20 border-t-primary h-4 w-4 animate-spin rounded-full border-2"
-						></div>
-						<span>Loading more projects...</span>
-					</div>
-				</div>
-			{/if}
-
-			{#if showLoadMore && !isLoading}
-				<div class="mt-16 text-center">
 					<button class="btn-modern group" onclick={() => loadMoreProjects()}>
 						<span class="flex items-center space-x-2">
 							<span>
-								Show More Projects 
+								{$t('work.loadMore')}
 							</span>
 							<svg
 								class="h-4 w-4 transition-transform group-hover:translate-y-1"
@@ -221,7 +211,7 @@
 
 			<div class="mt-8 text-center">
 				<a href="/projects" class="btn-modern-outline inline-flex items-center space-x-2">
-					<span>View All Projects</span>
+					<span>{$t('work.title')}</span>
 					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
 					</svg>
