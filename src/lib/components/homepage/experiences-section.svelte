@@ -109,7 +109,7 @@
 				'@type': 'Organization',
 				name: exp.company
 			},
-			description: exp.description
+			description: exp.description || ''
 		}));
 	}
 

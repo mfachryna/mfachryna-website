@@ -3,6 +3,7 @@
 	import type { ProjectWithTags } from '$lib/types/project';
 	import SEO from '$lib/components/seo.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { t } from '$lib/i18n/store';
 
 	export let data;
 	let projects: ProjectWithTags[] = data.projects;
@@ -48,11 +49,13 @@
 <main class="mx-auto max-w-6xl px-6 pt-32 pb-24 sm:px-8">
 	<header class="border-border/60 mb-12 border-b pb-10">
 		<span class="text-muted-foreground mb-3 block text-xs font-medium tracking-[0.2em] uppercase">
-			Portfolio
+			{$t('common.portfolio')}
 		</span>
-		<h1 class="gradient-text text-4xl font-bold tracking-tight sm:text-5xl">Projects</h1>
+		<h1 class="gradient-text text-4xl font-bold tracking-tight sm:text-5xl">
+			{$t('work.title')}
+		</h1>
 		<p class="text-muted-foreground mt-4 max-w-2xl text-base leading-relaxed sm:text-lg">
-			A showcase of my software engineering work and web development projects.
+			{$t('work.subtitle')}
 		</p>
 	</header>
 
@@ -63,14 +66,14 @@
 				class="border-destructive/40 hover:bg-destructive/20 mt-3 rounded-lg border px-4 py-2 text-sm transition-colors"
 				onclick={() => loadPage(currentPage)}
 			>
-				Try again
+				{$t('common.tryAgain')}
 			</button>
 		</div>
 	{/if}
 
 	{#if projects.length === 0 && !error}
 		<div class="border-border/60 rounded-2xl border border-dashed py-20 text-center">
-			<p class="text-muted-foreground text-lg">No projects found.</p>
+			<p class="text-muted-foreground text-lg">{$t('work.noProjects')}</p>
 		</div>
 	{:else}
 		{#if heroProject}
@@ -96,7 +99,7 @@
 					disabled={currentPage === 1}
 					onclick={() => loadPage(currentPage - 1)}
 				>
-					Previous
+					{$t('common.previous')}
 				</Button>
 				{#each Array(totalPages) as _, i}
 					<Button
@@ -111,7 +114,7 @@
 					disabled={currentPage === totalPages}
 					onclick={() => loadPage(currentPage + 1)}
 				>
-					Next
+					{$t('common.next')}
 				</Button>
 			</div>
 		</nav>

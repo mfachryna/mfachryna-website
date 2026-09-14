@@ -95,7 +95,19 @@ export const translations = {
 			readPost: 'Read Article',
 			minRead: 'min read',
 			noBlogs: 'No articles published yet.',
-			viewAll: 'View All Articles'
+			viewAll: 'View All Articles',
+			featured: 'Featured',
+			latestInsights: 'Latest Insights',
+			blogPosts: 'Blog Posts',
+			blogDesc: 'Exploring ideas, sharing knowledge, and documenting my journey in software development.',
+			filterAll: 'All',
+			backToAll: 'Back to all posts',
+			published: 'Published',
+			reading: 'Reading',
+			topics: 'Topics',
+			onThisPage: 'On this page',
+			noContent: 'This post has no content yet.',
+			checkBackSoon: 'Check back soon.'
 		},
 		contact: {
 			badge: 'GET IN TOUCH',
@@ -123,7 +135,16 @@ export const translations = {
 			loading: 'Loading...',
 			error: 'Something went wrong',
 			language: 'Language',
-			selectLanguage: 'Select Language'
+			selectLanguage: 'Select Language',
+			previous: 'Previous',
+			next: 'Next',
+			tryAgain: 'Try again',
+			technologies: 'Technologies & Skills',
+			items: 'items',
+			showing: 'Showing',
+			of: 'of',
+			projects: 'projects',
+			portfolio: 'Portfolio'
 		}
 	},
 	id: {
@@ -213,7 +234,19 @@ export const translations = {
 			readPost: 'Baca Artikel',
 			minRead: 'mnt baca',
 			noBlogs: 'Belum ada artikel yang diterbitkan.',
-			viewAll: 'Lihat Semua Artikel'
+			viewAll: 'Lihat Semua Artikel',
+			featured: 'Unggulan',
+			latestInsights: 'Wawasan Terbaru',
+			blogPosts: 'Artikel Blog',
+			blogDesc: 'Mengeksplorasi ide, berbagi pengetahuan, dan mendokumentasikan perjalanan rekayasa perangkat lunak.',
+			filterAll: 'Semua',
+			backToAll: 'Kembali ke semua artikel',
+			published: 'Dipublikasikan',
+			reading: 'Waktu Baca',
+			topics: 'Topik',
+			onThisPage: 'Di halaman ini',
+			noContent: 'Artikel ini belum memiliki konten.',
+			checkBackSoon: 'Kunjungi kembali segera.'
 		},
 		contact: {
 			badge: 'HUBUNGI SAYA',
@@ -241,7 +274,16 @@ export const translations = {
 			loading: 'Memuat...',
 			error: 'Terjadi kesalahan',
 			language: 'Bahasa',
-			selectLanguage: 'Pilih Bahasa'
+			selectLanguage: 'Pilih Bahasa',
+			previous: 'Sebelumnya',
+			next: 'Selanjutnya',
+			tryAgain: 'Coba lagi',
+			technologies: 'Teknologi & Keahlian',
+			items: 'item',
+			showing: 'Menampilkan',
+			of: 'dari',
+			projects: 'proyek',
+			portfolio: 'Portofolio'
 		}
 	},
 	ja: {
@@ -331,7 +373,19 @@ export const translations = {
 			readPost: '記事を読む',
 			minRead: '分で読めます',
 			noBlogs: '記事がまだありません。',
-			viewAll: 'すべての記事を見る'
+			viewAll: 'すべての記事を見る',
+			featured: '注目記事',
+			latestInsights: '最新の知見',
+			blogPosts: 'ブログ記事',
+			blogDesc: 'アイデアを探求し、知識を共有し、ソフトウェア開発の軌跡を記録しています。',
+			filterAll: 'すべて',
+			backToAll: 'すべての記事に戻る',
+			published: '公開日',
+			reading: '読了時間',
+			topics: 'トピック',
+			onThisPage: '目次',
+			noContent: 'この記事にはまだ本文がありません。',
+			checkBackSoon: 'また見に来てください。'
 		},
 		contact: {
 			badge: 'ご連絡',
@@ -359,7 +413,16 @@ export const translations = {
 			loading: '読み込み中...',
 			error: 'エラーが発生しました',
 			language: '言語',
-			selectLanguage: '言語を選択'
+			selectLanguage: '言語を選択',
+			previous: '前へ',
+			next: '次へ',
+			tryAgain: '再試行',
+			technologies: '技術とスキル',
+			items: '件',
+			showing: '表示中:',
+			of: '/',
+			projects: '件のプロジェクト',
+			portfolio: 'ポートフォリオ'
 		}
 	},
 	ar: {
@@ -449,7 +512,19 @@ export const translations = {
 			readPost: 'قراءة المقال',
 			minRead: 'دقائق قراءة',
 			noBlogs: 'لم يتم نشر مقالات بعد.',
-			viewAll: 'جميع المقالات'
+			viewAll: 'جميع المقالات',
+			featured: 'مميّز',
+			latestInsights: 'أحدث الرؤى',
+			blogPosts: 'مقالات المدونة',
+			blogDesc: 'استكشاف الأفكار، ومشاركة المعرفة، وتوثيق مسيرتي في هندسة البرمجيات.',
+			filterAll: 'الكل',
+			backToAll: 'العودة إلى جميع المقالات',
+			published: 'نُشر في',
+			reading: 'وقت القراءة',
+			topics: 'المواضيع',
+			onThisPage: 'في هذه الصفحة',
+			noContent: 'لا يوجد محتوى في هذا المقال بعد.',
+			checkBackSoon: 'يرجى العودة قريباً.'
 		},
 		contact: {
 			badge: 'تواصل معي',
@@ -477,7 +552,16 @@ export const translations = {
 			loading: 'جاري التحميل...',
 			error: 'حدث خطأ ما',
 			language: 'اللغة',
-			selectLanguage: 'اختر اللغة'
+			selectLanguage: 'اختر اللغة',
+			previous: 'السابق',
+			next: 'التالي',
+			tryAgain: 'إعادة المحاولة',
+			technologies: 'التقنيات والمهارات',
+			items: 'عناصر',
+			showing: 'عرض',
+			of: 'من',
+			projects: 'مشاريع',
+			portfolio: 'معرض الأعمال'
 		}
 	}
 } as const;

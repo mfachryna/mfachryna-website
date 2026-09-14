@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { fade, slide } from 'svelte/transition';
 	import Pil from './pil.svelte';
-	import { t } from '$lib/i18n/store';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { localizeExperience, localizeDate } from '$lib/i18n/content';
 
-	export let item;
-	export let i;
-	export let activeIndex;
-	export let toggle;
-	export let formatDate;
+	export let item: any;
+	export let i: number;
+	export let activeIndex: number;
+	export let toggle: (index: number) => void;
+	export let formatDate: (date: string | Date) => string;
+
+	$: localized = localizeExperience(item, $currentLocale);
 </script>
 
 <div class="relative flex items-center md:justify-center">
@@ -79,8 +82,8 @@
 									/>
 								</svg>
 								<span class="text-primary text-xs font-medium">
-									{formatDate(item.startDate)} - {item.endDate
-										? formatDate(item.endDate)
+									{localizeDate(item.startDate, $currentLocale)} - {item.endDate
+										? localizeDate(item.endDate, $currentLocale)
 										: $t('experience.present')}
 								</span>
 							</div>
@@ -115,16 +118,16 @@
 							<h3
 								class="text-foreground group-hover:from-primary group-hover:to-accent text-lg font-bold transition-all duration-300 group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:text-transparent md:text-xl lg:text-2xl"
 							>
-								{item.title}
+								{localized.title}
 							</h3>
-							{#if item.role && item.role !== item.title}
-								<p class="text-xs font-medium text-neutral-400 lg:text-sm">{item.role}</p>
+							{#if localized.role && localized.role !== localized.title}
+								<p class="text-xs font-medium text-neutral-400 lg:text-sm">{localized.role}</p>
 							{/if}
 						</div>
 						<p
 							class="from-accent to-primary bg-gradient-to-r bg-clip-text text-sm font-semibold text-transparent md:text-base lg:text-lg"
 						>
-							{item.company}
+							{localized.company || item.company}
 						</p>
 					</div>
 					<div class="ml-6 flex-shrink-0">
@@ -159,7 +162,7 @@
 				<p
 					class="text-foreground/60 line-clamp-3 text-xs leading-relaxed transition-colors duration-300 md:text-sm"
 				>
-					{item.description}
+					{localized.description}
 				</p>
 			</div>
 			{#if item.tags && item.tags.length > 0}
@@ -195,14 +198,14 @@
 					out:slide={{ duration: 250 }}
 				>
 					<div in:fade={{ duration: 200 }} out:fade={{ duration: 150 }}>
-						{#if item.content}
+						{#if localized.content}
 							<div class="prose prose-sm max-w-none">
 								<div class="text-foreground leading-relaxed">
-									{@html item.content}
+									{@html localized.content}
 								</div>
 							</div>
 						{/if}
-						{#if item.highlights && item.highlights.length > 0}
+						{#if localized.highlights && localized.highlights.length > 0}
 							<div>
 								<h4
 									class="text-foreground top-0 -mt-2 mb-3 flex items-center py-2 text-sm font-semibold md:text-base"
@@ -210,14 +213,14 @@
 									<span class="from-primary to-accent mr-2 h-2 w-2 rounded-full bg-gradient-to-r"
 									></span>
 									{$t('experience.achievements')}
-									{#if item.highlights.length > 5}
+									{#if localized.highlights.length > 5}
 										<span class="bg-primary/10 text-primary ml-2 rounded-full px-2 py-0.5 text-xs">
-											{item.highlights.length} items
+											{localized.highlights.length} {$t('common.items')}
 										</span>
 									{/if}
 								</h4>
 								<div class="grid gap-3">
-									{#each item.highlights as highlight, idx}
+									{#each localized.highlights as highlight, idx}
 										<div class="group flex items-start">
 											<div
 												class="bg-accent/10 mt-0.5 mr-3 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full"
@@ -243,7 +246,7 @@
 								>
 									<span class="from-primary to-accent mr-2 h-2 w-2 rounded-full bg-gradient-to-r"
 									></span>
-									Technologies & Skills
+									{$t('common.technologies')}
 									<span
 										class="bg-foreground/5 text-secondary-foreground ml-2 rounded-full px-2 py-0.5 text-xs"
 									>

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import AnimateOnScroll from './animate-on-scroll.svelte';
 	import CardCover from './card-cover.svelte';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { getBlogLocale, localizeDate } from '$lib/i18n/content';
 
 	/**
 	 * Blog card, two variants.
@@ -22,15 +24,7 @@
 	$: isHero = variant === 'hero';
 	$: cover = blog.imageUrl || (blog.images && blog.images[0]) || null;
 	$: summary = blog.excerpt || blog.description || '';
-
-	const formatDate = (date: string | Date | null) => {
-		if (!date) return '';
-		return new Date(date).toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		});
-	};
+	$: blogLocale = getBlogLocale(blog);
 </script>
 
 <AnimateOnScroll
@@ -55,18 +49,24 @@
 	<!-- body -->
 	<div class="flex flex-1 flex-col gap-3 {isHero ? 'p-7 md:justify-center md:p-9' : 'p-6'}">
 		<div class="text-muted-foreground flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs">
+			{#if blogLocale}
+				<span class="border-primary/30 bg-primary/10 text-primary font-medium px-2 py-0.5 rounded-full border text-[0.65rem] tracking-wider">
+					{blogLocale.badge}
+				</span>
+				<span class="opacity-40">&middot;</span>
+			{/if}
 			{#if isHero}
-				<span class="text-primary font-semibold tracking-widest uppercase">Featured</span>
+				<span class="text-primary font-semibold tracking-widest uppercase">{$t('blog.featured')}</span>
 				<span class="opacity-40">&middot;</span>
 			{/if}
 			{#if blog.publishedAt}
 				<time datetime={new Date(blog.publishedAt).toISOString()} class="tracking-wider uppercase">
-					{formatDate(blog.publishedAt)}
+					{localizeDate(blog.publishedAt, $currentLocale)}
 				</time>
 			{/if}
 			{#if blog.readingTime}
 				<span class="opacity-40">&middot;</span>
-				<span>{blog.readingTime} min read</span>
+				<span>{blog.readingTime} {$t('blog.minRead')}</span>
 			{/if}
 		</div>
 

@@ -15,8 +15,8 @@ export interface Experience {
 	highlights: string[];
 	startDate: Date | string;
 	endDate?: Date | string | null;
-	content: string;
-	description: string;
+	content?: string | null;
+	description?: string | null;
 	createdAt?: Date | string;
 	updatedAt?: Date | string;
 }

@@ -2,26 +2,23 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import SEO from '$lib/components/seo.svelte';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { localizeProject, localizeDate } from '$lib/i18n/content';
 
 	export let data: PageData;
 
-	$: project = data.project;
+	$: proj = localizeProject(data.project, $currentLocale);
 
 	/* Tiptap HTML from the CMS, rendered server-side — not markdown. */
-	$: content = project.content ?? '';
-	$: gallery = (project.images ?? []).filter(Boolean);
-
-	const formatDate = (date: string | Date | null) => {
-		if (!date) return '';
-		return new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
-	};
+	$: content = proj.content ?? '';
+	$: gallery = (data.project.images ?? []).filter(Boolean);
 
 	$: structuredData = {
 		'@context': 'https://schema.org',
 		'@type': 'SoftwareApplication',
-		name: project.title,
-		description: project.description,
-		image: project.imageUrl,
+		name: proj.title,
+		description: proj.description,
+		image: proj.imageUrl,
 		url: $page.url.href,
 		applicationCategory: 'WebApplication',
 		author: { '@type': 'Person', name: 'Muhammad Fachry Noorchoolish Arif' }
@@ -29,9 +26,9 @@
 </script>
 
 <SEO
-	title={project.title + " | Muhammad Fachry's Projects"}
-	description={project.description}
-	image={project.imageUrl || undefined}
+	title={proj.title + " | Muhammad Fachry's Projects"}
+	description={proj.description}
+	image={proj.imageUrl || undefined}
 	url={$page.url.href}
 	type="website"
 	{structuredData}
@@ -55,7 +52,7 @@
 					d="M10 19l-7-7m0 0l7-7m-7 7h18"
 				/>
 			</svg>
-			Back to all projects
+			{$t('work.title')}
 		</a>
 
 		<div class="lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
@@ -65,46 +62,50 @@
 					<dl
 						class="border-border/60 flex flex-wrap gap-x-6 gap-y-4 border-b pb-5 text-sm lg:block lg:space-y-5 lg:border-b-0 lg:pb-0"
 					>
-						{#if project.tags?.length}
+						{#if proj.tags?.length}
 							<div class="w-full lg:w-auto">
-								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">Stack</dt>
+								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">
+									{$t('common.technologies')}
+								</dt>
 								<dd class="mt-2 flex flex-wrap gap-1.5">
-									{#each project.tags as tag (tag.id)}
+									{#each proj.tags as tag (typeof tag === 'string' ? tag : tag.id)}
 										<span
 											class="border-border/70 text-muted-foreground rounded-full border px-2.5 py-0.5 text-xs"
 										>
-											{tag.name}
+											{typeof tag === 'string' ? tag : tag.name}
 										</span>
 									{/each}
 								</dd>
 							</div>
 						{/if}
 
-						{#if project.createdAt}
+						{#if proj.createdAt}
 							<div>
-								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">Added</dt>
-								<dd class="mt-1">{formatDate(project.createdAt)}</dd>
+								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">
+									{$t('blog.published')}
+								</dt>
+								<dd class="mt-1">{localizeDate(proj.createdAt, $currentLocale)}</dd>
 							</div>
 						{/if}
 
-						{#if project.featured}
+						{#if proj.featured}
 							<div>
 								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">Status</dt>
-								<dd class="text-primary mt-1 font-medium">Featured</dd>
+								<dd class="text-primary mt-1 font-medium">{$t('work.featured')}</dd>
 							</div>
 						{/if}
 					</dl>
 
-					{#if project.liveUrl || project.githubUrl}
+					{#if proj.liveUrl || proj.githubUrl}
 						<div class="border-border/60 mt-6 flex flex-col gap-2.5 lg:border-t lg:pt-6">
-							{#if project.liveUrl}
+							{#if proj.liveUrl}
 								<a
-									href={project.liveUrl}
+									href={proj.liveUrl}
 									target="_blank"
 									rel="noopener noreferrer"
 									class="btn-modern flex items-center justify-center gap-2 text-sm"
 								>
-									<span>Live Demo</span>
+									<span>{$t('work.liveDemo')}</span>
 									<svg
 										class="h-4 w-4"
 										fill="none"
@@ -121,9 +122,9 @@
 									</svg>
 								</a>
 							{/if}
-							{#if project.githubUrl}
+							{#if proj.githubUrl}
 								<a
-									href={project.githubUrl}
+									href={proj.githubUrl}
 									target="_blank"
 									rel="noopener noreferrer"
 									class="bg-secondary/80 hover:bg-secondary border-border/50 flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm transition-colors"
@@ -133,7 +134,7 @@
 											d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
 										/>
 									</svg>
-									<span>Source</span>
+									<span>{$t('work.github')}</span>
 								</a>
 							{/if}
 						</div>
@@ -147,24 +148,24 @@
 					<h1
 						class="text-3xl leading-tight font-bold tracking-tight text-balance sm:text-4xl lg:text-5xl"
 					>
-						{project.title}
+						{proj.title}
 					</h1>
 
-					{#if project.subtitle}
-						<p class="text-muted-foreground/80 mt-3 text-lg sm:text-xl">{project.subtitle}</p>
+					{#if proj.subtitle}
+						<p class="text-muted-foreground/80 mt-3 text-lg sm:text-xl">{proj.subtitle}</p>
 					{/if}
 
-					{#if project.description}
+					{#if proj.description}
 						<p class="text-muted-foreground mt-6 text-lg leading-relaxed text-pretty sm:text-xl">
-							{project.description}
+							{proj.description}
 						</p>
 					{/if}
 
-					{#if project.imageUrl}
+					{#if proj.imageUrl}
 						<figure class="border-border/60 mt-9 overflow-hidden rounded-xl border">
 							<img
-								src={project.imageUrl}
-								alt={project.title}
+								src={proj.imageUrl}
+								alt={proj.title}
 								width="1200"
 								height="675"
 								fetchpriority="high"
@@ -195,7 +196,7 @@
 								>
 									<img
 										src={image}
-										alt="{project.title} screenshot {i + 1}"
+										alt="{proj.title} screenshot {i + 1}"
 										width="800"
 										height="450"
 										loading="lazy"

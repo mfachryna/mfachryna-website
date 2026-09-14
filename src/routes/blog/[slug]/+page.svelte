@@ -2,6 +2,8 @@
 	import { page } from '$app/stores';
 	import type { PageData } from './$types';
 	import SEO from '$lib/components/seo.svelte';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { localizeDate } from '$lib/i18n/content';
 
 	export let data: PageData;
 
@@ -11,15 +13,6 @@
 	/* Tiptap HTML from the CMS, rendered server-side — not markdown.
 	   Heading ids are injected in +page.server.ts so the rail can link to them. */
 	$: content = blog.content ?? '';
-
-	const formatDate = (date: string | Date | null) => {
-		if (!date) return '';
-		return new Date(date).toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric'
-		});
-	};
 
 	$: structuredData = {
 		'@context': 'https://schema.org',
@@ -62,7 +55,7 @@
 					d="M10 19l-7-7m0 0l7-7m-7 7h18"
 				/>
 			</svg>
-			Back to all posts
+			{$t('blog.backToAll')}
 		</a>
 
 		<div class="lg:grid lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
@@ -76,11 +69,11 @@
 						{#if blog.publishedAt}
 							<div>
 								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">
-									Published
+									{$t('blog.published')}
 								</dt>
 								<dd class="mt-1">
 									<time datetime={new Date(blog.publishedAt).toISOString()}>
-										{formatDate(blog.publishedAt)}
+										{localizeDate(blog.publishedAt, $currentLocale)}
 									</time>
 								</dd>
 							</div>
@@ -88,14 +81,18 @@
 
 						{#if blog.readingTime}
 							<div>
-								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">Reading</dt>
-								<dd class="mt-1">{blog.readingTime} min</dd>
+								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">
+									{$t('blog.reading')}
+								</dt>
+								<dd class="mt-1">{blog.readingTime} {$t('blog.minRead')}</dd>
 							</div>
 						{/if}
 
 						{#if blog.tags?.length}
 							<div class="w-full lg:w-auto">
-								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">Topics</dt>
+								<dt class="text-muted-foreground/70 text-xs tracking-widest uppercase">
+									{$t('blog.topics')}
+								</dt>
 								<dd class="mt-2 flex flex-wrap gap-1.5">
 									{#each blog.tags as tag (tag.id)}
 										<span
@@ -112,7 +109,7 @@
 					{#if toc.length > 1}
 						<nav class="border-border/60 mt-6 hidden border-t pt-6 lg:block" aria-label="On this page">
 							<p class="text-muted-foreground/70 mb-3 text-xs tracking-widest uppercase">
-								On this page
+								{$t('blog.onThisPage')}
 							</p>
 							<ul class="space-y-2 text-sm">
 								{#each toc as item (item.id)}
@@ -166,7 +163,7 @@
 							{@html content}
 						</div>
 					{:else}
-						<p class="text-muted-foreground italic">This post has no content yet.</p>
+						<p class="text-muted-foreground italic">{$t('blog.noContent')}</p>
 					{/if}
 				</div>
 			</article>

@@ -2,6 +2,8 @@
 	import type { Project } from '$lib/types/project';
 	import AnimateOnScroll from './animate-on-scroll.svelte';
 	import CardCover from './card-cover.svelte';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { localizeProject } from '$lib/i18n/content';
 
 	/**
 	 * Project card, two variants.
@@ -22,6 +24,7 @@
 
 	$: isHero = variant === 'hero';
 	$: cover = project.thumbnailUrl || project.imageUrl || null;
+	$: localized = localizeProject(project, $currentLocale);
 </script>
 
 <AnimateOnScroll
@@ -39,8 +42,8 @@
 		<div class="relative {isHero ? 'md:h-full' : ''}">
 			<CardCover
 				src={cover}
-				alt="{project.title} preview"
-				title={project.title}
+				alt="{localized.title} preview"
+				title={localized.title}
 				hero={isHero}
 				eager={isHero}
 			/>
@@ -49,7 +52,7 @@
 				<span
 					class="bg-background/80 border-border/60 text-foreground absolute top-3 left-3 rounded-full border px-2.5 py-0.5 text-[0.7rem] font-medium tracking-wide backdrop-blur-sm"
 				>
-					Featured
+					{$t('work.featured')}
 				</span>
 			{/if}
 		</div>
@@ -58,7 +61,7 @@
 		<div class="flex flex-1 flex-col gap-3 {isHero ? 'p-7 md:justify-center md:p-9' : 'p-6'}">
 			{#if isHero}
 				<span class="text-primary text-xs font-semibold tracking-widest uppercase">
-					Featured Project
+					{$t('work.featured')}
 				</span>
 			{/if}
 
@@ -67,25 +70,25 @@
 					class="group-hover:text-primary font-bold tracking-tight text-balance transition-colors duration-300
 					{isHero ? 'text-2xl md:text-3xl lg:text-4xl' : 'line-clamp-2 text-lg'}"
 				>
-					{project.title}
+					{localized.title}
 				</h2>
-				{#if project.subtitle}
+				{#if localized.subtitle}
 					<p
 						class="text-muted-foreground/80 {isHero
 							? 'text-base md:text-lg'
 							: 'line-clamp-1 text-sm'}"
 					>
-						{project.subtitle}
+						{localized.subtitle}
 					</p>
 				{/if}
 			</div>
 
-			{#if project.description}
+			{#if localized.description}
 				<p
 					class="text-muted-foreground leading-relaxed
 					{isHero ? 'line-clamp-3 text-base md:text-lg' : 'line-clamp-2 text-sm'}"
 				>
-					{project.description}
+					{localized.description}
 				</p>
 			{/if}
 

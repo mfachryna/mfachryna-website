@@ -6,6 +6,7 @@ export interface Project {
   title: string;
   subtitle: string;
   description: string;
+  content?: string | null;
   imageUrl: string;
   thumbnailUrl?: string | null; 
   images?: string[];            
