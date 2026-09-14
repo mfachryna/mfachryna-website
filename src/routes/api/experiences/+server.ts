@@ -14,7 +14,10 @@ export async function GET({ url }) {
                 skip,
                 take: limit,
                 include: { tags: true },
-                orderBy: { startDate: 'desc' }
+                orderBy: [
+                    { endDate: { sort: 'desc', nulls: 'first' } },
+                    { startDate: 'desc' }
+                ]
             }),
             prisma.experience.count({
                 where: { isHidden: false }
