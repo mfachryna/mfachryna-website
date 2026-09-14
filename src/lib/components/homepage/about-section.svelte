@@ -11,8 +11,8 @@
 			name: 'Muhammad Fachry Noorchoolish Arif',
 			jobTitle: 'Software Engineer',
 			description:
-				'Backend engineer at Suitmedia in Jakarta, building Laravel and MySQL systems for loyalty, warehouse and admissions platforms.',
-			skills: ['Laravel', 'PHP', 'MySQL', 'Go', 'PostgreSQL', 'API Design', 'Technical Documentation']
+				'Software Engineer and ODP IT Trainee at Bank Syariah Indonesia, with strong experience building backend systems in Go, Laravel, PostgreSQL, and distributed architectures.',
+			skills: ['Go', 'Laravel', 'PHP', 'PostgreSQL', 'MySQL', 'API Design', 'Microservices', 'Docker', 'Technical Documentation']
 		}
 	};
 

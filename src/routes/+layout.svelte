@@ -18,7 +18,7 @@
 	const siteName = 'Muhammad Fachry Noorchoolish Arif - Software Engineer';
 	const siteDescription =
 		'Personal portfolio of Muhammad Fachry Noorchoolish Arif, a Software Engineer specializing in web development.';
-	const siteUrl = 'https://mfachryna.vercel.com';
+	const siteUrl = 'https://mfachryna.my.id';
 
 	let mounted = false;
 	let showScrollTop = writable(false);
@@ -95,12 +95,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="x-ua-compatible" content="IE=edge" />
 
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-	<link
-		href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-		rel="stylesheet"
-	/>
 
 	<style>
 		:root {

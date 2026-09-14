@@ -7,17 +7,14 @@
 
 	const texts = [
 		'A SOFTWARE ENGINEER',
-		'A NOOB GAMER',
-		'A GREAT WHITE SHARK',
-		'A HOPELESS ROMANTIC MAN',
-		'A LAG EXCUSE STRATEGIST',
-		'A CURIOUS MONKEY',
-		'A PROFESSIONAL SLEEPER',
+		'A BACKEND ARCHITECT',
+		'A GO & LARAVEL SPECIALIST',
+		'A DISTRIBUTED SYSTEMS ENTHUSIAST',
+		'A PROBLEM SOLVER',
 		'A DARK MODE EVANGELIST',
-		'A ROCK-SKIPPING SPEEDSTER',
 		'A TRAIL-SEEKING ADVENTURER',
 		'A MASTER OF CTRL+Z',
-		'A SNOOZE BUTTON SCHOLAR'
+		'A NOOB GAMER'
 	];
 	const title = 'Muhammad Fachry Noorchoolish Arif - Software Engineer';
 	const description = 'Experienced Software Engineer and ODP IT Trainee at Bank Syariah Indonesia';
@@ -184,7 +181,7 @@
 					>
 				</div>
 				<h1
-					class=", text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl"
+					class="text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl"
 				>
 					<span class="">Hi, I'm Fachry</span>
 				</h1>
