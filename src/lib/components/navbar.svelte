@@ -224,7 +224,6 @@
 		</div>
 
 		<div class="hidden items-center space-x-3 md:flex">
-			<LanguageSwitcher />
 			{#if data?.resumeUrl}
 				<a
 					href={data.resumeUrl}

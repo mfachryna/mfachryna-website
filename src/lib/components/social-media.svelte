@@ -4,6 +4,7 @@
 	import { Moon, Sun } from '@lucide/svelte';
 	import { toggleMode } from 'mode-watcher';
 	import socialMediaData from '$lib/data/social-media.json';
+	import LanguageSwitcher from '$lib/components/language-switcher.svelte';
 
 	type NavLink = {
 		name: string;
@@ -58,6 +59,8 @@
 			</a>
 		{/if}
 	{/each}
+
+	<LanguageSwitcher variant="rail" />
 
 	<button
 		onclick={toggleMode}
