@@ -7,6 +7,21 @@ export const AVAILABLE_LOCALES = [
 
 export type Locale = (typeof AVAILABLE_LOCALES)[number]['code'];
 
+export const HERO_TYPEWRITER_TEXTS = [
+	'A SOFTWARE ENGINEER',
+	'A NOOB GAMER',
+	'A GREAT WHITE SHARK',
+	'A HOPELESS ROMANTIC MAN',
+	'A LAG EXCUSE STRATEGIST',
+	'A CURIOUS MONKEY',
+	'A PROFESSIONAL SLEEPER',
+	'A DARK MODE EVANGELIST',
+	'A ROCK-SKIPPING SPEEDSTER',
+	'A TRAIL-SEEKING ADVENTURER',
+	'A MASTER OF CTRL+Z',
+	'A SNOOZE BUTTON SCHOLAR'
+] as const;
+
 export const translations = {
 	en: {
 		nav: {
@@ -20,18 +35,8 @@ export const translations = {
 			welcome: 'Welcome to my world',
 			greeting: "Hi, I'm",
 			name: 'Fachry',
-			typewriter: [
-				'A SOFTWARE ENGINEER',
-				'A BACKEND ARCHITECT',
-				'A GO & LARAVEL SPECIALIST',
-				'A DISTRIBUTED SYSTEMS ENTHUSIAST',
-				'A PROBLEM SOLVER',
-				'A DARK MODE EVANGELIST',
-				'A TRAIL-SEEKING ADVENTURER',
-				'A MASTER OF CTRL+Z',
-				'A NOOB GAMER'
-			],
-			tagline: 'Crafting robust distributed backends, resilient system architectures, and high-performance applications that bridge enterprise scale with sharia-compliant banking technology.',
+			typewriter: HERO_TYPEWRITER_TEXTS,
+			tagline: "Passionate about crafting elegant solutions and building scalable systems. From backend APIs to system designs, I transform ideas into impactful digital products that make a difference in people's lives.",
 			exploreWorks: 'Explore My Works',
 			letsConnect: "Let's Connect",
 			resume: 'Resume'
@@ -52,17 +57,17 @@ export const translations = {
 				{
 					title: 'The Architect',
 					icon: 'drafting-compass',
-					description: 'I design data models and APIs the rest of the system leans on. On enterprise platforms, that means schemas and service boundaries that stay correct across distributed nodes — the foundation you only notice when missing.'
+					description: "I design the blueprint for your software's success. My focus is on creating clean, scalable, and maintainable systems that stand the test of time and traffic. I build the strong foundation you need for future growth."
 				},
 				{
 					title: 'The Pragmatist',
 					icon: 'sliders-h',
-					description: 'Technology is a toolbox, not a dogma. Go and Spring Boot where concurrency and strict typing matter; Laravel or TypeScript where product agility is king. The right choice is what your team can easily operate.'
+					description: 'Technology is a toolbox, and I bring the whole set. I choose the right language, framework, and architecture for your specific challenge, ensuring practical, efficient solutions without being dogmatic about a single technology.'
 				},
 				{
-					title: 'The Reliable Partner',
+					title: 'The Business Partner',
 					icon: 'handshake',
-					description: 'I deliver mission-critical milestones with precision. Managing parallel initiatives, maintaining high SLA uptime, and providing comprehensive documentation and architecture handovers.'
+					description: 'I sit at the intersection of code and commerce. I listen to your business needs and translate them into technical solutions that drive growth, improve efficiency, and deliver a measurable return on investment. Your goals become my technical roadmap.'
 				}
 			]
 		},
@@ -159,18 +164,8 @@ export const translations = {
 			welcome: 'Selamat datang di dunia saya',
 			greeting: 'Halo, saya',
 			name: 'Fachry',
-			typewriter: [
-				'SOFTWARE ENGINEER',
-				'ARSITEK BACKEND',
-				'SPESIALIS GO & LARAVEL',
-				'PENGGEMAR DISTRIBUTED SYSTEMS',
-				'PROBLEM SOLVER',
-				'PENIKMAT DARK MODE',
-				'PELARI & PETUALANG',
-				'PAKAR CTRL+Z',
-				'GAMER PEMULA'
-			],
-			tagline: 'Merancang backend terdistribusi yang tangguh, arsitektur sistem berkinerja tinggi, dan solusi enterprise yang mengintegrasikan skala perbankan syariah modern.',
+			typewriter: HERO_TYPEWRITER_TEXTS,
+			tagline: 'Berfokus membangun solusi elegan dan sistem yang skalabel. Dari backend API hingga arsitektur sistem, saya mewujudkan ide menjadi produk digital yang berdampak nyata.',
 			exploreWorks: 'Lihat Karya Saya',
 			letsConnect: 'Mari Terhubung',
 			resume: 'Unduh CV'
@@ -189,19 +184,19 @@ export const translations = {
 			devops: 'Cloud & Infrastruktur',
 			cards: [
 				{
-					title: 'Sang Arsitek',
+					title: 'The Architect',
 					icon: 'drafting-compass',
-					description: 'Saya merancang model data dan API yang menjadi pondasi sistem. Pada platform enterprise, ini berarti skema dan batasan service yang tetap presisi di berbagai node — pondasi kokoh yang baru disadari saat hilang.'
+					description: 'Merancang fondasi arsitektur sistem yang bersih, terstruktur, dan skalabel untuk jangka panjang. Memastikan sistem siap menghadapi pertumbuhan traffic dan kebutuhan masa depan.'
 				},
 				{
-					title: 'Sang Pragmatis',
+					title: 'The Pragmatist',
 					icon: 'sliders-h',
-					description: 'Teknologi adalah alat, bukan dogma. Menggunakan Go dan Spring Boot saat konkurensi dan tipe data ketat dibutuhkan; Laravel atau TypeScript untuk kecepatan iterasi produk. Pilihan tepat adalah sistem yang mudah dikelola tim.'
+					description: 'Teknologi adalah sarana, bukan dogma. Memilih bahasa, framework, dan arsitektur yang paling tepat dan efisien untuk memecahkan masalah tanpa terpaku pada satu teknologi saja.'
 				},
 				{
-					title: 'Mitra Terpercaya',
+					title: 'The Business Partner',
 					icon: 'handshake',
-					description: 'Saya menyelesaikan milestone proyek dengan presisi. Mengelola inisiatif paralel, menjaga SLA uptime yang tinggi, serta menyiapkan dokumentasi teknis dan proses handover yang menyeluruh.'
+					description: 'Menghubungkan kebutuhan bisnis dengan solusi teknis. Menerjemahkan objektif produk menjadi arsitektur dan sistem yang mendorong efisiensi dan pertumbuhan nyata.'
 				}
 			]
 		},
@@ -298,18 +293,8 @@ export const translations = {
 			welcome: 'ポートフォリオへようこそ',
 			greeting: 'こんにちは、',
 			name: 'ファフリです',
-			typewriter: [
-				'ソフトウェアエンジニア',
-				'バックエンドアーキテクト',
-				'GO & LARAVEL スペシャリスト',
-				'分散システム開発者',
-				'問題解決エンジニア',
-				'ダークモード愛好家',
-				'トレイルランナー',
-				'CTRL+Zの達人',
-				'ゲーマー'
-			],
-			tagline: '堅牢な分散バックエンド、高可用性システムアーキテクチャ、そして金融機関水準のセキュリティを備えた高パフォーマンスなWebアプリケーションを構築しています。',
+			typewriter: HERO_TYPEWRITER_TEXTS,
+			tagline: 'エレガントなソリューションとスケーラブルなシステムの構築に情熱を注いでいます。バックエンドAPIからシステム設計まで、アイデアを価値あるデジタルプロダクトへと昇華させます。',
 			exploreWorks: '実績を見る',
 			letsConnect: 'お問い合わせ',
 			resume: '職務経歴書'
@@ -437,18 +422,8 @@ export const translations = {
 			welcome: 'مرحباً بكم في عالمي',
 			greeting: 'مرحباً، أنا',
 			name: 'فخري',
-			typewriter: [
-				'مهندس برمجيات',
-				'معمار خلفي للأنظمة',
-				'متخصص في GO و LARAVEL',
-				'مهتم بالأنظمة الموزعة',
-				'محلل ومبتكر حلول',
-				'عاشق للوضع الليلي',
-				'عداء في الطبيعة',
-				'خبير CTRL+Z',
-				'لاعب مبتدئ'
-			],
-			tagline: 'تصميم أنظمة خلفية متينة وموزعة، ومعماريات برمجية عالية الأداء تربط بين مقاييس المؤسسات الكبرى والتكنولوجيا المصرفية الإسلامية.',
+			typewriter: HERO_TYPEWRITER_TEXTS,
+			tagline: 'شغوف بابتكار حلول برمجية أنيقة وبناء أنظمة قابلة للتوسع، وتحويل الأفكار إلى منتجات رقمية ذات أثر حقيقي.',
 			exploreWorks: 'استعرض أعمالي',
 			letsConnect: 'تواصل معي',
 			resume: 'السيرة الذاتية'

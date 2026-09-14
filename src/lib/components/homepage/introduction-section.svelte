@@ -22,7 +22,7 @@
 	function typeWriter() {
 		if (!isComponentMounted || !animationsStarted) return;
 
-		const sentence = texts[sentenceIndex];
+		const sentence = texts[sentenceIndex % texts.length] || '';
 		if (!isDeleting) {
 			if (charIndex < sentence.length) {
 				currentText += sentence[charIndex++];
