@@ -6,7 +6,7 @@
 
 	let { isSidebarOpen, toggleSidebar, data } = $props();
 
-	let isScrolled = $derived(false);
+	let isScrolled = $state(false);
 	let pathName = $derived($page.url.pathname);
 
 	const navLinks = [

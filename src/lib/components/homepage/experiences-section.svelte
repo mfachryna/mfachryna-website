@@ -80,8 +80,8 @@
 			}
 
 			const result = await response.json();
-
-			experiences = [...experiences, ...result.data];
+			const newExperiences = result.experiences || result.data || [];
+			experiences = [...experiences, ...newExperiences];
 
 			currentPage = result.pagination.page;
 
