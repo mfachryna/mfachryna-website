@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Moon, Sun } from '@lucide/svelte';
-	import { toggleMode } from 'mode-watcher';
+	import { toggleThemeWithRipple } from '$lib/utils';
 	import socialMediaData from '$lib/data/social-media.json';
 	import LanguageSwitcher from '$lib/components/language-switcher.svelte';
 
@@ -63,8 +63,8 @@
 	<LanguageSwitcher variant="rail" />
 
 	<button
-		onclick={toggleMode}
-		class="bg-accent hover:text-primary transition-opacity duration-300 p-1.5 rounded-full"
+		onclick={toggleThemeWithRipple}
+		class="bg-accent hover:text-primary transition-opacity duration-300 p-1.5 rounded-full cursor-pointer"
 		aria-label="Toggle theme"
 		title="Toggle theme"
 	>

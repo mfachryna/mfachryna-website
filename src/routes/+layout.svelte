@@ -4,7 +4,8 @@
 	import Navbar from '../lib/components/navbar.svelte';
 	import ScrollIndicator from '$lib/components/scroll-indicator.svelte';
 	import LoadingIndicator from '$lib/components/loading-indicator.svelte';
-	import { ModeWatcher, toggleMode } from 'mode-watcher';
+	import { ModeWatcher } from 'mode-watcher';
+	import { toggleThemeWithRipple } from '$lib/utils';
 	let { children, data } = $props();
 	import { Toaster } from 'svelte-french-toast';
 	import { onMount, onDestroy } from 'svelte';
@@ -150,7 +151,7 @@
 {#if !isSidebarOpen}
 <div class="fixed bottom-4 left-4 z-[120] block transition-all duration-300 md:hidden">
 	<button
-		onclick={toggleMode}
+		onclick={toggleThemeWithRipple}
 		class="bg-accent/30 hover:text-primary/30 backdrop-blur-md cursor-pointer rounded-full p-2.5 transition-opacity duration-300"
 		aria-label="Toggle theme"
 		title="Toggle theme"
