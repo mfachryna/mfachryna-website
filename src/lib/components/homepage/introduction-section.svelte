@@ -19,6 +19,14 @@
 	let isComponentMounted = false;
 	let animationsStarted = false;
 
+	let prevLocale: string | null = null;
+	$: if ($currentLocale) {
+		if (prevLocale !== null && prevLocale !== $currentLocale && animationsStarted) {
+			isDeleting = true;
+		}
+		prevLocale = $currentLocale;
+	}
+
 	function typeWriter() {
 		if (!isComponentMounted || !animationsStarted) return;
 
