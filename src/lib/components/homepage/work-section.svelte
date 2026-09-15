@@ -221,7 +221,7 @@
 			{#if projects.length > 0}
 				<div class="mt-8 text-center">
 					<p class="text-muted-foreground text-sm">
-						Showing {Math.min(visibleProjects, projects.length)} of {totalItems} projects
+						{$t('common.showing')} {Math.min(visibleProjects, projects.length)} {$t('common.of')} {totalItems} {$t('common.projects')}
 					</p>
 				</div>
 			{/if}

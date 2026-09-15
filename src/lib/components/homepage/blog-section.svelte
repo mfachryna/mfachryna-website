@@ -6,6 +6,7 @@
 	import Button from '../ui/button/button.svelte';
 	import { onMount } from 'svelte';
 	import type { BlogWithTags } from '$lib/types/blog';
+	import { t } from '$lib/i18n/store';
 
 	export let data: {
 		blogs: BlogWithTags[];
@@ -150,15 +151,15 @@
 		<div class="mb-16 space-y-4 text-center">
 			<div class="inline-block">
 				<span class="text-muted-foreground mb-2 block text-sm font-medium tracking-widest uppercase"
-					>Latest Insights</span
+					>{$t('blog.badge')}</span
 				>
-				<h2 class="text-responsive-xl gradient-text font-bold">Blog Posts</h2>
+				<h2 class="text-responsive-xl gradient-text font-bold">{$t('blog.title')}</h2>
 			</div>
 			<div
 				class="from-primary via-accent to-primary mx-auto h-1 w-24 rounded-full bg-gradient-to-r"
 			></div>
 			<p class="text-muted-foreground mx-auto max-w-2xl">
-				Exploring ideas, sharing knowledge, and documenting my journey in software development
+				{$t('blog.subtitle')}
 			</p>
 		</div>
 
@@ -169,13 +170,13 @@
 			<div class="py-16 text-center">
 				<div class="card-modern mx-auto max-w-md text-center">
 					<p class="text-destructive mb-4">{error}</p>
-					<button class="btn-modern" onclick={retryFetch}> Try Again </button>
+					<button class="btn-modern" onclick={retryFetch}> {$t('common.tryAgain')} </button>
 				</div>
 			</div>
 		{:else if blogs.length === 0}
 			<div class="py-16 text-center">
 				<div class="card-modern mx-auto max-w-md text-center">
-					<p class="text-muted-foreground">No blog posts found.</p>
+					<p class="text-muted-foreground">{$t('blog.noBlogs')}</p>
 				</div>
 			</div>
 		{:else}
@@ -201,9 +202,9 @@
 						<span class="flex items-center space-x-2">
 							<span>
 								{#if visibleBlogs < blogs.length}
-									Show More Posts ({blogs.length - visibleBlogs} remaining)
+									{$t('blog.showMore')} ({blogs.length - visibleBlogs})
 								{:else}
-									Load More Posts
+									{$t('blog.showMore')}
 								{/if}
 							</span>
 							<svg
@@ -226,7 +227,7 @@
 
 			<div class="mt-8 text-center">
 				<a href="/blog" class="btn-modern-outline inline-flex items-center space-x-2">
-					<span>View All Posts</span>
+					<span>{$t('blog.viewAll')}</span>
 					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
 					</svg>
@@ -236,7 +237,7 @@
 			{#if blogs.length > 0}
 				<div class="mt-8 text-center">
 					<span class="text-muted-foreground text-sm">
-						Showing {Math.min(visibleBlogs, blogs.length)} of {totalItems} articles
+						{$t('common.showing')} {Math.min(visibleBlogs, blogs.length)} {$t('common.of')} {totalItems} {$t('common.articles')}
 					</span>
 				</div>
 			{/if}

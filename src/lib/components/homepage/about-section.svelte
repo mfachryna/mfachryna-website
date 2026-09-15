@@ -6,29 +6,8 @@
 	import { translations } from '$lib/i18n/translations';
 
 	$: aboutCards = translations[$currentLocale]?.about?.cards ?? translations.en.about.cards;
-
-	const structuredData = {
-		'@context': 'https://schema.org',
-		'@type': 'ProfilePage',
-		mainEntity: {
-			'@type': 'Person',
-			name: 'Muhammad Fachry Noorchoolish Arif',
-			jobTitle: 'Software Engineer',
-			description:
-				'Software Engineer and ODP IT Trainee at Bank Syariah Indonesia, with strong experience building backend systems in Go, Laravel, PostgreSQL, and distributed architectures.',
-			skills: ['Go', 'Laravel', 'PHP', 'PostgreSQL', 'MySQL', 'API Design', 'Microservices', 'Docker', 'Technical Documentation']
-		}
-	};
-
-	// NOTE: `fa-solid` in Iconify is Font Awesome 5. FA6-only names
-	// (arrow-trend-up, screwdriver-wrench) resolve to nothing and render blank.
-	// Verify a name at https://api.iconify.design/fa-solid/<name>.svg before using it.
-	const traits = [
-		{ label: 'Problem Solver', icon: 'bullseye' },
-		{ label: 'Growth-Oriented', icon: 'chart-line' },
-		{ label: 'Strategic Thinker', icon: 'lightbulb' },
-		{ label: 'Technology Agnostic', icon: 'tools' }
-	];
+	$: traits = translations[$currentLocale]?.about?.traits ?? translations.en.about.traits;
+	$: philosophy = translations[$currentLocale]?.about?.philosophy ?? translations.en.about.philosophy;
 
 </script>
 
@@ -111,9 +90,7 @@
 			<AnimateOnScroll animation="fade" delay={600}>
 				<div class="mx-auto max-w-3xl">
 					<p class="text-muted-foreground mb-8 text-base leading-relaxed lg:text-lg">
-						I believe in building software that not only works but makes a difference. Every line of
-						code is written with purpose, every system designed with the future in mind, and every
-						solution crafted to drive real business value.
+						{philosophy}
 					</p>
 					<div class="flex flex-wrap justify-center gap-4">
 						<!--

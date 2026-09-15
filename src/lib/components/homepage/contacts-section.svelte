@@ -3,7 +3,8 @@
 	import PageTitle from '../page-title.svelte';
 	import Button from '../ui/button/button.svelte';
 	import { onMount } from 'svelte';
-	import { t } from '$lib/i18n/store';
+	import { t, currentLocale } from '$lib/i18n/store';
+	import { translations } from '$lib/i18n/translations';
 
 	import type { ToastPosition } from 'svelte-french-toast';
 	import AnimateOnScroll from '../animate-on-scroll.svelte';
@@ -50,9 +51,10 @@
 		additional: ''
 	};
 
-	const needsOptions = ['Website', 'App', 'Design', 'Consultation'];
-	const projectTypes = ['Portfolio', 'Business Site', 'E-commerce', 'Other'];
-	const budgets = ['< $1k', '$1k–$5k', '$5k–$10k', '$10k+'];
+	$: contactDict = translations[$currentLocale]?.contact ?? translations.en.contact;
+	$: needsOptions = contactDict.needsOptions;
+	$: projectTypes = contactDict.projectTypeOptions;
+	$: budgets = contactDict.budgetOptions;
 
 	let isNeedsOpen = false;
 	let isProjectTypeOpen = false;
@@ -112,32 +114,33 @@
 	function validateForm() {
 		formErrors = {};
 		let isValid = true;
+		const errs = contactDict.errors;
 
 		if (!form.needs) {
-			formErrors.needs = 'Please select your needs';
+			formErrors.needs = errs.needs;
 			isValid = false;
 		}
 
 		if (!form.name) {
-			formErrors.name = 'Name is required';
+			formErrors.name = errs.name;
 			isValid = false;
 		}
 
 		if (!form.email) {
-			formErrors.email = 'Email is required';
+			formErrors.email = errs.email;
 			isValid = false;
 		} else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
-			formErrors.email = 'Please enter a valid email';
+			formErrors.email = errs.emailValid;
 			isValid = false;
 		}
 
 		if (!form.projectType) {
-			formErrors.projectType = 'Please select project type';
+			formErrors.projectType = errs.projectType;
 			isValid = false;
 		}
 
 		if (!form.budget) {
-			formErrors.budget = 'Please select budget';
+			formErrors.budget = errs.budget;
 			isValid = false;
 		}
 
@@ -170,13 +173,13 @@
 					additional: ''
 				};
 
-				toast.success("Thank you! Your message has been sent successfully. I'll be in touch soon.");
+				toast.success(contactDict.successMessage);
 			} else {
-				toast.error(result.message || 'There was an error submitting the form. Please try again.');
+				toast.error(result.message || contactDict.errorMessage);
 			}
 		} catch (error) {
 			console.error('Error submitting form:', error);
-			toast.error('There was a network error. Please try again or contact me directly.');
+			toast.error(contactDict.errorMessage);
 		} finally {
 			isSubmitting = false;
 		}
@@ -221,7 +224,7 @@
 				>
 					<div id="needs-combobox" class="relative text-sm">
 						<label for="needs" class="mb-1 block font-medium">
-							<span class="text-sm text-red-500">*</span> Needs
+							<span class="text-sm text-red-500">*</span> {contactDict.needsLabel}
 						</label>
 						<div class="relative">
 							<button
@@ -239,7 +242,7 @@
 								<input
 									id="needs"
 									type="text"
-									placeholder="Input or select your needs"
+									placeholder={contactDict.needsPlaceholder}
 									bind:value={form.needs}
 									onfocus={() => (isNeedsOpen = true)}
 									oninput={() => (isNeedsOpen = true)}
@@ -283,7 +286,7 @@
 									role="listbox"
 								>
 									{#if filteredNeeds.length === 0}
-										<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
+										<li class="px-4 py-2 text-gray-500 italic">{contactDict.noMatching}</li>
 									{:else}
 										{#each filteredNeeds as option, i}
 											<li
@@ -314,12 +317,12 @@
 					<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<div>
 							<label for="name" class="mb-1 block font-medium">
-								<span class="text-red-500">*</span> Name
+								<span class="text-red-500">*</span> {contactDict.nameLabel}
 							</label>
 							<input
 								id="name"
 								type="text"
-								placeholder="Input Your name here"
+								placeholder={contactDict.namePlaceholder}
 								bind:value={form.name}
 								class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
 								class:border-red-500={formErrors.name}
@@ -333,12 +336,12 @@
 
 						<div>
 							<label for="email" class="mb-1 block font-medium">
-								<span class="text-red-500">*</span> Email
+								<span class="text-red-500">*</span> {contactDict.emailLabel}
 							</label>
 							<input
 								id="email"
 								type="email"
-								placeholder="Input Your email here"
+								placeholder={contactDict.emailPlaceholder}
 								bind:value={form.email}
 								class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
 								class:border-red-500={formErrors.email}
@@ -354,7 +357,7 @@
 					<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<div id="projectType-combobox" class="relative">
 							<label for="project" class="mb-1 block font-medium">
-								<span class="text-red-500">*</span> Project Type
+								<span class="text-red-500">*</span> {contactDict.projectTypeLabel}
 							</label>
 							<div class="relative">
 								<button
@@ -374,7 +377,7 @@
 									<input
 										id="project"
 										type="text"
-										placeholder="Input or select project type"
+										placeholder={contactDict.projectTypePlaceholder}
 										bind:value={form.projectType}
 										onfocus={() => (isProjectTypeOpen = true)}
 										oninput={() => (isProjectTypeOpen = true)}
@@ -418,7 +421,7 @@
 										role="listbox"
 									>
 										{#if filteredProjectTypes.length === 0}
-											<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
+											<li class="px-4 py-2 text-gray-500 italic">{contactDict.noMatching}</li>
 										{:else}
 											{#each filteredProjectTypes as option, i}
 												<li
@@ -448,7 +451,7 @@
 
 						<div id="budget-combobox" class="relative">
 							<label for="budget" class="mb-1 block font-medium">
-								<span class="text-red-500">*</span> Budget
+								<span class="text-red-500">*</span> {contactDict.budgetLabel}
 							</label>
 							<div class="relative">
 								<button
@@ -466,7 +469,7 @@
 									<input
 										id="budget"
 										type="text"
-										placeholder="Input or select budget"
+										placeholder={contactDict.budgetPlaceholder}
 										bind:value={form.budget}
 										onfocus={() => (isBudgetOpen = true)}
 										oninput={() => (isBudgetOpen = true)}
@@ -510,7 +513,7 @@
 										role="listbox"
 									>
 										{#if filteredBudgets.length === 0}
-											<li class="px-4 py-2 text-gray-500 italic">No matching options</li>
+											<li class="px-4 py-2 text-gray-500 italic">{contactDict.noMatching}</li>
 										{:else}
 											{#each filteredBudgets as option, i}
 												<li
@@ -540,11 +543,11 @@
 					</div>
 
 					<div>
-						<label for="additional" class="mb-1 block font-medium">Description</label>
+						<label for="additional" class="mb-1 block font-medium">{contactDict.descLabel}</label>
 						<textarea
-							id="description"
+							id="additional"
 							rows="5"
-							placeholder="Describe your project or any additional information"
+							placeholder={contactDict.descPlaceholder}
 							bind:value={form.additional}
 							class="border-border bg-input text-foreground placeholder:text-muted-foreground w-full rounded-md border px-4 py-2"
 						></textarea>
@@ -552,7 +555,7 @@
 
 					<div class="pt-4 text-center">
 						<Button variant="default" size="lg" type="submit" disabled={isSubmitting}>
-							{isSubmitting ? $t('contact.sending') : $t('contact.sendButton')}
+							{isSubmitting ? contactDict.sending : contactDict.sendButton}
 						</Button>
 					</div>
 				</form>
