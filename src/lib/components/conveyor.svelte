@@ -43,7 +43,7 @@
 		</div>
 	</section>
 {:else if trackLogos.length > 0}
-	<section class="relative bg-gradient-to-r">
+	<section class="relative bg-gradient-to-r" dir="ltr">
 		<div class="relative overflow-hidden px-0 py-12">
 			<div class="relative">
 				<div class="tech-conveyor flex whitespace-nowrap">

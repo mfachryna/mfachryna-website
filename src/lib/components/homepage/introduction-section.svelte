@@ -188,7 +188,7 @@
 			</div>
 			<div class="flex items-center justify-center">
 				<div class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
-					<span class="gradient-text relative">
+					<span class="gradient-text relative inline-block" dir="ltr">
 						{currentText}
 						<span
 							class="from-primary to-accent ml-1 inline-block h-5 w-0.5 bg-gradient-to-b transition-opacity duration-300 sm:h-7 md:h-9 lg:h-10"
@@ -217,10 +217,10 @@
 
 			<div class="flex flex-row items-center justify-center gap-4 pt-8">
 				<button class="btn-modern group" onclick={() => smoothScrollTo('#work')}>
-					<span class="flex items-center text-xs sm:text-sm md:text-base">
+					<span class="flex items-center gap-2 text-xs sm:text-sm md:text-base">
 						<span>{$t('hero.exploreWorks')}</span>
 						<svg
-							class="h-4 w-4 transition-transform group-hover:translate-x-1"
+							class="h-4 w-4 transition-transform group-hover:translate-x-1 rtl:rotate-180 rtl:group-hover:-translate-x-1"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"
