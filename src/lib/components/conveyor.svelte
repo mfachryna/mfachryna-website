@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import ConveyorSkeleton from './skeletons/conveyor-skeleton.svelte';
 
-	let logos: (string | null)[] = [];
-	let conveyorElement: HTMLDivElement;
-	let singleSetWidth = 0;
+	let rawLogos: string[] = [];
 	let loading = true;
 	let error: string | null = null;
 
@@ -18,12 +16,9 @@
 
 			const tags = await res.json();
 
-			logos = tags
+			rawLogos = tags
 				.filter((tag: { iconUrl?: string }) => !!tag.iconUrl)
 				.map((tag: { iconUrl: string }) => tag.iconUrl.replace(/^\/static/, ''));
-
-			await tick();
-			singleSetWidth = conveyorElement?.scrollWidth / 2 || 0;
 		} catch (err) {
 			error = err instanceof Error ? err.message : 'Failed to load tech logos';
 			console.error('Conveyor error:', err);
@@ -31,6 +26,9 @@
 			loading = false;
 		}
 	});
+
+	// Ensure the track has enough items (at least 4x repeats) to cover any viewport up to 4K ultrawide
+	$: trackLogos = rawLogos.length > 0 ? [...rawLogos, ...rawLogos, ...rawLogos, ...rawLogos] : [];
 </script>
 
 {#if loading}
@@ -44,56 +42,51 @@
 			</div>
 		</div>
 	</section>
-{:else if logos.length > 0}
+{:else if trackLogos.length > 0}
 	<section class="relative bg-gradient-to-r">
 		<div class="relative overflow-hidden px-0 py-12">
 			<div class="relative">
+				<div class="tech-conveyor flex whitespace-nowrap">
+					<!-- Track A -->
+					{#each trackLogos as logo}
+						<div class="tech-logo-container group p-2 mx-3 md:mx-4">
+							<div class="relative">
+								<div
+									class="from-primary/20 to-accent/20 absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
+								></div>
 
-				<div class="tech-conveyor flex whitespace-nowrap" bind:this={conveyorElement}>
-					{#each logos as logo, i}
-						{#if logo}
-							<div class="tech-logo-container group p-2 mx-3 md:mx-4">
-								<div class="relative">
-									<div
-										class="from-primary/20 to-accent/20 absolute inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
-									></div>
-
-									<div
-										class=" backdrop-blur-md bg-foreground/10 border-border/50 group-hover:border-accent/30 group-hover:bg-primary/10 relative rounded-lg border p-3 transition-all duration-500 group-hover:scale-110"
-									>
-										<img
-											src={logo}
-											alt="tech logo"
-											class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
-											onerror={() => (logos[i] = null)}
-										/>
-									</div>
+								<div
+									class="backdrop-blur-md bg-foreground/10 border-border/50 group-hover:border-accent/30 group-hover:bg-primary/10 relative rounded-lg border p-3 transition-all duration-500 group-hover:scale-110"
+								>
+									<img
+										src={logo}
+										alt="tech logo"
+										class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
+									/>
 								</div>
 							</div>
-						{/if}
+						</div>
 					{/each}
 
-					{#each logos as logo, i}
-						{#if logo}
-							<div class="tech-logo-container group p-2 mx-3 md:mx-4">
-								<div class="relative">
-									<div
-										class="from-primary/20 to-accent/20 inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
-									></div>
+					<!-- Track B (Identical duplicate for seamless infinite loop) -->
+					{#each trackLogos as logo}
+						<div class="tech-logo-container group p-2 mx-3 md:mx-4" aria-hidden="true">
+							<div class="relative">
+								<div
+									class="from-primary/20 to-accent/20 inset-0 rounded-lg bg-gradient-to-r opacity-0 blur transition-opacity duration-500 group-hover:opacity-100"
+								></div>
 
-									<div
-										class=" backdrop-blur-md bg-foreground/10 border-border/50 group-hover:border-accent/30 group-hover:bg-primary/10 relative rounded-lg border p-3 transition-all duration-500 group-hover:scale-110"
-									>
-										<img
-											src={logo}
-											alt="tech logo"
-											class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
-											onerror={() => (logos[i] = null)}
-										/>
-									</div>
+								<div
+									class="backdrop-blur-md bg-foreground/10 border-border/50 group-hover:border-accent/30 group-hover:bg-primary/10 relative rounded-lg border p-3 transition-all duration-500 group-hover:scale-110"
+								>
+									<img
+										src={logo}
+										alt="tech logo"
+										class="h-8 w-8 object-contain opacity-60 grayscale transition-all duration-500 group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
+									/>
 								</div>
 							</div>
-						{/if}
+						</div>
 					{/each}
 				</div>
 			</div>
@@ -103,7 +96,7 @@
 
 <style>
 	.tech-conveyor {
-		animation: smooth-scroll 40s linear infinite;
+		animation: smooth-scroll 45s linear infinite;
 		will-change: transform;
 	}
 
